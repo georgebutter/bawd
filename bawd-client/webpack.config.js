@@ -1,5 +1,6 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const {
   NODE_ENV = 'development',
 } = process.env;
@@ -30,10 +31,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
-    new HtmlWebpackPlugin()
-  ],
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-  },
+    new HtmlWebpackPlugin(),
+  ]
 };
