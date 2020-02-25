@@ -8,6 +8,10 @@
     "log:client": "heroku logs -a bawd-client --tail",
     "heroku-postbuild": "./heroku.build"
   },
+  "engines": {
+    "node": "12.10.0",
+    "yarn": "1.17.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ButsAndCats/bawd.git"
