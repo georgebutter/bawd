@@ -1,9 +1,9 @@
 const path = require('path');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {
   NODE_ENV = 'development',
 } = process.env;
-console.log(`Running ${NODE_ENV} build`)
+console.log(`Running ${NODE_ENV} build`);
 module.exports = {
   entry: './src/index.tsx',
   mode: NODE_ENV,
@@ -29,6 +29,9 @@ module.exports = {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  plugins: [
+    new HtmlWebpackPlugin()
+  ],
   externals: {
     'react': 'React',
     'react-dom': 'ReactDOM',
