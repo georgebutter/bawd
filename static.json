@@ -3,5 +3,10 @@
   "clean_urls": true,
   "routes": {
     "/*.html": "index.html"
+  },
+  "proxies": {
+    "/api/": {
+      "origin": "https://bawd-server.herokuapp.com/"
+    }
   }
 }
