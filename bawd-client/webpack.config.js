@@ -1,7 +1,7 @@
 const path = require('path');
 
 const {
-  NODE_ENV = 'production',
+  NODE_ENV = 'development',
 } = process.env;
 
 module.exports = {

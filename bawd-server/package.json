@@ -5,8 +5,8 @@
   "scripts": {
     "build": "webpack",
     "start": "node dist/index.js",
-    "start:dev": "NODE_ENV=development webpack",
-    "run:dev": "NODE_ENV=development nodemon dist/index.js",
+    "start:dev": "webpack",
+    "run:dev": "nodemon dist/index.js",
     "test": "tslint -c ../tslint.json -p tsconfig.json --fix && jest"
   },
   "private": true,
