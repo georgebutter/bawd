@@ -3,7 +3,7 @@ const path = require('path');
 const {
   NODE_ENV = 'development',
 } = process.env;
-
+console.log(`Running ${NODE_ENV} build`)
 module.exports = {
   entry: './src/index.tsx',
   mode: NODE_ENV,

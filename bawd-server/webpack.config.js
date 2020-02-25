@@ -5,7 +5,7 @@ const WebpackShellPlugin = require('webpack-shell-plugin');
 const {
   NODE_ENV = 'development',
 } = process.env;
-
+console.log(`Running ${NODE_ENV} build`)
 module.exports = {
   entry: './src/index.ts',
   mode: NODE_ENV,
@@ -24,7 +24,7 @@ module.exports = {
   },
   plugins: [
     new WebpackShellPlugin({
-      onBuildEnd: ['yarn run:dev'],
+      onBuildEnd: NODE_ENV === 'development' ? ['yarn run:dev'] : [],
     }),
   ],
   resolve: {
