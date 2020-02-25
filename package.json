@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "log:server": "heroku logs -a bawd-server --tail",
     "log:client": "heroku logs -a bawd-client --tail",
-    "heroku-postbuild": "bash heroku.build"
+    "heroku-postbuild": "yarn workspaces run build"
   },
   "engines": {
     "node": "10.13.0",
