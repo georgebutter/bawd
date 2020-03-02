@@ -4,7 +4,7 @@ import { CloseIcon } from "./icons";
 const Popup: React.FC<IProps> = ({ children, setPopup }) => {
   return (
     <div className={`fixed inset-0 ${children ? `` : `opacity-0 invisible pointer-events-none`}`}>
-      <div className={`absolute inset-0 bg-white opacity-50`}
+      <div className={`absolute inset-0 bg-white opacity-50 backdrop-blur`}
         onClick={() => setPopup(null)}
       />
       <div className={`absolute inset-0 flex items-center justify-center`}>

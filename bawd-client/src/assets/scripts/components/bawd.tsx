@@ -48,7 +48,7 @@ const CreateBoard: React.FC = () => {
     <Container>
       <Form onSubmit={async (e) => {
         e.preventDefault();
-        const response = await fetch(`/api/boards`, {
+        const response = await fetch(`/api/boards.json`, {
           body: JSON.stringify({
             name
           }),
@@ -57,7 +57,6 @@ const CreateBoard: React.FC = () => {
           },
           method: "POST",
         });
-        console.log(response);
       }}>
         <Column>
           <Heading tag={`h6`}>
