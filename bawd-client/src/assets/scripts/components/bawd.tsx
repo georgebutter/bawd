@@ -1,0 +1,87 @@
+import * as React from "react";
+import Button from "./button";
+import Column from "./column";
+import Container from "./container";
+import Form from "./form";
+import Heading from "./heading";
+import { BoardIcon } from "./icons";
+import Input from "./input";
+import Popup from "./popup";
+import Row from "./row";
+
+const Bawd: React.FC = () => {
+  const [popup, setPopup] = React.useState<JSX.Element>(null);
+  return (
+    <Container>
+      <Row>
+        <Column>
+          <Heading tag={`h1`}>Bawd</Heading>
+        </Column>
+      </Row>
+      <Row>
+        <Column width={`1/2`}>
+          <Heading tag={`h3`}>
+            {`Boards`}
+          </Heading>
+        </Column>
+        <Column width={`1/2`} align={`end`}>
+          <Button
+            onClick={() => setPopup(<CreateBoard />)}
+          >
+            <BoardIcon size={12} />
+            <span className={"ml-1"}>{"Create board"}</span>
+          </Button>
+        </Column>
+      </Row>
+      <Popup
+        setPopup={setPopup}
+      >
+        {popup}
+      </Popup>
+    </Container>
+  );
+};
+
+const CreateBoard: React.FC = () => {
+  const [name, setName] = React.useState<string>("");
+  return (
+    <Container>
+      <Form onSubmit={async (e) => {
+        e.preventDefault();
+        const response = await fetch(`/api/boards`, {
+          body: JSON.stringify({
+            name
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+        });
+        console.log(response);
+      }}>
+        <Column>
+          <Heading tag={`h6`}>
+            Create a board
+          </Heading>
+        </Column>
+        <Column>
+          <Input
+            name="BoardName"
+            label="Choose a name"
+            placeholder="Board name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </Column>
+        <Column>
+          <Button>
+            <BoardIcon size={12} />
+            <span className={"ml-1"}>{"Create board"}</span>
+          </Button>
+        </Column>
+      </Form>
+    </Container>
+  );
+};
+
+export default Bawd;
