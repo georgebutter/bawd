@@ -1,14 +1,13 @@
-const { DefinePlugin } = require("webpack");
+const {DefinePlugin} = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const {
   NODE_ENV = 'development',
-  API_URL = 'https://localhost:3100'
+  API_URL = 'https://localhost:3100',
 } = process.env;
 console.log(`Running ${NODE_ENV} build`);
 module.exports = () => {
-  const env = dotenv.config().parsed;
   return {
     entry: [
       './src/assets/scripts/index.tsx',
