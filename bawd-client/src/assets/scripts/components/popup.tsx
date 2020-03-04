@@ -3,11 +3,11 @@ import { CloseIcon } from "./icons";
 
 const Popup: React.FC<IProps> = ({ children, setPopup }) => {
   return (
-    <div className={`fixed inset-0 ${children ? `` : `opacity-0 invisible pointer-events-none`}`}>
+    <div className={`fixed inset-0 ${children({ setPopup }) ? `` : `opacity-0 invisible pointer-events-none`}`}>
       <div className={`absolute inset-0 bg-white opacity-50 backdrop-blur`}
         onClick={() => setPopup(null)}
       />
-      <div className={`absolute inset-0 flex items-center justify-center`}>
+      <div className={`absolute inset-0 flex items-center justify-center p-2`}>
         <div className={`bg-gray-300 rounded-lg w-full max-w-lg p-2 relative`}>
           <button
             className={`absolute right-0 top-0 p-2`}
@@ -15,7 +15,7 @@ const Popup: React.FC<IProps> = ({ children, setPopup }) => {
           >
             <CloseIcon size={24} />
           </button>
-          {children}
+          {children({ setPopup })}
         </div>
       </div>
     </div>
@@ -23,7 +23,8 @@ const Popup: React.FC<IProps> = ({ children, setPopup }) => {
 };
 
 interface IProps {
-  setPopup: React.Dispatch<React.SetStateAction<JSX.Element>>;
+  setPopup: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+  children: (props: {setPopup: IProps["setPopup"]}) => React.ReactNode;
 }
 
 export default Popup;

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const Column: React.FC<IProps> = ({ children, width = "full", align = "start", vertical = "start" }) => (
-  <div className={`flex flex-wrap w-full md:w-${width} p-2 justify-${align} items-${vertical}`}>
+  <div className={`flex flex-wrap w-${width} p-2 justify-${align} items-${vertical}`}>
     {children}
   </div>
 );

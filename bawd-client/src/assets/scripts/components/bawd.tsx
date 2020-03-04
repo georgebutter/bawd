@@ -10,7 +10,7 @@ import Popup from "./popup";
 import Row from "./row";
 
 const Bawd: React.FC = () => {
-  const [popup, setPopup] = React.useState<JSX.Element>(null);
+  const [popup, setPopup] = React.useState<React.ReactNode>(null);
   return (
     <Container>
       <Row>
@@ -26,7 +26,7 @@ const Bawd: React.FC = () => {
         </Column>
         <Column width={`1/2`} align={`end`}>
           <Button
-            onClick={() => setPopup(<CreateBoard />)}
+            onClick={() => setPopup(<CreateBoard setPopup={setPopup}/>)}
           >
             <BoardIcon size={12} />
             <span className={"ml-1"}>{"Create board"}</span>
@@ -36,19 +36,21 @@ const Bawd: React.FC = () => {
       <Popup
         setPopup={setPopup}
       >
-        {popup}
+        {() => popup}
       </Popup>
     </Container>
   );
 };
 
-const CreateBoard: React.FC = () => {
+const CreateBoard: React.FC<{
+  setPopup: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+}> = ({ setPopup }) => {
   const [name, setName] = React.useState<string>("");
   return (
     <Container>
       <Form onSubmit={async (e) => {
         e.preventDefault();
-        const response = await fetch(`/api/boards.json`, {
+        const response = await fetch(`${process.env.API_URL}/boards.json`, {
           body: JSON.stringify({
             name
           }),
@@ -57,6 +59,10 @@ const CreateBoard: React.FC = () => {
           },
           method: "POST",
         });
+        const json = await response.json();
+        if (json.status === "success") {
+          setPopup(null);
+        }
       }}>
         <Column>
           <Heading tag={`h6`}>
