@@ -1,10 +1,10 @@
 const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const dotenv = require('dotenv');
 
 const {
   NODE_ENV = 'development',
+  API_URL = 'https://localhost:3100'
 } = process.env;
 console.log(`Running ${NODE_ENV} build`);
 module.exports = () => {
@@ -51,7 +51,7 @@ module.exports = () => {
         chunkFilename: 'styles.css',
       }),
       new DefinePlugin({
-        'process.env.API_URL': JSON.stringify(env.API_URL),
+        'process.env.API_URL': API_URL,
       }),
     ],
   };
