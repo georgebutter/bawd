@@ -1,15 +1,17 @@
 import { Client } from "@elastic/elasticsearch";
 import * as express from "express";
 
+const {
+  PORT = 3100,
+  BONSAI_URL = "http://localhost:9200"
+} = process.env;
+
 const elasticClient = new Client({
-  node: "http://localhost:9200"
+  node: BONSAI_URL
 });
 
 const app = express();
 app.use(express.json());
-const {
-  PORT = 3100,
-} = process.env;
 
 const ing = (promise: any) => {
   return promise.then((data: any) => {
