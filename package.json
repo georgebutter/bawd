@@ -10,7 +10,7 @@
   },
   "engines": {
     "node": "10.13.0",
-    "yarn": "1.22.0"
+    "yarn": "1.17.3"
   },
   "repository": {
     "type": "git",
