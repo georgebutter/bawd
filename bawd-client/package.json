@@ -4,7 +4,8 @@
   "scripts": {
     "build": "webpack",
     "test": "tslint -c ../tslint.json -p tsconfig.json --fix",
-    "start": "echo 'started'"
+    "start": "echo 'started'",
+    "dev": "webpack-dev-server"
   },
   "author": "",
   "license": "UNLICENSED",
@@ -24,7 +25,8 @@
     "tslint": "^6.0.0",
     "typescript": "^3.7.5",
     "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "react": "^16.12.0",

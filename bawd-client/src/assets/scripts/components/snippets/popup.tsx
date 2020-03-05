@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CloseIcon } from "./icons";
+import { CloseIcon } from "../icons";
 
 const Popup: React.FC<IProps> = ({ children, setPopup }) => {
   return (

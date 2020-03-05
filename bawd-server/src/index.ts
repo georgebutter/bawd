@@ -36,7 +36,10 @@ app.post("/boards.json", (req: express.Request, res: express.Response) => {
         status: "error",
       });
     }
-    res.json(result);
+    return res.json({
+      result,
+      status: "success",
+    });
   })();
 });
 

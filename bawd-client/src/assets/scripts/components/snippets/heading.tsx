@@ -10,7 +10,7 @@ const Heading: React.FC<IProps> = ({ children, size, tag, className, itemprop })
     h6: "text-lg",
   };
   const style: string = size ? sizes[size] : sizes[tag];
-  const classes: string = `${style} ${className ? className : ""}`;
+  const classes: string = `lh-crop ${style} ${className ? className : ""}`;
   return React.createElement(tag, {
     className: classes,
     itemProp: itemprop,

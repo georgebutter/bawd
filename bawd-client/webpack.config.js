@@ -1,8 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
 
 const {
-  NODE_ENV = 'production',
+  NODE_ENV = 'development',
 } = process.env;
 console.log(`Running ${NODE_ENV} build`);
 module.exports = () => {
@@ -13,6 +14,19 @@ module.exports = () => {
     ],
     mode: NODE_ENV,
     devtool: 'source-map',
+    devServer: {
+      port: 3200,
+      contentBase: path.join(__dirname, 'dist'),
+      compress: true,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3100/',
+          pathRewrite: {
+            '^/api': '',
+          },
+        },
+      },
+    },
     watch: NODE_ENV === 'development',
     module: {
       rules: [
@@ -46,7 +60,7 @@ module.exports = () => {
       new MiniCssExtractPlugin({
         filename: 'assets/styles/index.css',
         chunkFilename: 'styles.css',
-      })
+      }),
     ],
   };
 };
