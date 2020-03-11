@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "webpack",
     "start": "node dist/index.js",
-    "start:dev": "webpack",
     "run:dev": "nodemon dist/index.js",
+    "dev": "webpack",
     "test": "tslint -c ../tslint.json -p tsconfig.json --fix && jest"
   },
   "private": true,

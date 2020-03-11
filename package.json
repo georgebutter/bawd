@@ -6,11 +6,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "log:server": "heroku logs -a bawd-server --tail",
     "log:client": "heroku logs -a bawd-client --tail",
+    "dev": "yarn workspaces foreach run dev -p",
     "heroku-postbuild": "yarn workspaces run build"
   },
   "engines": {
     "node": "10.13.0",
-    "yarn": "1.22.0"
+    "yarn": "1.22.4"
   },
   "repository": {
     "type": "git",

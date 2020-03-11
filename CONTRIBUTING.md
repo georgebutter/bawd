@@ -1,6 +1,6 @@
 ### Getting started
 
-Run the server locally with `yarn start:dev` it will run on `localhost:3100`
+Run the server locally with `yarn dev` it will run on `localhost:3100`
 Elastic search needs to be running with `elasticsearch`
 
 Run the client locally with `yarn dev`
