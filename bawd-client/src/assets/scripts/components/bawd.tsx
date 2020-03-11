@@ -2,8 +2,8 @@ import {
   ReactiveBase, ReactiveList
 } from "@appbaseio/reactivesearch";
 import * as React from "react";
-import { IBoard } from "../types";
-import { BoardIcon } from "./icons";
+import { IBoard, IPost } from "../types";
+import { BoardIcon, PostIcon } from "./icons";
 import * as Sections from "./sections";
 
 import {
@@ -29,6 +29,57 @@ const Bawd: React.FC = () => {
       <Row>
         <Column width={`1/2`}>
           <Heading tag={`h3`}>
+            {`Posts`}
+          </Heading>
+        </Column>
+        <Column width={`1/2`} align={`end`}>
+          <Button
+            onClick={() => setPopup(<Sections.CreatePost setPopup={setPopup}/>)}
+          >
+            <PostIcon size={12} />
+            <span className={"ml-1"}>{"Create post"}</span>
+          </Button>
+        </Column>
+      </Row>
+      <ReactiveBase
+        app={`posts`}
+        url={BONSAI_URL}
+      >
+        <ReactiveList
+          dataField="post-results"
+          componentId="PostResults"
+          showResultStats={false}
+          render={({
+            loading,
+            data
+          }) => (
+            <Row>
+              {data.map((post: IPost) => (
+                <Column key={post.title}>
+                  <p>{post.title}</p>
+                </Column>
+              ))}
+            </Row>
+          )}
+          renderNoResults={() => (
+            <Row>
+              <Column>
+                <p>No posts found.</p>
+              </Column>
+            </Row>
+          )}
+          renderError={(error: any) => (
+            <Row>
+              <Column>
+                <p>{error}</p>
+              </Column>
+            </Row>
+          )}
+        />
+      </ReactiveBase>
+      <Row>
+        <Column width={`1/2`}>
+          <Heading tag={`h3`}>
             {`Boards`}
           </Heading>
         </Column>
@@ -49,21 +100,33 @@ const Bawd: React.FC = () => {
           dataField="results"
           componentId="Results"
           showResultStats={false}
-          stream={true}
-        >
-          {({
+          render={({
             loading,
             data
           }) => (
             <Row>
               {data.map((board: IBoard) => (
                 <Column key={board.name}>
-                  {board.name}
+                  <p>{board.name}</p>
                 </Column>
               ))}
             </Row>
           )}
-        </ReactiveList>
+          renderNoResults={() => (
+            <Row>
+              <Column>
+                <p>No boards found.</p>
+              </Column>
+            </Row>
+          )}
+          renderError={(error: any) => (
+            <Row>
+              <Column>
+                <p>{error}</p>
+              </Column>
+            </Row>
+          )}
+        />
       </ReactiveBase>
       <Popup
         setPopup={setPopup}

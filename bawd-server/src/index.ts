@@ -21,6 +21,30 @@ const ing = (promise: any) => {
   .catch((err: any) => [err]);
 };
 
+app.post("/posts.json", (req: express.Request, res: express.Response) => {
+  const { title, post } = req.body;
+
+  (async () => {
+    const [err, result] = await ing(elasticClient.index({
+      body: {
+        post,
+        title,
+      },
+      index: "posts",
+    }));
+    if (err) {
+      return res.json({
+        error: err,
+        status: "error",
+      });
+    }
+    return res.json({
+      result,
+      status: "success",
+    });
+  })();
+});
+
 app.post("/boards.json", (req: express.Request, res: express.Response) => {
   const { name } = req.body;
 
@@ -64,10 +88,10 @@ if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
     (async () => {
-      const [err] = await ing(elasticClient.indices.get({
+      const [boardsErr] = await ing(elasticClient.indices.get({
         index: "boards"
       }));
-      if (err) {
+      if (boardsErr) {
         const [error] = await ing(elasticClient.indices.create({
           body: {
             mappings: {
@@ -78,6 +102,23 @@ if (require.main === module) {
         }));
         if (error) {
           console.error("Could not create boards index");
+          console.log(error.body.error);
+        }
+      }
+      const [postsErr] = await ing(elasticClient.indices.get({
+        index: "posts"
+      }));
+      if (postsErr) {
+        const [error] = await ing(elasticClient.indices.create({
+          body: {
+            mappings: {
+              properties: mappings.posts
+            }
+          },
+          index: "posts",
+        }));
+        if (error) {
+          console.error("Could not create posts index");
           console.log(error.body.error);
         }
       }

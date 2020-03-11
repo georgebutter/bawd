@@ -14,6 +14,9 @@ module.exports = {
         ],
       },
     },
+    maxHeight: {
+      2: '2rem'
+    }
   },
   variants: {},
   plugins: [],
