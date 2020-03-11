@@ -48,6 +48,8 @@ const Bawd: React.FC = () => {
         <ReactiveList
           dataField="results"
           componentId="Results"
+          showResultStats={false}
+          stream={true}
         >
           {({
             loading,
