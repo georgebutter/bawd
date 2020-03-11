@@ -1,5 +1,6 @@
 import { Client } from "@elastic/elasticsearch";
 import * as express from "express";
+import * as mappings from "./mappings";
 
 const {
   PORT = 3100,
@@ -102,6 +103,25 @@ app.get("/boards.json", (req: express.Request, res: express.Response) => {
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
+    (async () => {
+      const [err] = await ing(elasticClient.indices.get({
+        index: "boards"
+      }));
+      console.log(mappings);
+      if (err) {
+        const [error] = await ing(elasticClient.indices.create({
+          body: {
+            mapping: {
+              properties: mappings.boards
+            }
+          },
+          index: "boards",
+        }));
+        if (error) {
+          throw error;
+        }
+      }
+    })();
   });
 }
 

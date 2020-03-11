@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .backdrop-blur {
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(40px);
 }
 
 .lh-crop::before {

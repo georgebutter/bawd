@@ -41,28 +41,28 @@ const Bawd: React.FC = () => {
           </Button>
         </Column>
       </Row>
-      <Row>
-        <ReactiveBase
-          app={`boards`}
-          url={BONSAI_URL}
+      <ReactiveBase
+        app={`boards`}
+        url={BONSAI_URL}
+      >
+        <ReactiveList
+          dataField="results"
+          componentId="Results"
         >
-          <ReactiveList
-            dataField="results"
-            componentId="Results"
-          >
-            {({
-              loading,
-              data
-            }) => (
-              <div>
-                {data.map((board: IBoard) => (
-                  <span>{board.name}</span>
-                ))}
-              </div>
-            )}
-          </ReactiveList>
-        </ReactiveBase>
-      </Row>
+          {({
+            loading,
+            data
+          }) => (
+            <Row>
+              {data.map((board: IBoard) => (
+                <Column key={board.name}>
+                  {board.name}
+                </Column>
+              ))}
+            </Row>
+          )}
+        </ReactiveList>
+      </ReactiveBase>
       <Popup
         setPopup={setPopup}
       >
