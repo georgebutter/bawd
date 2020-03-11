@@ -107,18 +107,18 @@ if (require.main === module) {
       const [err] = await ing(elasticClient.indices.get({
         index: "boards"
       }));
-      console.log(mappings);
       if (err) {
         const [error] = await ing(elasticClient.indices.create({
           body: {
-            mapping: {
+            mappings: {
               properties: mappings.boards
             }
           },
           index: "boards",
         }));
         if (error) {
-          throw error;
+          console.error("Could not create boards index");
+          console.log(error.body.error);
         }
       }
     })();
