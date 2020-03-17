@@ -10,5 +10,6 @@
     "/api/": {
       "origin": "https://bawd-server.herokuapp.com/"
     }
-  }
+  }, 
+  "error_page": "index.html"
 }

@@ -1,3 +1,7 @@
+import Error from "./error";
 import Home from "./home";
 
-export { Home };
+export {
+  Error,
+  Home,
+};

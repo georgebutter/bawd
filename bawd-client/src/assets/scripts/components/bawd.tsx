@@ -7,7 +7,8 @@ import {
 } from "react-router-dom";
 
 import {
-  Home
+  Error,
+  Home,
 } from "./templates";
 
 const routes = [
