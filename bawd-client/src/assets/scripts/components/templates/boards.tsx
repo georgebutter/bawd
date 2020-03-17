@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import {
+  BoardItem,
   Button,
   Column,
   Container,
@@ -27,61 +28,6 @@ const Home: React.FC = () => {
   return (
     <React.Fragment>
       <Container>
-        <Row>
-          <Column width={`1/2`}>
-            <Heading tag={`h3`}>
-              {`Posts`}
-            </Heading>
-          </Column>
-          <Column width={`1/2`} align={`end`}>
-            <Button
-              onClick={() => setPopup(<Sections.CreatePost setPopup={setPopup}/>)}
-            >
-              <PostIcon size={12} />
-              <span className={"ml-1"}>
-                {"Create post"}
-              </span>
-            </Button>
-          </Column>
-        </Row>
-        <ReactiveBase
-          app={`posts`}
-          url={BONSAI_URL}
-        >
-          <ReactiveList
-            dataField="post-results"
-            componentId="PostResults"
-            showResultStats={false}
-            render={({
-              loading,
-              data
-            }) => (
-              <Row>
-                {data.map((post: IPost) => (
-                  <Column key={post._id}>
-                    <Link to={`/boards/${post.board.handle}/${post.handle}`}>
-                      <p>{post.title}</p>
-                    </Link>
-                  </Column>
-                ))}
-              </Row>
-            )}
-            renderNoResults={() => (
-              <Row>
-                <Column>
-                  <p>No posts found.</p>
-                </Column>
-              </Row>
-            )}
-            renderError={(error: any) => (
-              <Row>
-                <Column>
-                  <p>{error}</p>
-                </Column>
-              </Row>
-            )}
-          />
-        </ReactiveBase>
         <Row>
           <Column width={`1/2`}>
             <Heading tag={`h3`}>
@@ -111,11 +57,7 @@ const Home: React.FC = () => {
             }) => (
               <Row>
                 {data.map((board: IBoard) => (
-                  <Column key={board.name}>
-                    <Link to={`/boards/${board.handle}`}>
-                      <p>{board.name}</p>
-                    </Link>
-                  </Column>
+                  <BoardItem board={board} key={board.name} />
                 ))}
               </Row>
             )}

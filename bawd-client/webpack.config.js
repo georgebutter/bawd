@@ -14,6 +14,10 @@ module.exports = () => {
       './src/assets/scripts/index.tsx',
       './src/assets/styles/index.css',
     ],
+    output: {
+      publicPath: '/',
+      path: path.resolve(__dirname, 'dist/assets'),
+    },
     mode: NODE_ENV,
     devtool: 'source-map',
     devServer: {
@@ -32,8 +36,12 @@ module.exports = () => {
         index: '/src/',
         rewrites: [
           {
-            from: /^\/assets/,
-            to: '/assets/',
+            from: '/main.js',
+            to: '/main.js',
+          },
+          {
+            from: '/index.css',
+            to: '/index.css',
           },
           {
             from: /^\/boards/,
@@ -66,7 +74,12 @@ module.exports = () => {
         {
           test: /\.css$/,
           use: [
-            MiniCssExtractPlugin.loader,
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: NODE_ENV === 'development',
+              },
+            },
             'css-loader',
             'postcss-loader',
           ],
@@ -74,14 +87,14 @@ module.exports = () => {
       ],
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js', '.jsx', '.css'],
+      extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
     plugins: [
       new HtmlWebpackPlugin({
         template: 'src/index.html',
       }),
       new MiniCssExtractPlugin({
-        filename: 'assets/styles/index.css',
+        filename: 'index.css',
         chunkFilename: 'styles.css',
       }),
       new webpack.DefinePlugin({

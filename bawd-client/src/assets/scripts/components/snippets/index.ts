@@ -1,3 +1,4 @@
+import BoardItem from "./board-item";
 import Button from "./button";
 import Column from "./column";
 import Container from "./container";
@@ -9,4 +10,16 @@ import Row from "./row";
 import SearchSelect from "./search-select";
 import TextArea from "./textarea";
 
-export { Button, Column, Container, Form, Heading, Input, Popup, Row, SearchSelect, TextArea };
+export {
+  BoardItem,
+  Button,
+  Column,
+  Container,
+  Form,
+  Heading,
+  Input,
+  Popup,
+  Row,
+  SearchSelect,
+  TextArea,
+};

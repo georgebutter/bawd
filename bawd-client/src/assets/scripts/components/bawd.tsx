@@ -14,6 +14,7 @@ import {
 } from "./snippets";
 
 import {
+  Boards,
   Error,
   Home,
 } from "./templates";
@@ -23,6 +24,11 @@ const routes = [
     exact: true,
     main: () => <Home />,
     path: "/",
+  },
+  {
+    exact: true,
+    main: () => <Boards />,
+    path: "/boards/:boardHandle",
   },
   {
     exact: false,

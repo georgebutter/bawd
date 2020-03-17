@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useHistory } from "react-router-dom";
 import { BoardIcon } from "../icons";
 import {
   Button,
@@ -12,6 +13,7 @@ import {
 const CreateBoard: React.FC<{
   setPopup: React.Dispatch<React.SetStateAction<React.ReactNode>>;
 }> = ({ setPopup }) => {
+  const history = useHistory();
   const [name, setName] = React.useState<string>("");
   return (
     <Container>
@@ -29,6 +31,7 @@ const CreateBoard: React.FC<{
         const json = await response.json();
         if (json.status === "success") {
           setPopup(null);
+          history.push(`/boards/${json.body.handle}`);
         }
       }}>
         <Column>

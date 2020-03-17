@@ -1,6 +1,3 @@
-import {
-  ReactiveBase
-} from "@appbaseio/reactivesearch";
 import * as React from "react";
 import { IBoard } from "../../types";
 import { PostIcon } from "../icons";
@@ -48,8 +45,6 @@ const CreatePost: React.FC<{
           }));
           errs.push(err);
         }
-        console.log(title);
-        console.log(post);
         if (!title || title === "") {
           const err = "Title cannot be blank";
           setErrors((prevErrors) => ({
@@ -69,6 +64,7 @@ const CreatePost: React.FC<{
         }
         const response = await fetch(`/api/posts.json`, {
           body: JSON.stringify({
+            board,
             post,
             title
           }),

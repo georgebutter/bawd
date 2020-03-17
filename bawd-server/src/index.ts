@@ -1,6 +1,7 @@
 import { Client } from "@elastic/elasticsearch";
 import * as express from "express";
 import * as mappings from "./mappings";
+import { handleize } from "./utils";
 
 const {
   PORT = 3100,
@@ -22,11 +23,29 @@ const ing = (promise: any) => {
 };
 
 app.post("/posts.json", (req: express.Request, res: express.Response) => {
-  const { title, post } = req.body;
-
+  const { title, post, board } = req.body;
+  const handle = handleize(title);
+  if (!title || title === "") {
+    return res.json({
+      error: {
+        chooseTitle: "Title cannot be blank"
+      },
+      status: "error",
+    });
+  }
+  if (!post || post === "") {
+    return res.json({
+      error: {
+        chooseTitle: "Post cannot be blank"
+      },
+      status: "error",
+    });
+  }
   (async () => {
     const [err, result] = await ing(elasticClient.index({
       body: {
+        board,
+        handle,
         post,
         title,
       },
@@ -47,12 +66,22 @@ app.post("/posts.json", (req: express.Request, res: express.Response) => {
 
 app.post("/boards.json", (req: express.Request, res: express.Response) => {
   const { name } = req.body;
-
-  (async () => {
-    const [err, result] = await ing(elasticClient.index({
-      body: {
-        name
+  if (!name || name === "") {
+    return res.json({
+      error: {
+        chooseTitle: "Name cannot be blank"
       },
+      status: "error",
+    });
+  }
+  const handle = handleize(name);
+  (async () => {
+    const body = {
+      handle,
+      name,
+    };
+    const [err, result] = await ing(elasticClient.index({
+      body,
       index: "boards",
     }));
     if (err) {
@@ -62,6 +91,7 @@ app.post("/boards.json", (req: express.Request, res: express.Response) => {
       });
     }
     return res.json({
+      body,
       result,
       status: "success",
     });
