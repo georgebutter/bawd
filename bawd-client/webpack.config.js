@@ -28,6 +28,27 @@ module.exports = () => {
           },
         },
       },
+      historyApiFallback: {
+        index: '/src/',
+        rewrites: [
+          {
+            from: /^\/assets/,
+            to: '/assets/',
+          },
+          {
+            from: /^\/boards/,
+            to: '/index.html',
+          },
+          {
+            from: '/',
+            to: '/index.html',
+          },
+          {
+            from: /./,
+            to: '/index.html',
+          },
+        ],
+      },
     },
     watch: NODE_ENV === 'development',
     module: {

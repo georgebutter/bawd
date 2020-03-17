@@ -24,11 +24,6 @@ const Home: React.FC = () => {
     <React.Fragment>
       <Container>
         <Row>
-          <Column>
-            <Heading tag={`h1`}>Bawd</Heading>
-          </Column>
-        </Row>
-        <Row>
           <Column width={`1/2`}>
             <Heading tag={`h3`}>
               {`Posts`}
