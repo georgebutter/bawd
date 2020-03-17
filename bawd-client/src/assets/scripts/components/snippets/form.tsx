@@ -2,7 +2,7 @@ import * as React from "react";
 
 const Form: React.FC<IProps> = ({ children, onSubmit }) => (
   <form
-    className={`flex flex-wrap w-full -ml-2`}
+    className={`flex flex-wrap w-full`}
     onSubmit={onSubmit}
   >
     {children}

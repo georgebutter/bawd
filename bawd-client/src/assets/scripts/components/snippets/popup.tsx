@@ -4,17 +4,17 @@ import { CloseIcon } from "../icons";
 const Popup: React.FC<IProps> = ({ children, setPopup }) => {
   return (
     <div className={`fixed inset-0 ${children({ setPopup }) ? `` : `opacity-0 invisible pointer-events-none`}`}>
-      <div className={`absolute inset-0 bg-white opacity-50 backdrop-blur`}
+      <div className={`fixed inset-0 bg-white opacity-50 backdrop-blur`} onClick={() => setPopup(null)}/>
+      <button
+        className={`absolute right-0 top-0 p-2`}
         onClick={() => setPopup(null)}
-      />
-      <div className={`absolute inset-0 flex items-center justify-center p-2`}>
-        <div className={`bg-gray-300 rounded-lg w-full max-w-lg p-2 relative`}>
-          <button
-            className={`absolute right-0 top-0 p-2`}
-            onClick={() => setPopup(null)}
-          >
-            <CloseIcon size={24} />
-          </button>
+      >
+        <CloseIcon size={24} />
+      </button>
+      <div className={`flex flex-col h-full justify-center p-2 w-full`}>
+        <div
+          className={`bg-gray-300 max-w-lg min-h-8 mx-auto overflow-y-auto py-2 relative rounded-lg w-full`}
+        >
           {children({ setPopup })}
         </div>
       </div>

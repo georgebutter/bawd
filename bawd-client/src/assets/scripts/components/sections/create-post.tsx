@@ -2,8 +2,8 @@ import {
   ReactiveBase
 } from "@appbaseio/reactivesearch";
 import * as React from "react";
+import { IBoard } from "../../types";
 import { PostIcon } from "../icons";
-
 import {
   Button,
   Column,
@@ -20,10 +20,53 @@ const CreatePost: React.FC<{
 }> = ({ setPopup }) => {
   const [title, setTitle] = React.useState<string>("");
   const [post, setPost] = React.useState<string>("");
+  const [board, setBoard] = React.useState<IBoard>(null);
+  const [errors, setErrors] = React.useState<{
+    chooseBoard: "Please specify an existing board";
+    chooseTitle: "Title cannot be blank",
+    choosePost: "Post cannot be blank"
+  }>({
+    chooseBoard: null,
+    choosePost: null,
+    chooseTitle: null,
+  });
   return (
     <Container>
       <Form onSubmit={async (e) => {
         e.preventDefault();
+        setErrors({
+          chooseBoard: null,
+          choosePost: null,
+          chooseTitle: null,
+        });
+        const errs = [];
+        if (!board) {
+          const err = "Please specify an existing board";
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            chooseBoard: err,
+          }));
+          errs.push(err);
+        }
+        console.log(title);
+        console.log(post);
+        if (!title || title === "") {
+          const err = "Title cannot be blank";
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            chooseTitle: err,
+          }));
+        }
+        if (!post || post === "") {
+          const err = "Post cannot be blank";
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            choosePost: err,
+          }));
+        }
+        if (errs.length) {
+          return;
+        }
         const response = await fetch(`/api/posts.json`, {
           body: JSON.stringify({
             post,
@@ -51,6 +94,7 @@ const CreatePost: React.FC<{
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            error={errors.chooseTitle}
           />
         </Column>
         <Column>
@@ -60,10 +104,17 @@ const CreatePost: React.FC<{
             placeholder="Text"
             value={post}
             onChange={(e) => setPost(e.target.value)}
+            error={errors.choosePost}
           />
         </Column>
         <Column>
-          <SearchSelect label={"Choose board"} name={"ChooseBoard"} index="boards"/>
+          <SearchSelect
+            label={"Choose board"}
+            name={"ChooseBoard"}
+            index="boards"
+            onSelect={(asset) => setBoard(asset)}
+            error={errors.chooseBoard}
+          />
         </Column>
         <Column>
           <Button>

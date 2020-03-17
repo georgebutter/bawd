@@ -15,8 +15,11 @@ module.exports = {
       },
     },
     maxHeight: {
-      2: '2rem'
-    }
+      8: '8rem',
+    },
+    minHeight: {
+      8: '8rem',
+    },
   },
   variants: {},
   plugins: [],
