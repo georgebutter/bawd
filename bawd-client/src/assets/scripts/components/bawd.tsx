@@ -34,10 +34,12 @@ const routes = [
 const Bawd: React.FC = () => {
   return (
     <Router>
-      <Container>
+      <Container className={`bg-gray-200`}>
         <Row>
           <Column>
-            <Heading tag={`h1`}>Bawd</Heading>
+            <Link to={`/`}>
+              <Heading tag={`h6`} size={`h4`}>Bawd</Heading>
+            </Link>
           </Column>
         </Row>
       </Container>
