@@ -16,7 +16,6 @@ module.exports = () => {
     ],
     output: {
       publicPath: '/',
-      path: path.resolve(__dirname, 'dist/assets'),
     },
     mode: NODE_ENV,
     devtool: 'source-map',
