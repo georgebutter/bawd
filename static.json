@@ -2,7 +2,8 @@
   "root": "bawd-client/dist",
   "clean_urls": true,
   "routes": {
-    "/*.html": "index.html"
+    "/assets/*": "/assets/",
+    "/**": "index.html"
   },
   "proxies": {
     "/api/": {
