@@ -112,7 +112,7 @@ const CreatePost: React.FC<{
             label={"Choose board"}
             name={"ChooseBoard"}
             index="boards"
-            onSelect={(asset) => setBoard(asset)}
+            onSelect={(asset: IBoard) => setBoard(asset)}
             error={errors.chooseBoard}
           />
         </Column>
