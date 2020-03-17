@@ -3,7 +3,8 @@
   "clean_urls": true,
   "routes": {
     "/assets/*": "/assets/",
-    "/**": "index.html"
+    "/boards/*": "index.html",
+    "/": "index.html"
   },
   "proxies": {
     "/api/": {
