@@ -17,6 +17,11 @@ const routes = [
     main: () => <Home />,
     path: "/",
   },
+  {
+    exact: false,
+    main: () => <Error />,
+    path: "*",
+  },
 ];
 
 const Bawd: React.FC = () => {
