@@ -17,6 +17,7 @@ import {
   Boards,
   Error,
   Home,
+  Post,
 } from "./templates";
 
 const routes = [
@@ -29,6 +30,11 @@ const routes = [
     exact: true,
     main: () => <Boards />,
     path: "/boards/:boardHandle",
+  },
+  {
+    exact: true,
+    main: () => <Post />,
+    path: "/boards/:boardHandle/:postHandle",
   },
   {
     exact: false,

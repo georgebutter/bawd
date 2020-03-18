@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import {
+  BoardItem,
   Button,
   Column,
   Container,
@@ -111,11 +112,10 @@ const Home: React.FC = () => {
             }) => (
               <Row>
                 {data.map((board: IBoard) => (
-                  <Column key={board.name}>
-                    <Link to={`/boards/${board.handle}`}>
-                      <p>{board.name}</p>
-                    </Link>
-                  </Column>
+                  <BoardItem
+                    board={board}
+                    key={board.name}
+                  />
                 ))}
               </Row>
             )}

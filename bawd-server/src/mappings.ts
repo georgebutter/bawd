@@ -1,6 +1,6 @@
 export const boards = {
   handle: {
-    type: "string"
+    type: "text"
   },
   name: {
     type: "keyword"
@@ -12,7 +12,7 @@ export const posts = {
     properties: boards,
   },
   handle: {
-    type: "string"
+    type: "text"
   },
   post: {
     type: "text"
