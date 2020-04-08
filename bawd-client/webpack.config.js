@@ -1,11 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
-const webpack = require('webpack');
 
 const {
   NODE_ENV = 'development',
-  BONSAI_URL = 'http://localhost:9200',
 } = process.env;
 
 module.exports = () => {
@@ -95,9 +93,6 @@ module.exports = () => {
       new MiniCssExtractPlugin({
         filename: 'index.css',
         chunkFilename: 'styles.css',
-      }),
-      new webpack.DefinePlugin({
-        'BONSAI_URL': JSON.stringify(BONSAI_URL),
       }),
     ],
   };

@@ -1,11 +1,16 @@
 export interface IBoard {
-  name: string;
-  handle: string;
+  _id: string;
+  _source: {
+    name: string;
+    handle: string;
+  };
 }
 
 export interface IPost {
   _id: string;
-  title: string;
-  handle: string;
-  board: IBoard;
+  _source: {
+    title: string;
+    handle: string;
+    board: IBoard["_source"];
+  };
 }

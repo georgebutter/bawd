@@ -1,7 +1,7 @@
-import BoardItem from "./board-item";
 import Button from "./button";
 import Column from "./column";
 import Container from "./container";
+import ElasticList from "./elastic-list";
 import Form from "./form";
 import Heading from "./heading";
 import Input from "./input";
@@ -11,10 +11,10 @@ import SearchSelect from "./search-select";
 import TextArea from "./textarea";
 
 export {
-  BoardItem,
   Button,
   Column,
   Container,
+  ElasticList,
   Form,
   Heading,
   Input,

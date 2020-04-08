@@ -19,7 +19,7 @@ const CreateBoard: React.FC<{
     <Container>
       <Form onSubmit={async (e) => {
         e.preventDefault();
-        const response = await fetch(`/api/boards.json`, {
+        const response = await fetch(`/api/boards`, {
           body: JSON.stringify({
             name
           }),

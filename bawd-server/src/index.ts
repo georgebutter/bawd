@@ -22,7 +22,13 @@ const ing = (promise: any) => {
   .catch((err: any) => [err]);
 };
 
-app.post("/posts.json", (req: express.Request, res: express.Response) => {
+( async () => {
+  await elasticClient.indices.refresh({ index: "posts" });
+  await elasticClient.indices.refresh({ index: "boards" });
+  console.log("refreshing indices");
+})();
+
+app.post("/posts", (req: express.Request, res: express.Response) => {
   const { title, post, board } = req.body;
   const handle = handleize(title);
   if (!title || title === "") {
@@ -64,7 +70,7 @@ app.post("/posts.json", (req: express.Request, res: express.Response) => {
   })();
 });
 
-app.post("/boards.json", (req: express.Request, res: express.Response) => {
+app.post("/boards", (req: express.Request, res: express.Response) => {
   const { name } = req.body;
   if (!name || name === "") {
     return res.json({
@@ -98,7 +104,7 @@ app.post("/boards.json", (req: express.Request, res: express.Response) => {
   })();
 });
 
-app.get("/boards.json", (req: express.Request, res: express.Response) => {
+app.get("/boards", (req: express.Request, res: express.Response) => {
   (async () => {
     const [err, result] = await ing(elasticClient.search({
       index: "boards",
@@ -109,7 +115,53 @@ app.get("/boards.json", (req: express.Request, res: express.Response) => {
         status: "error",
       });
     }
-    res.json(result);
+    res.json({
+      result,
+      status: "success",
+    });
+  })();
+});
+
+app.get("/posts/:handle", (req: express.Request, res: express.Response) => {
+  (async () => {
+    const [err, result] = await ing(elasticClient.search({
+      body: {
+        query: {
+          match: {
+            handle: req.params.handle
+          }
+        }
+      },
+      index: "posts",
+    }));
+    if (err) {
+      return res.json({
+        error: err,
+        status: "error",
+      });
+    }
+    res.json({
+      result,
+      status: "success",
+    });
+  })();
+});
+
+app.get("/posts", (req: express.Request, res: express.Response) => {
+  (async () => {
+    const [err, result] = await ing(elasticClient.search({
+      index: "posts",
+    }));
+    if (err) {
+      return res.json({
+        error: err,
+        status: "error",
+      });
+    }
+    res.json({
+      result,
+      status: "success",
+    });
   })();
 });
 

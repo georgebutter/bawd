@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 
 import {
-  BoardItem,
   Button,
   Column,
   Container,
@@ -20,8 +19,7 @@ import {
 import { IBoard, IPost } from "../../types";
 import { BoardIcon, PostIcon } from "../icons";
 import * as Sections from "../sections";
-
-declare const BONSAI_URL: string;
+import ElasticList from "../snippets/elastic-list";
 
 const Home: React.FC = () => {
   const [popup, setPopup] = React.useState<React.ReactNode>(null);
@@ -45,44 +43,44 @@ const Home: React.FC = () => {
             </Button>
           </Column>
         </Row>
-        <ReactiveBase
-          app={`posts`}
-          url={BONSAI_URL}
-        >
-          <ReactiveList
-            dataField="post-results"
-            componentId="PostResults"
-            showResultStats={false}
-            render={({
-              loading,
-              data
-            }) => (
-              <Row>
-                {data.map((post: IPost) => (
-                  <Column key={post._id}>
-                    <Link to={`/boards/${post.board.handle}/${post.handle}`}>
-                      <p>{post.title}</p>
-                    </Link>
-                  </Column>
-                ))}
-              </Row>
-            )}
-            renderNoResults={() => (
-              <Row>
-                <Column>
-                  <p>No posts found.</p>
+        <ElasticList
+          index={`posts`}
+          renderLoading={() => (
+            <Row>
+              <Column>
+                <p>Loading...</p>
+              </Column>
+            </Row>
+          )}
+          render={(data) => (
+            <Row>
+              {data.map(({
+                _source,
+                _id
+              }: IPost) => (
+                <Column key={_id}>
+                  <Link to={`/boards/${_source.board.handle}/${_source.handle}`}>
+                    <p>{_source.title}</p>
+                  </Link>
                 </Column>
-              </Row>
-            )}
-            renderError={(error: any) => (
-              <Row>
-                <Column>
-                  <p>{error}</p>
-                </Column>
-              </Row>
-            )}
-          />
-        </ReactiveBase>
+              ))}
+            </Row>
+          )}
+          renderNoResults={() => (
+            <Row>
+              <Column>
+                <p>No posts found.</p>
+              </Column>
+            </Row>
+          )}
+          renderError={(error: any) => (
+            <Row>
+              <Column>
+                <p>{error}</p>
+              </Column>
+            </Row>
+          )}
+        />
         <Row>
           <Column width={`1/2`}>
             <Heading tag={`h3`}>
@@ -98,43 +96,9 @@ const Home: React.FC = () => {
             </Button>
           </Column>
         </Row>
-        <ReactiveBase
-          app={`boards`}
-          url={BONSAI_URL}
-        >
-          <ReactiveList
-            dataField="results"
-            componentId="Results"
-            showResultStats={false}
-            render={({
-              loading,
-              data
-            }) => (
-              <Row>
-                {data.map((board: IBoard) => (
-                  <BoardItem
-                    board={board}
-                    key={board.name}
-                  />
-                ))}
-              </Row>
-            )}
-            renderNoResults={() => (
-              <Row>
-                <Column>
-                  <p>No boards found.</p>
-                </Column>
-              </Row>
-            )}
-            renderError={(error: any) => (
-              <Row>
-                <Column>
-                  <p>{error}</p>
-                </Column>
-              </Row>
-            )}
-          />
-        </ReactiveBase>
+        <Row>
+          <Sections.BoardList />
+        </Row>
       </Container>
       <Popup
         setPopup={setPopup}

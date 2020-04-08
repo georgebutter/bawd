@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 
 import { IPost } from "../../types";
+import { getPostByHandle } from "../../utils";
 import {
   Column,
   Container,
@@ -15,24 +16,11 @@ const Post: React.FC = () => {
   const { boardHandle, postHandle } = useParams();
   const [post, setPost] = React.useState<IPost>(null);
   React.useEffect(() => {
-  //   (async () => {
-  //     const res = await fetch(`/posts/_search`, {
-  //       body: JSON.stringify({
-  //         query: {
-  //           match: {
-  //             handle: "new-post"
-  //           }
-  //         }
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       method: "GET",
-  //     });
-  //     const json = await res.json();
-  //     console.log(json);
-  //   })();
-    console.log(boardHandle, postHandle);
+    (async () => {
+      const thePost = await getPostByHandle(postHandle);
+      console.log(thePost);
+      setPost(thePost);
+    })();
   }, []);
 
   return (
@@ -40,7 +28,7 @@ const Post: React.FC = () => {
       <Row>
         <Column>
           <Heading tag="h3">
-            {`Post`}
+            {post ? post._source.title : "Loading"}
           </Heading>
         </Column>
       </Row>

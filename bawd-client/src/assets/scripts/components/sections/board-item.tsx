@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Column } from ".";
 import { IBoard } from "../../types";
+import { Column } from "../snippets";
 
 const BoardItem: React.FC<IProps> = ({ board }) => (
   <Column key={board.name}>
@@ -12,7 +12,7 @@ const BoardItem: React.FC<IProps> = ({ board }) => (
 );
 
 export interface IProps {
-  board: IBoard;
+  board: IBoard["_source"];
 }
 
-export default BoardItem;
+export { BoardItem };

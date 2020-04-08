@@ -1,6 +1,3 @@
-import {
-  ReactiveBase, ReactiveList
-} from "@appbaseio/reactivesearch";
 import * as React from "react";
 
 import {
@@ -8,7 +5,6 @@ import {
 } from "react-router-dom";
 
 import {
-  BoardItem,
   Button,
   Column,
   Container,
@@ -20,8 +16,7 @@ import {
 import { IBoard, IPost } from "../../types";
 import { BoardIcon, PostIcon } from "../icons";
 import * as Sections from "../sections";
-
-declare const BONSAI_URL: string;
+import ElasticList from "../snippets/elastic-list";
 
 const Home: React.FC = () => {
   const [popup, setPopup] = React.useState<React.ReactNode>(null);
@@ -43,40 +38,9 @@ const Home: React.FC = () => {
             </Button>
           </Column>
         </Row>
-        <ReactiveBase
-          app={`boards`}
-          url={BONSAI_URL}
-        >
-          <ReactiveList
-            dataField="results"
-            componentId="Results"
-            showResultStats={false}
-            render={({
-              loading,
-              data
-            }) => (
-              <Row>
-                {data.map((board: IBoard) => (
-                  <BoardItem board={board} key={board.name} />
-                ))}
-              </Row>
-            )}
-            renderNoResults={() => (
-              <Row>
-                <Column>
-                  <p>No boards found.</p>
-                </Column>
-              </Row>
-            )}
-            renderError={(error: any) => (
-              <Row>
-                <Column>
-                  <p>{error}</p>
-                </Column>
-              </Row>
-            )}
-          />
-        </ReactiveBase>
+        <Row>
+          <Sections.BoardList />
+        </Row>
       </Container>
       <Popup
         setPopup={setPopup}

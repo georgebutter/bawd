@@ -2,11 +2,9 @@ import * as React from "react";
 import { IBoard } from "../../types";
 import Input from "./input";
 
-declare const BONSAI_URL: string;
-
 const SearchSelect: React.FC<IProps> = ({ onSelect, label, name, index, error }) => {
   const [asset, setAsset] = React.useState<IBoard>(null);
-  const [assets, setAssets] = React.useState<Array<{ _source: IBoard }>>([]);
+  const [assets, setAssets] = React.useState<IBoard[]>([]);
   const [value, setValue] = React.useState<string>("");
   return (
     <div className={"relative w-full"}>
@@ -27,7 +25,7 @@ const SearchSelect: React.FC<IProps> = ({ onSelect, label, name, index, error })
           setAsset(null);
           onSelect(null);
           (async () => {
-            const response = await fetch(`${BONSAI_URL}/${index}/_search?`, {
+            const response = await fetch(`/api/${index}/_search?`, {
               body: JSON.stringify(
                 {
                   query: {
@@ -55,12 +53,12 @@ const SearchSelect: React.FC<IProps> = ({ onSelect, label, name, index, error })
         {assets.map((item) => (
           <button
             className={"p-1 rounded hover:bg-gray-200 w-full text-left"}
-            key={item._source.name}
+            key={item._id}
             onClick={() => {
-              setAsset(item._source);
+              setAsset(item);
               setAssets([]);
               setValue(item._source.name);
-              onSelect(item._source);
+              onSelect(item);
             }}
             type={"button"}
           >

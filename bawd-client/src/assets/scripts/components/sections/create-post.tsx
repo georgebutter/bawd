@@ -62,7 +62,7 @@ const CreatePost: React.FC<{
         if (errs.length) {
           return;
         }
-        const response = await fetch(`/api/posts.json`, {
+        const response = await fetch(`/api/posts`, {
           body: JSON.stringify({
             board,
             post,

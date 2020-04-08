@@ -46,15 +46,17 @@ const routes = [
 const Bawd: React.FC = () => {
   return (
     <Router>
-      <Container className={`bg-gray-200`}>
-        <Row>
-          <Column>
-            <Link to={`/`}>
-              <Heading tag={`h6`} size={`h4`}>Bawd</Heading>
-            </Link>
-          </Column>
-        </Row>
-      </Container>
+      <header className={`bg-gray-200`}>
+        <Container>
+          <Row>
+            <Column>
+              <Link to={`/`}>
+                <Heading tag={`h6`} size={`h4`}>Bawd</Heading>
+              </Link>
+            </Column>
+          </Row>
+        </Container>
+      </header>
       <Switch>
         {routes.map((route) => (
           <Route
