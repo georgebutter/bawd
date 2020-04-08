@@ -14,6 +14,11 @@ module.exports = {
         ],
       },
     },
+    colors: {
+      bg: 'var(--bg)',
+      text: 'var(--text)',
+      fg: 'var(--fg)',
+    },
     maxHeight: {
       8: '8rem',
     },

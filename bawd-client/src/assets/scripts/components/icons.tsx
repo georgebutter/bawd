@@ -7,13 +7,18 @@ export const CloseIcon: React.FC<IProps> = ({ size }) => (
 );
 export const BoardIcon: React.FC<IProps> = ({ size }) => (
   <IconWrapper size={size}>
-    <path d="M7,1H25a1,1,0,0,1,1,1V4H6V2A1,1,0,0,1,7,1Z" fill="currentColor"></path>
-    <path d="M30,6H2A1,1,0,0,0,1,7V30a1,1,0,0,0,1,1H30a1,1,0,0,0,1-1V7A1,1,0,0,0,30,6ZM6,13.5A2.5,2.5,0,1,1,8.5,16,2.5,2.5,0,0,1,6,13.5ZM26.882,24.472A1,1,0,0,1,26,25H9a1,1,0,0,1-.633-1.774l11-9a1.017,1.017,0,0,1,.781-.215,1,1,0,0,1,.684.434l6,9A1,1,0,0,1,26.882,24.472Z" fill="currentColor"></path>
+    <path d="M7,1H25a1,1,0,0,1,1,1V4H6V2A1,1,0,0,1,7,1Z" fill="currentColor" />
+    <path d="M30,6H2A1,1,0,0,0,1,7V30a1,1,0,0,0,1,1H30a1,1,0,0,0,1-1V7A1,1,0,0,0,30,6ZM6,13.5A2.5,2.5,0,1,1,8.5,16,2.5,2.5,0,0,1,6,13.5ZM26.882,24.472A1,1,0,0,1,26,25H9a1,1,0,0,1-.633-1.774l11-9a1.017,1.017,0,0,1,.781-.215,1,1,0,0,1,.684.434l6,9A1,1,0,0,1,26.882,24.472Z" fill="currentColor" />
   </IconWrapper>
 );
 export const PostIcon: React.FC<IProps> = ({ size }) => (
   <IconWrapper size={size}>
-    <path d="M29 1H3a2 2 0 00-2 2v26a2 2 0 002 2h26a2 2 0 002-2V3a2 2 0 00-2-2zM12.5 7A2.5 2.5 0 1110 9.5 2.5 2.5 0 0112.5 7zM6 24l4-7 4 3 6-7 6 11z" fill="currentColor"/>
+    <path d="M29 1H3a2 2 0 00-2 2v26a2 2 0 002 2h26a2 2 0 002-2V3a2 2 0 00-2-2zM12.5 7A2.5 2.5 0 1110 9.5 2.5 2.5 0 0112.5 7zM6 24l4-7 4 3 6-7 6 11z" fill="currentColor" />
+  </IconWrapper>
+);
+export const ContrastIcon: React.FC<IProps> = ({ size }) => (
+  <IconWrapper size={size}>
+    <path fill="currentColor" d="M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zM2 16C2 8.6 7.7 2.6 15 2.1V30c-7.3-.6-13-6.6-13-14z" />
   </IconWrapper>
 );
 
