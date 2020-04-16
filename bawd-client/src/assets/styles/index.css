@@ -29,16 +29,24 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #3f3356;
+    --primary: #6979f8;
+    --primary-faded: #A5AFFB;
+    --success: #00C48C;
+    --error: #FF647C;
+    --bg: #221524;
     --text: #d0c9d6;
-    --fg: #1a051d;
+    --fg: #3f3356;
   }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
+    --primary: #6979f8;
+    --primary-faded: #A5AFFB;
+    --success: #00C48C;
+    --error: #FF647C;
     --bg: #fff;
-    --text: #1a051d;
+    --text: #221524;
     --fg: #ece9f1;
   }
 }
@@ -59,4 +67,5 @@
   height: 0;
   width: 0;
   margin-top: calc(-0.5 * 0.5em);
+  margin-bottom: calc(-0.5 * 0.5em);
 }

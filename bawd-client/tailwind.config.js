@@ -15,9 +15,14 @@ module.exports = {
       },
     },
     colors: {
-      bg: 'var(--bg)',
-      text: 'var(--text)',
-      fg: 'var(--fg)',
+      'primary': 'var(--primary)',
+      'success': 'var(--success)',
+      'error': 'var(--error)',
+      'primaryfaded': 'var(--primary-faded)',
+      'bg': 'var(--bg)',
+      'text': 'var(--text)',
+      'fg': 'var(--fg)',
+      'transparent': 'transparent',
     },
     maxHeight: {
       8: '8rem',

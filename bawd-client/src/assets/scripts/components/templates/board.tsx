@@ -2,6 +2,7 @@ import * as React from "react";
 
 import {
   Link,
+  useParams,
 } from "react-router-dom";
 
 import {
@@ -14,28 +15,30 @@ import {
 } from "../snippets";
 
 import { IBoard, IPost } from "../../types";
+import { getBoardByHandle } from "../../utils";
 import { BoardIcon, PostIcon } from "../icons";
 import * as Sections from "../sections";
 import ElasticList from "../snippets/elastic-list";
 
-const Boards: React.FC = () => {
+const Board: React.FC = () => {
+  const { boardHandle } = useParams();
+  const [board, setBoard] = React.useState<IBoard>(null);
   const [popup, setPopup] = React.useState<React.ReactNode>(null);
+  React.useEffect(() => {
+    (async () => {
+      const theBoard = await getBoardByHandle(boardHandle);
+      setBoard(theBoard);
+    })();
+  }, [boardHandle]);
+
   return (
     <React.Fragment>
       <Container>
         <Row>
-          <Column width={`1/2`}>
+          <Column>
             <Heading tag={`h3`}>
-              {`Boards`}
+              {board ? board._source.name : "Loading"}
             </Heading>
-          </Column>
-          <Column width={`1/2`} align={`end`}>
-            <Button
-              onClick={() => setPopup(<Sections.CreateBoard setPopup={setPopup}/>)}
-            >
-              <BoardIcon size={12} />
-              <span className={"ml-1"}>{"Create board"}</span>
-            </Button>
           </Column>
         </Row>
         <Row>
@@ -51,4 +54,4 @@ const Boards: React.FC = () => {
   );
 };
 
-export default Boards;
+export default Board;

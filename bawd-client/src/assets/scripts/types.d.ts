@@ -12,5 +12,6 @@ export interface IPost {
     title: string;
     handle: string;
     board: IBoard["_source"];
+    post: string;
   };
 }

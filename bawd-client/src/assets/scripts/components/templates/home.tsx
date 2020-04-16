@@ -1,6 +1,3 @@
-import {
-  ReactiveBase, ReactiveList
-} from "@appbaseio/reactivesearch";
 import * as React from "react";
 
 import {
@@ -59,9 +56,20 @@ const Home: React.FC = () => {
                 _id
               }: IPost) => (
                 <Column key={_id}>
-                  <Link to={`/boards/${_source.board.handle}/${_source.handle}`}>
-                    <p>{_source.title}</p>
-                  </Link>
+                  <div className="w-full">
+                    <Row>
+                      <Column width="1/2">
+                        <Link to={`/boards/${_source.board.handle}/${_id}/${_source.handle}`}>
+                          <p>{_source.title}</p>
+                        </Link>
+                      </Column>
+                      <Column width="1/2" align="end">
+                        <span className="bg-primary text-bg px-1 rounded text-xs inline-block">
+                          {_source.board.name}
+                        </span>
+                      </Column>
+                    </Row>
+                  </div>
                 </Column>
               ))}
             </Row>

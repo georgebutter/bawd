@@ -16,7 +16,7 @@ const Input: React.FC<IProps> = ({
       {label}
     </label>
     <input
-      className={`w-full p-1 rounded border-2 ${error ? `border-red-500` : ``} ${success ? `border-green-500` : ``} ${!success && !error ? `border-transparent` : ``}`}
+      className={`text-bg w-full p-1 rounded border-2 ${error ? `border-error` : ``} ${success ? `border-success` : ``} ${!success && !error ? `border-transparent` : ``}`}
       name={name}
       type={type}
       placeholder={placeholder}

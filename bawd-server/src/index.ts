@@ -1,7 +1,7 @@
 import { Client } from "@elastic/elasticsearch";
 import * as express from "express";
+import { handleize } from "../../bawd-shared";
 import * as mappings from "./mappings";
-import { handleize } from "./utils";
 
 const {
   PORT = 3100,
@@ -22,7 +22,7 @@ const ing = (promise: any) => {
   .catch((err: any) => [err]);
 };
 
-( async () => {
+(async () => {
   await elasticClient.indices.refresh({ index: "posts" });
   await elasticClient.indices.refresh({ index: "boards" });
   console.log("refreshing indices");
@@ -50,6 +50,7 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
   (async () => {
     const [err, result] = await ing(elasticClient.index({
       body: {
+        _id: Math.random().toString(16).substr(2),
         board,
         handle,
         post,
@@ -107,6 +108,31 @@ app.post("/boards", (req: express.Request, res: express.Response) => {
 app.get("/boards", (req: express.Request, res: express.Response) => {
   (async () => {
     const [err, result] = await ing(elasticClient.search({
+      index: "boards",
+    }));
+    if (err) {
+      return res.json({
+        error: err,
+        status: "error",
+      });
+    }
+    res.json({
+      result,
+      status: "success",
+    });
+  })();
+});
+
+app.get("/boards/:handle", (req: express.Request, res: express.Response) => {
+  (async () => {
+    const [err, result] = await ing(elasticClient.search({
+      body: {
+        query: {
+          match: {
+            handle: req.params.handle
+          }
+        }
+      },
       index: "boards",
     }));
     if (err) {

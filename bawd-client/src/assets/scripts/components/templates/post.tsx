@@ -13,12 +13,11 @@ import {
 } from "../snippets";
 
 const Post: React.FC = () => {
-  const { boardHandle, postHandle } = useParams();
+  const { boardName, postHandle } = useParams();
   const [post, setPost] = React.useState<IPost>(null);
   React.useEffect(() => {
     (async () => {
       const thePost = await getPostByHandle(postHandle);
-      console.log(thePost);
       setPost(thePost);
     })();
   }, []);
@@ -30,6 +29,9 @@ const Post: React.FC = () => {
           <Heading tag="h3">
             {post ? post._source.title : "Loading"}
           </Heading>
+        </Column>
+        <Column>
+          <p>{post ? post._source.post : "Loading"}</p>
         </Column>
       </Row>
     </Container>

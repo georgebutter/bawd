@@ -49,10 +49,10 @@ const SearchSelect: React.FC<IProps> = ({ onSelect, label, name, index, error })
           })();
         }}
       />
-      <div className={"max-h-8 shadow-lg rounded bg-white overflow-y-auto absolute w-full mt-1"}>
+      <div className={"max-h-8 shadow-lg rounded bg-bg overflow-y-auto absolute w-full mt-1"}>
         {assets.map((item) => (
           <button
-            className={"p-1 rounded hover:bg-gray-200 w-full text-left"}
+            className={"p-1 rounded hover:bg-fg w-full text-left"}
             key={item._id}
             onClick={() => {
               setAsset(item);

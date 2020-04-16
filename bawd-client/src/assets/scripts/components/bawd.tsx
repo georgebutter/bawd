@@ -17,6 +17,7 @@ import {
 } from "./snippets";
 
 import {
+  Board,
   Boards,
   Error,
   Home,
@@ -32,12 +33,17 @@ const routes = [
   {
     exact: true,
     main: () => <Boards />,
+    path: "/boards",
+  },
+  {
+    exact: true,
+    main: () => <Board />,
     path: "/boards/:boardHandle",
   },
   {
     exact: true,
     main: () => <Post />,
-    path: "/boards/:boardHandle/:postHandle",
+    path: "/boards/:boardHandle/:postId/:postHandle",
   },
   {
     exact: false,
@@ -49,14 +55,22 @@ const routes = [
 const applyLight = () => {
   const { style } = document.documentElement;
   style.setProperty("--bg", "#fff");
-  style.setProperty("--text", "#1a051d");
+  style.setProperty("--text", "#221524");
   style.setProperty("--fg", "#ece9f1");
+  style.setProperty("--primary", "#6979f8");
+  style.setProperty("--success", "#00C48C");
+  style.setProperty("--error", "#FF647C");
+  style.setProperty("--primary-faded", "#A5AFFB");
 };
 const applyDark = () => {
   const { style } = document.documentElement;
-  style.setProperty("--bg", "#3f3356");
+  style.setProperty("--bg", "#221524");
   style.setProperty("--text", "#d0c9d6");
-  style.setProperty("--fg", "#1a051d");
+  style.setProperty("--fg", "#3f3356");
+  style.setProperty("--primary", "#6979f8");
+  style.setProperty("--success", "#00C48C");
+  style.setProperty("--error", "#FF647C");
+  style.setProperty("--primary-faded", "#A5AFFB");
 };
 
 const Bawd: React.FC = () => {
@@ -65,9 +79,7 @@ const Bawd: React.FC = () => {
 
   const changeDarkMode = (change?: "dark" | "light") => {
     setDark((prev) => {
-      console.log(change)
       const next = change === "dark" ? true : change === "light" ? false : !prev;
-      console.log(next);
       if (next) {
         applyDark();
       } else {
@@ -79,7 +91,6 @@ const Bawd: React.FC = () => {
 
   React.useEffect(() => {
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      console.log(e);
       const change = e.matches ? "dark" : "light";
       changeDarkMode(change);
     });
@@ -92,11 +103,14 @@ const Bawd: React.FC = () => {
           <Row>
             <Column width="1/2">
               <Link to={`/`}>
-                <Heading tag={`h6`} size={`h4`}>Bawd</Heading>
+                <Heading tag={`h6`} size={`h4`}>
+                  Bawd
+                </Heading>
               </Link>
             </Column>
             <Column width="1/2" align="end">
               <Button
+                colour="blank"
                 onClick={() => changeDarkMode()}
               >
                 <Icons.ContrastIcon size={24} />
