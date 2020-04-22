@@ -1,5 +1,6 @@
 import * as React from "react";
 import { IBoard } from "../../types";
+import { togglePopup } from "../../utils";
 import { PostIcon } from "../icons";
 import {
   Button,
@@ -12,9 +13,7 @@ import {
   TextArea
 } from "../snippets";
 
-const CreatePost: React.FC<{
-  setPopup: React.Dispatch<React.SetStateAction<React.ReactNode>>;
-}> = ({ setPopup }) => {
+const CreatePost: React.FC = () => {
   const [title, setTitle] = React.useState<string>("");
   const [post, setPost] = React.useState<string>("");
   const [board, setBoard] = React.useState<IBoard>(null);
@@ -75,14 +74,9 @@ const CreatePost: React.FC<{
         });
         const json = await response.json();
         if (json.status === "success") {
-          setPopup(null);
+          togglePopup(null);
         }
       }}>
-        <Column>
-          <Heading tag={`h6`}>
-            {"Create a post"}
-          </Heading>
-        </Column>
         <Column>
           <Input
             name="PostTitle"

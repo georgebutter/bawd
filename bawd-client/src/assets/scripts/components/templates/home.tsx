@@ -13,13 +13,14 @@ import {
   Row,
 } from "../snippets";
 
-import { IBoard, IPost } from "../../types";
+import { IBoard, IPost, IPopup } from "../../types";
 import { BoardIcon, PostIcon } from "../icons";
 import * as Sections from "../sections";
 import ElasticList from "../snippets/elastic-list";
+import { togglePopup } from "../../utils";
 
 const Home: React.FC = () => {
-  const [popup, setPopup] = React.useState<React.ReactNode>(null);
+
   return (
     <React.Fragment>
       <Container>
@@ -31,7 +32,10 @@ const Home: React.FC = () => {
           </Column>
           <Column width={`1/2`} align={`end`}>
             <Button
-              onClick={() => setPopup(<Sections.CreatePost setPopup={setPopup}/>)}
+              onClick={() => togglePopup({
+                content: () => <Sections.CreatePost />,
+                title: "Create Post"
+              })}
             >
               <PostIcon size={12} />
               <span className={"ml-1"}>
@@ -97,7 +101,10 @@ const Home: React.FC = () => {
           </Column>
           <Column width={`1/2`} align={`end`}>
             <Button
-              onClick={() => setPopup(<Sections.CreateBoard setPopup={setPopup}/>)}
+              onClick={() => togglePopup({
+                content: () => <Sections.CreateBoard />,
+                title: "Create Board",
+              })}
             >
               <BoardIcon size={12} />
               <span className={"ml-1"}>{"Create board"}</span>
@@ -108,11 +115,6 @@ const Home: React.FC = () => {
           <Sections.BoardList />
         </Row>
       </Container>
-      <Popup
-        setPopup={setPopup}
-      >
-        {() => popup}
-      </Popup>
     </React.Fragment>
   );
 };

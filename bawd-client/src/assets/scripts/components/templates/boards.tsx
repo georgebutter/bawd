@@ -1,9 +1,6 @@
 import * as React from "react";
 
-import {
-  Link,
-} from "react-router-dom";
-
+import { togglePopup } from "../../utils";
 import {
   Button,
   Column,
@@ -13,10 +10,8 @@ import {
   Row,
 } from "../snippets";
 
-import { IBoard, IPost } from "../../types";
 import { BoardIcon, PostIcon } from "../icons";
 import * as Sections from "../sections";
-import ElasticList from "../snippets/elastic-list";
 
 const Boards: React.FC = () => {
   const [popup, setPopup] = React.useState<React.ReactNode>(null);
@@ -31,10 +26,15 @@ const Boards: React.FC = () => {
           </Column>
           <Column width={`1/2`} align={`end`}>
             <Button
-              onClick={() => setPopup(<Sections.CreateBoard setPopup={setPopup}/>)}
+              onClick={() => togglePopup({
+                content: () => <Sections.CreateBoard />,
+                title: "Create Board",
+              })}
             >
               <BoardIcon size={12} />
-              <span className={"ml-1"}>{"Create board"}</span>
+              <span className={"ml-1"}>
+                {"Create board"}
+              </span>
             </Button>
           </Column>
         </Row>
@@ -42,11 +42,6 @@ const Boards: React.FC = () => {
           <Sections.BoardList />
         </Row>
       </Container>
-      <Popup
-        setPopup={setPopup}
-      >
-        {() => popup}
-      </Popup>
     </React.Fragment>
   );
 };

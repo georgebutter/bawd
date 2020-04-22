@@ -23,7 +23,6 @@ import ElasticList from "../snippets/elastic-list";
 const Board: React.FC = () => {
   const { boardHandle } = useParams();
   const [board, setBoard] = React.useState<IBoard>(null);
-  const [popup, setPopup] = React.useState<React.ReactNode>(null);
   React.useEffect(() => {
     (async () => {
       const theBoard = await getBoardByHandle(boardHandle);
@@ -45,11 +44,6 @@ const Board: React.FC = () => {
           <Sections.BoardList />
         </Row>
       </Container>
-      <Popup
-        setPopup={setPopup}
-      >
-        {() => popup}
-      </Popup>
     </React.Fragment>
   );
 };

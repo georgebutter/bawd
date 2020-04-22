@@ -38,3 +38,21 @@ export const getBoardByHandle = async (handle: string): Promise<IBoard> => {
   const json = await res.json();
   return json.result.body.hits.hits[0];
 };
+
+/**
+ * Fire a custom event so that the popup component can be displayed from anywhere.
+ * There is only ever one popup on the page this reduces the number of dom elements.
+ * @function togglePopup
+ * @param {Object} popup The content and the title of the popup to be displayed.
+ * @version 0.0.1
+ * @returns {Promise} A promise representing an IBoard
+ */
+export const togglePopup = (popup: {
+  content: React.ReactNode;
+  title: string;
+}): void => {
+  const event = new CustomEvent("popup:toggle", {
+    detail: popup
+  });
+  document.dispatchEvent(event);
+};

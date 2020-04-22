@@ -8,10 +8,12 @@ import {
   Switch,
 } from "react-router-dom";
 
+import { IPopup } from "../types";
 import {
   Column,
   Container,
   Heading,
+  Popup,
   Row,
   Button,
 } from "./snippets";
@@ -76,6 +78,7 @@ const applyDark = () => {
 const Bawd: React.FC = () => {
   const prefersDark = matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
   const [dark, setDark] = React.useState<boolean>(prefersDark);
+  const [popup, setPopup] = React.useState<IPopup>(null);
 
   const changeDarkMode = (change?: "dark" | "light") => {
     setDark((prev) => {
@@ -93,6 +96,10 @@ const Bawd: React.FC = () => {
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
       const change = e.matches ? "dark" : "light";
       changeDarkMode(change);
+    });
+
+    document.addEventListener("popup:toggle", (event: CustomEvent) => {
+      setPopup((prev) => !prev ? event.detail : null);
     });
   }, []);
 
@@ -129,6 +136,10 @@ const Bawd: React.FC = () => {
           />
         ))}
       </Switch>
+      <Popup
+        setPopup={setPopup}
+        popup={popup}
+      />
     </Router>
   );
 };

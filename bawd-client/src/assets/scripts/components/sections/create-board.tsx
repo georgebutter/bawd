@@ -2,7 +2,7 @@ import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { useDebounce } from "use-debounce";
 import { handleize } from "../../../../../../bawd-shared";
-import { getBoardByHandle } from "../../utils";
+import { getBoardByHandle, togglePopup } from "../../utils";
 import { BoardIcon } from "../icons";
 import {
   Button,
@@ -13,9 +13,7 @@ import {
   Input
 } from "../snippets";
 
-const CreateBoard: React.FC<{
-  setPopup: React.Dispatch<React.SetStateAction<React.ReactNode>>;
-}> = ({ setPopup }) => {
+const CreateBoard: React.FC = () => {
   const history = useHistory();
   const [name, setName] = React.useState<string>("");
   const debouncedName = useDebounce(name, 500);
@@ -49,15 +47,10 @@ const CreateBoard: React.FC<{
         });
         const json = await response.json();
         if (json.status === "success") {
-          setPopup(null);
+          togglePopup(null);
           history.push(`/boards/${json.body.handle}`);
         }
       }}>
-        <Column>
-          <Heading tag={`h6`}>
-            {"Create a board"}
-          </Heading>
-        </Column>
         <Column>
           <Input
             name="BoardName"
