@@ -11,7 +11,14 @@ export interface IPost {
   _source: {
     title: string;
     handle: string;
-    board: IBoard["_source"];
+    board: IBoard;
     post: string;
+    tripcode: string;
+    id: string;
   };
+}
+
+interface IPopup {
+  content: () => React.ReactNode;
+  title: string;
 }

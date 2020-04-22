@@ -21,6 +21,7 @@ module.exports = {
       'primaryfaded': 'var(--primary-faded)',
       'bg': 'var(--bg)',
       'text': 'var(--text)',
+      'faded': 'var(--faded)',
       'fg': 'var(--fg)',
       'transparent': 'transparent',
     },

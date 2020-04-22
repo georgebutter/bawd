@@ -59,6 +59,7 @@ const applyLight = () => {
   const { style } = document.documentElement;
   style.setProperty("--bg", "#fff");
   style.setProperty("--text", "#221524");
+  style.setProperty("--faded", "#7c7086");
   style.setProperty("--fg", "#ece9f1");
   style.setProperty("--primary", "#6979f8");
   style.setProperty("--success", "#00C48C");
@@ -67,9 +68,10 @@ const applyLight = () => {
 };
 const applyDark = () => {
   const { style } = document.documentElement;
-  style.setProperty("--bg", "#221524");
+  style.setProperty("--bg", "#3f3356");
   style.setProperty("--text", "#d0c9d6");
-  style.setProperty("--fg", "#3f3356");
+  style.setProperty("--faded", "#7c7086");
+  style.setProperty("--fg", "#221524");
   style.setProperty("--primary", "#6979f8");
   style.setProperty("--success", "#00C48C");
   style.setProperty("--error", "#FF647C");

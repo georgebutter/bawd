@@ -26,10 +26,11 @@ const ElasticList: React.FC<IProps> = ({
       }
     })();
   }, []);
+
   if (status === "loading") {
     return renderLoading();
   } else if (status === "ready") {
-    if (data.body.hits.hits.length) {
+    if (data?.body?.hits?.hits?.length) {
       return render(data.body.hits.hits);
     }
     return renderNoResults();

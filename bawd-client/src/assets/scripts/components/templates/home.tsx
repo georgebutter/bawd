@@ -55,27 +55,7 @@ const Home: React.FC = () => {
           )}
           render={(data) => (
             <Row>
-              {data.map(({
-                _source,
-                _id
-              }: IPost) => (
-                <Column key={_id}>
-                  <div className="w-full">
-                    <Row>
-                      <Column width="1/2">
-                        <Link to={`/boards/${_source.board.handle}/${_id}/${_source.handle}`}>
-                          <p>{_source.title}</p>
-                        </Link>
-                      </Column>
-                      <Column width="1/2" align="end">
-                        <span className="bg-primary text-bg px-1 rounded text-xs inline-block">
-                          {_source.board.name}
-                        </span>
-                      </Column>
-                    </Row>
-                  </div>
-                </Column>
-              ))}
+              {data.map((post: IPost) => <Sections.PostItem {...post}  key={post._id} />)}
             </Row>
           )}
           renderNoResults={() => (

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const Button: React.FC<IProps> = ({
-  children, onClick, colour = "primary", disabled
+  children, onClick, colour = "primary", disabled, type = "button",
 }) => {
   const classes: {
     [key in Colours]: {
@@ -23,6 +23,7 @@ const Button: React.FC<IProps> = ({
       className={classes[colour][disabled ? "disabled" : "default"]}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {children}
     </button>
@@ -33,6 +34,7 @@ interface IProps {
   disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   colour?: Colours;
+  type?: "submit" | "button";
 }
 
 type Colours = "primary" | "blank";

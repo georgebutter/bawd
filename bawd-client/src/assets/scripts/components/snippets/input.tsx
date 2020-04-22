@@ -4,19 +4,19 @@ const Input: React.FC<IProps> = ({
   type = "text", placeholder, label, name, value, onChange, error, success, autoComplete, onBlur
 }) => (
   <React.Fragment>
-    {error ? (
-      <small className={`text-red-500`}>
-        {error}
-      </small>
-    ) : null}
     <label
       className={"w-full py-1 text-xs lh-crop"}
       htmlFor={name}
     >
       {label}
     </label>
+    {error ? (
+      <p className={`text-error`}>
+        {error}
+      </p>
+    ) : null}
     <input
-      className={`text-bg w-full p-1 rounded border-2 ${error ? `border-error` : ``} ${success ? `border-success` : ``} ${!success && !error ? `border-transparent` : ``}`}
+      className={`text-text bg-bg w-full p-1 rounded border-2 ${error ? `border-error` : ``} ${success ? `border-success` : ``} ${!success && !error ? `border-transparent` : ``}`}
       name={name}
       type={type}
       placeholder={placeholder}

@@ -4,15 +4,15 @@ import {
 } from "./types";
 
 /**
- * Gets a post from the end point querying by the posts handle
+ * Gets a post from the end point querying by the posts id
  * @async
- * @function getPostByHandle
- * @param {string} handle The handle of the post you want to retrieve.
+ * @function getPostByid
+ * @param {string} id The id of the post you want to retrieve.
  * @version 0.0.1
  * @returns {Promise} A promise representing an IPost
  */
-export const getPostByHandle = async (handle: string): Promise<IPost> => {
-  const res = await fetch(`/api/posts/${handle}`, {
+export const getPostByid = async (id: string): Promise<IPost> => {
+  const res = await fetch(`/api/posts/${id}`, {
     headers: {
       "Content-Type": "application/json",
     },

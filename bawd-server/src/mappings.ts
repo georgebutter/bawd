@@ -14,10 +14,16 @@ export const posts = {
   handle: {
     type: "text"
   },
+  id: {
+    type: "text"
+  },
   post: {
     type: "text"
   },
   title: {
     type: "keyword"
+  },
+  tripcode: {
+    type: "text"
   },
 };

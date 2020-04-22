@@ -25,7 +25,7 @@ const SearchSelect: React.FC<IProps> = ({ onSelect, label, name, index, error })
           setAsset(null);
           onSelect(null);
           (async () => {
-            const response = await fetch(`/api/${index}/_search?`, {
+            const response = await fetch(`/api/${index}/search`, {
               body: JSON.stringify(
                 {
                   query: {
@@ -43,8 +43,8 @@ const SearchSelect: React.FC<IProps> = ({ onSelect, label, name, index, error })
               method: "POST",
             });
             const json = await response.json();
-            if (json.hits.hits) {
-              setAssets(json.hits.hits);
+            if (json.result) {
+              setAssets(json.result.body.hits.hits);
             }
           })();
         }}

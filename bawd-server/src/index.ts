@@ -2,10 +2,12 @@ import { Client } from "@elastic/elasticsearch";
 import * as express from "express";
 import { handleize } from "../../bawd-shared";
 import * as mappings from "./mappings";
+import { createTripcode } from "./utils";
 
 const {
   PORT = 3100,
-  BONSAI_URL = "http://localhost:9200"
+  BONSAI_URL = "http://localhost:9200",
+  HMAC_SECRET = "Open Sesame"
 } = process.env;
 
 const elasticClient = new Client({
@@ -14,6 +16,7 @@ const elasticClient = new Client({
 
 const app = express();
 app.use(express.json());
+app.set("trust proxy", true);
 
 const ing = (promise: any) => {
   return promise.then((data: any) => {
@@ -29,7 +32,10 @@ const ing = (promise: any) => {
 })();
 
 app.post("/posts", (req: express.Request, res: express.Response) => {
-  const { title, post, board } = req.body;
+  const { title, post, board, password } = req.body;
+  const ip = req.headers["x-forwarded-for"] ||
+  req.connection.remoteAddress ||
+  req.socket.remoteAddress;
   const handle = handleize(title);
   if (!title || title === "") {
     return res.json({
@@ -48,13 +54,17 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
     });
   }
   (async () => {
+    const tripcode = createTripcode(HMAC_SECRET, password);
+
     const [err, result] = await ing(elasticClient.index({
       body: {
-        _id: Math.random().toString(16).substr(2),
         board,
         handle,
+        id: Math.random().toString(16).substr(2),
+        ip,
         post,
         title,
+        tripcode,
       },
       index: "posts",
     }));
@@ -65,6 +75,26 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
       });
     }
     return res.json({
+      result,
+      status: "success",
+    });
+  })();
+});
+
+app.post("/boards/search", (req: express.Request, res: express.Response) => {
+  (async () => {
+    const [err, result] = await ing(elasticClient.search({
+      body: req.body,
+      index: "boards",
+    }));
+    if (err) {
+      return res.json({
+        error: err,
+        status: "error",
+      });
+    }
+    return res.json({
+      body: req.body,
       result,
       status: "success",
     });
@@ -127,11 +157,14 @@ app.get("/boards/:handle", (req: express.Request, res: express.Response) => {
   (async () => {
     const [err, result] = await ing(elasticClient.search({
       body: {
+        _source: {
+          exclude: ["ip"]
+        },
         query: {
           match: {
             handle: req.params.handle
           }
-        }
+        },
       },
       index: "boards",
     }));
@@ -148,13 +181,13 @@ app.get("/boards/:handle", (req: express.Request, res: express.Response) => {
   })();
 });
 
-app.get("/posts/:handle", (req: express.Request, res: express.Response) => {
+app.get("/posts/:id", (req: express.Request, res: express.Response) => {
   (async () => {
     const [err, result] = await ing(elasticClient.search({
       body: {
         query: {
           match: {
-            handle: req.params.handle
+            id: req.params.id
           }
         }
       },

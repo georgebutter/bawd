@@ -13,11 +13,11 @@ import {
 } from "../snippets";
 
 const Post: React.FC = () => {
-  const { boardName, postHandle } = useParams();
+  const { boardName, postHandle, postId } = useParams();
   const [post, setPost] = React.useState<IPost>(null);
   React.useEffect(() => {
     (async () => {
-      const thePost = await getPostByHandle(postHandle);
+      const thePost = await getPostById(postId);
       setPost(thePost);
     })();
   }, []);

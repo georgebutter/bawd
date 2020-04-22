@@ -7,16 +7,17 @@ import {
   Column,
   Container,
   Form,
-  Heading,
   Input,
   SearchSelect,
-  TextArea
+  MarkdownInput,
 } from "../snippets";
 
 const CreatePost: React.FC = () => {
+  const [status, setStatus] = React.useState<"ready" | "loading">("ready");
   const [title, setTitle] = React.useState<string>("");
   const [post, setPost] = React.useState<string>("");
   const [board, setBoard] = React.useState<IBoard>(null);
+  const [password, setPassword] = React.useState<string>("");
   const [errors, setErrors] = React.useState<{
     chooseBoard: "Please specify an existing board";
     chooseTitle: "Title cannot be blank",
@@ -30,6 +31,7 @@ const CreatePost: React.FC = () => {
     <Container>
       <Form onSubmit={async (e) => {
         e.preventDefault();
+        setStatus("loading");
         setErrors({
           chooseBoard: null,
           choosePost: null,
@@ -64,8 +66,9 @@ const CreatePost: React.FC = () => {
         const response = await fetch(`/api/posts`, {
           body: JSON.stringify({
             board,
+            password,
             post,
-            title
+            title,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -74,6 +77,7 @@ const CreatePost: React.FC = () => {
         });
         const json = await response.json();
         if (json.status === "success") {
+          setStatus("ready");
           togglePopup(null);
         }
       }}>
@@ -88,7 +92,16 @@ const CreatePost: React.FC = () => {
           />
         </Column>
         <Column>
-          <TextArea
+          <Input
+            name="Password"
+            label="Password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Column>
+        <Column>
+          <MarkdownInput
             name="PostBody"
             label="Post"
             placeholder="Text"
@@ -107,9 +120,13 @@ const CreatePost: React.FC = () => {
           />
         </Column>
         <Column>
-          <Button>
+          <Button
+            type="submit"
+          >
             <PostIcon size={12} />
-            <span className={"ml-1"}>{"Create post"}</span>
+            <span className={"ml-1"}>
+              {status === "loading" ? "Creating post" : "Create post"}
+            </span>
           </Button>
         </Column>
       </Form>
