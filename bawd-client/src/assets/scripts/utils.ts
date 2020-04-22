@@ -11,7 +11,7 @@ import {
  * @version 0.0.1
  * @returns {Promise} A promise representing an IPost
  */
-export const getPostByid = async (id: string): Promise<IPost> => {
+export const getPostById = async (id: string): Promise<IPost> => {
   const res = await fetch(`/api/posts/${id}`, {
     headers: {
       "Content-Type": "application/json",

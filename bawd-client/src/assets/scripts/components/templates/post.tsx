@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 
 import { IPost } from "../../types";
-import { getPostByHandle } from "../../utils";
+import { getPostById } from "../../utils";
 import {
   Column,
   Container,
