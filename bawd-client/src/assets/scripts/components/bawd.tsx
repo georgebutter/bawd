@@ -9,13 +9,14 @@ import {
 } from "react-router-dom";
 
 import { IPopup } from "../types";
+
 import {
+  Button,
   Column,
   Container,
   Heading,
   Popup,
   Row,
-  Button,
 } from "./snippets";
 
 import {
