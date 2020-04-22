@@ -1,3 +1,4 @@
+import * as marked from "marked";
 import * as React from "react";
 import {
   useParams
@@ -31,7 +32,9 @@ const Post: React.FC = () => {
           </Heading>
         </Column>
         <Column>
-          <p>{post ? post._source.post : "Loading"}</p>
+          <div dangerouslySetInnerHTML={{
+            __html: post ? marked(post._source.post) : "Loading" }}
+          />
         </Column>
       </Row>
     </Container>
