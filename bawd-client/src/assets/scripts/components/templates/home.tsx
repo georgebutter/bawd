@@ -1,26 +1,20 @@
 import * as React from "react";
 
 import {
-  Link,
-} from "react-router-dom";
-
-import {
   Button,
   Column,
   Container,
   Heading,
-  Popup,
   Row,
 } from "../snippets";
 
-import { IBoard, IPost, IPopup } from "../../types";
+import { IBoard, IPost } from "../../types";
+import { togglePopup } from "../../utils";
 import { BoardIcon, PostIcon } from "../icons";
 import * as Sections from "../sections";
 import ElasticList from "../snippets/elastic-list";
-import { togglePopup } from "../../utils";
 
 const Home: React.FC = () => {
-
   return (
     <React.Fragment>
       <Container>

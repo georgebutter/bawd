@@ -23,16 +23,16 @@ const MarkdownInput: React.FC<IProps> = ({
         </p>
       ) : null}
       <div className="border rounded border-faded w-full bg-bg">
-        <div className="p-2 border-b border-faded">
+        <div className="p-2 border-b border-faded flex items-center">
           <Button
             type="button"
             colour="blank"
             onClick={() => setView((prev) => prev === "write" ? "preview" : "write")}
           >
             {view === "write" ? (
-              <EyeIcon size={24} />
+              <EyeIcon size={18} />
             ) : (
-              <NoEyeIcon size={24} />
+              <NoEyeIcon size={18} />
             )}
           </Button>
         </div>
@@ -49,8 +49,10 @@ const MarkdownInput: React.FC<IProps> = ({
             dangerouslySetInnerHTML={{ __html: marked(value) }}
           />
         )}
-
       </div>
+      <small className="text-xs">
+        Markdown supported
+      </small>
     </React.Fragment>
   );
 };

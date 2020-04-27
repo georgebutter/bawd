@@ -1,20 +1,23 @@
 import * as React from "react";
+import ReactPlayer from "react-player";
 import { IBoard } from "../../types";
 import { togglePopup } from "../../utils";
 import { PostIcon } from "../icons";
+
 import {
   Button,
   Column,
   Container,
   Form,
   Input,
-  SearchSelect,
   MarkdownInput,
+  SearchSelect,
 } from "../snippets";
 
 const CreatePost: React.FC = () => {
   const [status, setStatus] = React.useState<"ready" | "loading">("ready");
   const [title, setTitle] = React.useState<string>("");
+  const [link, setLink] = React.useState<string>("");
   const [post, setPost] = React.useState<string>("");
   const [board, setBoard] = React.useState<IBoard>(null);
   const [password, setPassword] = React.useState<string>("");
@@ -66,6 +69,7 @@ const CreatePost: React.FC = () => {
         const response = await fetch(`/api/posts`, {
           body: JSON.stringify({
             board,
+            link,
             password,
             post,
             title,
@@ -93,13 +97,28 @@ const CreatePost: React.FC = () => {
         </Column>
         <Column>
           <Input
-            name="Password"
-            label="Password"
-            placeholder="Password"
+            name="Signature"
+            label="Signature"
+            placeholder="Signature"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Column>
+        <Column>
+          <Input
+            name="Link"
+            label="Link"
+            placeholder="Link"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+          />
+        </Column>
+        {ReactPlayer.canPlay(link) ? (
+          <Column>
+            <ReactPlayer url={link} />
+          </Column>
+        ) : null}
         <Column>
           <MarkdownInput
             name="PostBody"

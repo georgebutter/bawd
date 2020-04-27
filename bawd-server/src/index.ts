@@ -32,7 +32,7 @@ const ing = (promise: any) => {
 })();
 
 app.post("/posts", (req: express.Request, res: express.Response) => {
-  const { title, post, board, password } = req.body;
+  const { title, post, board, password, link } = req.body;
   const ip = req.headers["x-forwarded-for"] ||
   req.connection.remoteAddress ||
   req.socket.remoteAddress;
@@ -55,13 +55,13 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
   }
   (async () => {
     const tripcode = createTripcode(HMAC_SECRET, password);
-
     const [err, result] = await ing(elasticClient.index({
       body: {
         board,
         handle,
         id: Math.random().toString(16).substr(2),
         ip,
+        link,
         post,
         title,
         tripcode,

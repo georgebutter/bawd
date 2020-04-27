@@ -1,5 +1,6 @@
 import * as marked from "marked";
 import * as React from "react";
+import ReactPlayer from "react-player";
 import {
   useParams
 } from "react-router-dom";
@@ -12,6 +13,7 @@ import {
   Heading,
   Row,
 } from "../snippets";
+
 
 const Post: React.FC = () => {
   const { boardName, postHandle, postId } = useParams();
@@ -36,6 +38,11 @@ const Post: React.FC = () => {
             __html: post ? marked(post._source.post) : "Loading" }}
           />
         </Column>
+        {post?._source?.link && ReactPlayer.canPlay(post._source.link) ? (
+          <Column>
+            <ReactPlayer url={post._source.link} />
+          </Column>
+        ) : null}
       </Row>
     </Container>
   );

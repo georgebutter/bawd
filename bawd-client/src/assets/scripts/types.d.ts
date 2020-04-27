@@ -15,6 +15,7 @@ export interface IPost {
     post: string;
     tripcode: string;
     id: string;
+    link: string;
   };
 }
 
