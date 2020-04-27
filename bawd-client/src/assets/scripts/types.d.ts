@@ -3,6 +3,7 @@ export interface IBoard {
   _source: {
     name: string;
     handle: string;
+    category: string;
   };
 }
 

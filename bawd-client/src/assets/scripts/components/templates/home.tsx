@@ -85,9 +85,7 @@ const Home: React.FC = () => {
             </Button>
           </Column>
         </Row>
-        <Row>
-          <Sections.BoardList />
-        </Row>
+        <Sections.BoardList />
       </Container>
     </React.Fragment>
   );

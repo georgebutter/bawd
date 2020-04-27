@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { useDebounce } from "use-debounce";
-import { handleize } from "../../../../../../bawd-shared";
+import { categories, handleize } from "../../../../../../bawd-shared";
 import { getBoardByHandle, togglePopup } from "../../utils";
 import { BoardIcon } from "../icons";
 import {
@@ -9,22 +9,21 @@ import {
   Column,
   Container,
   Form,
-  Heading,
-  Input
+  Input,
+  Select
 } from "../snippets";
 
 const CreateBoard: React.FC = () => {
   const history = useHistory();
   const [name, setName] = React.useState<string>("");
+  const [category, setCategory] = React.useState<typeof categories[number] | "">("");
   const debouncedName = useDebounce(name, 500);
   const [status, setStatus] = React.useState<string>("disabled");
-
   React.useEffect(() => {
     (async () => {
       if (name.length > 3) {
         const handle = handleize(name);
         const board = await getBoardByHandle(handle);
-        console.log(board);
         if (!board) {
           setStatus("validated");
         }
@@ -38,7 +37,8 @@ const CreateBoard: React.FC = () => {
         e.preventDefault();
         const response = await fetch(`/api/boards`, {
           body: JSON.stringify({
-            name
+            category,
+            name,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -46,6 +46,7 @@ const CreateBoard: React.FC = () => {
           method: "POST",
         });
         const json = await response.json();
+        console.log(json);
         if (json.status === "success") {
           togglePopup(null);
           history.push(`/boards/${json.body.handle}`);
@@ -61,8 +62,24 @@ const CreateBoard: React.FC = () => {
           />
         </Column>
         <Column>
+          <Select
+            label="Category"
+            name="Category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option>Please select a category</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </Select>
+        </Column>
+        <Column>
           <Button
             disabled={status === "disabled"}
+            type="submit"
           >
             <BoardIcon size={12} />
             <span className={"ml-1"}>

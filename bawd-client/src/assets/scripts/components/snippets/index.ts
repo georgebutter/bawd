@@ -9,6 +9,7 @@ import MarkdownInput from "./markdown-input";
 import Popup from "./popup";
 import Row from "./row";
 import SearchSelect from "./search-select";
+import Select from "./select";
 import TextArea from "./textarea";
 
 export {
@@ -23,5 +24,6 @@ export {
   Popup,
   Row,
   SearchSelect,
+  Select,
   TextArea,
 };

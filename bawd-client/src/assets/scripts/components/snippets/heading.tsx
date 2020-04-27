@@ -17,7 +17,7 @@ const Heading: React.FC<IProps> = ({ children, size, tag, className, itemprop })
   }, children);
 };
 
-export interface IProps {
+interface IProps {
   /** Additonal classes to apply to the heading */
   className?: string;
   /** Default styling section from the style guide, only affect the style */

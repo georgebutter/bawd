@@ -4,11 +4,9 @@ import { IBoard } from "../../types";
 import { Column } from "../snippets";
 
 const BoardItem: React.FC<IProps> = ({ board }) => (
-  <Column key={board.name}>
-    <Link to={`/boards/${board.handle}`}>
-      <p>{board.name}</p>
-    </Link>
-  </Column>
+  <Link className="text-sm text-primary hover:underline" to={`/boards/${board.handle}`} key={board.name}>
+    <p>{board.name}</p>
+  </Link>
 );
 
 export interface IProps {

@@ -6,7 +6,7 @@ const Row: React.FC<IProps> = ({ children, className }) => (
   </div>
 );
 
-export interface IProps {
+interface IProps {
   className?: string;
 }
 

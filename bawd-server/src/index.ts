@@ -102,7 +102,7 @@ app.post("/boards/search", (req: express.Request, res: express.Response) => {
 });
 
 app.post("/boards", (req: express.Request, res: express.Response) => {
-  const { name } = req.body;
+  const { name, category } = req.body;
   if (!name || name === "") {
     return res.json({
       error: {
@@ -114,6 +114,7 @@ app.post("/boards", (req: express.Request, res: express.Response) => {
   const handle = handleize(name);
   (async () => {
     const body = {
+      category,
       handle,
       name,
     };
