@@ -38,9 +38,22 @@ const Post: React.FC = () => {
             __html: post ? marked(post._source.post) : "Loading" }}
           />
         </Column>
-        {post?._source?.link && ReactPlayer.canPlay(post._source.link) ? (
+        {post?._source?.link ? (
           <Column>
-            <ReactPlayer url={post._source.link} />
+            {
+              ReactPlayer.canPlay(post._source.link) ? (
+                <ReactPlayer url={post._source.link} />
+              ) : (
+                <a
+                  href={post._source.link}
+                  target="_blank"
+                  rel="nofollow noreferrer"
+                  className="text-primary"
+                >
+                  External link
+                </a>
+              )
+            }
           </Column>
         ) : null}
       </Row>
