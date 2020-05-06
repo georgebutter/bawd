@@ -40,9 +40,7 @@ const Board: React.FC = () => {
             </Heading>
           </Column>
         </Row>
-        <Row>
-          <Sections.BoardList />
-        </Row>
+        <Sections.BoardList />
       </Container>
     </React.Fragment>
   );
