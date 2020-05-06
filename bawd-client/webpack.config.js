@@ -90,6 +90,7 @@ module.exports = () => {
     plugins: [
       new HtmlWebpackPlugin({
         template: 'src/index.html',
+        hash: true,
       }),
       new MiniCssExtractPlugin({
         filename: 'index.css',
