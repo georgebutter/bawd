@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as Store from "store";
 import * as Icons from "./icons";
 
 import {
@@ -79,8 +80,10 @@ const applyDark = () => {
 };
 
 const Bawd: React.FC = () => {
-  const prefersDark = matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
-  const [dark, setDark] = React.useState<boolean>(prefersDark);
+  const prefersColourScheme = matchMedia && matchMedia("(prefers-color-scheme: dark)").matches
+  const prefersDark = Store.get("prefersDark");
+  console.log(prefersDark)
+  const [dark, setDark] = React.useState<boolean>(prefersDark || prefersColourScheme);
   const [popup, setPopup] = React.useState<IPopup>(null);
 
   const changeDarkMode = (change?: "dark" | "light") => {
@@ -91,6 +94,7 @@ const Bawd: React.FC = () => {
       } else {
         applyLight();
       }
+      Store.set("prefersDark", next);
       return next;
     });
   };
@@ -98,12 +102,17 @@ const Bawd: React.FC = () => {
   React.useEffect(() => {
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
       const change = e.matches ? "dark" : "light";
-      changeDarkMode(change);
+      if (!Store.get("prefersDark")) {
+        changeDarkMode(change);
+      }
     });
 
     document.addEventListener("popup:toggle", (event: CustomEvent) => {
       setPopup((prev) => !prev ? event.detail : null);
     });
+    if (prefersDark !== prefersColourScheme && matchMedia) {
+      changeDarkMode(prefersDark ? "dark" : "light");
+    }
   }, []);
 
   return (
