@@ -81,11 +81,13 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
   })();
 });
 
-app.post("/boards/search", (req: express.Request, res: express.Response) => {
+app.post("/:index/search", (req: express.Request, res: express.Response) => {
   (async () => {
+    const { index } = req.params;
+    const { body } = req;
     const [err, result] = await ing(elasticClient.search({
-      body: req.body,
-      index: "boards",
+      body,
+      index,
     }));
     if (err) {
       return res.json({
@@ -94,7 +96,7 @@ app.post("/boards/search", (req: express.Request, res: express.Response) => {
       });
     }
     return res.json({
-      body: req.body,
+      body,
       result,
       status: "success",
     });

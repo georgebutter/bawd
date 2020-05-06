@@ -6,15 +6,18 @@ const ElasticList: React.FC<IProps> = ({
   renderError,
   render,
   index,
+  query,
 }) => {
   const [status, setStatus] = React.useState<string>("loading");
   const [data, setData] = React.useState<any>(null);
   React.useEffect(() => {
     (async () => {
-      const response = await fetch(`/api/${index}`, {
+      const response = await fetch(`/api/${index}${query ? `/search` : ``}`, {
+        body: JSON.stringify(query),
         headers: {
           "Content-Type": "application/json",
         },
+        method: query ? "POST" : "GET",
       });
       const json = await response.json();
       if (json.status === "error") {
@@ -25,15 +28,15 @@ const ElasticList: React.FC<IProps> = ({
         setStatus("ready");
       }
     })();
-  }, []);
+  }, [query, index]);
 
   if (status === "loading") {
-    return renderLoading();
+    return renderLoading ? renderLoading() : <React.Fragment />;
   } else if (status === "ready") {
     if (data?.body?.hits?.hits?.length) {
       return render(data.body.hits.hits);
     }
-    return renderNoResults();
+    return renderLoading ? renderNoResults() : <React.Fragment />;
   }
   return renderError(data);
 
@@ -42,9 +45,10 @@ const ElasticList: React.FC<IProps> = ({
 interface IProps {
   index: string;
   render: (data: any) => JSX.Element;
-  renderLoading: () => JSX.Element;
+  renderLoading?: () => JSX.Element;
   renderError: (error: any) => JSX.Element;
-  renderNoResults: () => JSX.Element;
+  renderNoResults?: () => JSX.Element;
+  query?: any;
 }
 
 export default ElasticList;

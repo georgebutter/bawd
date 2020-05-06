@@ -8,11 +8,9 @@ import {
   Row,
 } from "../snippets";
 
-import { IBoard, IPost } from "../../types";
 import { togglePopup } from "../../utils";
 import { BoardIcon, PostIcon } from "../icons";
 import * as Sections from "../sections";
-import ElasticList from "../snippets/elastic-list";
 
 const Home: React.FC = () => {
   return (
@@ -38,35 +36,7 @@ const Home: React.FC = () => {
             </Button>
           </Column>
         </Row>
-        <ElasticList
-          index={`posts`}
-          renderLoading={() => (
-            <Row>
-              <Column>
-                <p>Loading...</p>
-              </Column>
-            </Row>
-          )}
-          render={(data) => (
-            <Row>
-              {data.map((post: IPost) => <Sections.PostItem {...post}  key={post._id} />)}
-            </Row>
-          )}
-          renderNoResults={() => (
-            <Row>
-              <Column>
-                <p>No posts found.</p>
-              </Column>
-            </Row>
-          )}
-          renderError={(error: any) => (
-            <Row>
-              <Column>
-                <p>{error}</p>
-              </Column>
-            </Row>
-          )}
-        />
+        <Sections.PostList />
         <Row>
           <Column width={`1/2`}>
             <Heading tag={`h3`}>
@@ -81,11 +51,13 @@ const Home: React.FC = () => {
               })}
             >
               <BoardIcon size={12} />
-              <span className={"ml-1"}>{"Create board"}</span>
+              <span className={"ml-1"}>
+                {"Create board"}
+              </span>
             </Button>
           </Column>
         </Row>
-        <Sections.BoardList />
+        <Sections.BoardsList />
       </Container>
     </React.Fragment>
   );

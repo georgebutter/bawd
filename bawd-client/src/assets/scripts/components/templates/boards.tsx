@@ -39,7 +39,7 @@ const Boards: React.FC = () => {
           </Column>
         </Row>
         <Row>
-          <Sections.BoardList />
+          <Sections.BoardsList />
         </Row>
       </Container>
     </React.Fragment>

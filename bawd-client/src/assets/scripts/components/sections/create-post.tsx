@@ -14,12 +14,14 @@ import {
   SearchSelect,
 } from "../snippets";
 
-const CreatePost: React.FC = () => {
+const CreatePost: React.FC<{
+  board?: IBoard;
+}> = (props) => {
   const [status, setStatus] = React.useState<"ready" | "loading">("ready");
   const [title, setTitle] = React.useState<string>("");
   const [link, setLink] = React.useState<string>("");
   const [post, setPost] = React.useState<string>("");
-  const [board, setBoard] = React.useState<IBoard>(null);
+  const [board, setBoard] = React.useState<IBoard>(props.board);
   const [password, setPassword] = React.useState<string>("");
   const [errors, setErrors] = React.useState<{
     chooseBoard: "Please specify an existing board";
@@ -129,15 +131,17 @@ const CreatePost: React.FC = () => {
             error={errors.choosePost}
           />
         </Column>
-        <Column>
-          <SearchSelect
-            label={"Choose board"}
-            name={"ChooseBoard"}
-            index="boards"
-            onSelect={(asset: IBoard) => setBoard(asset)}
-            error={errors.chooseBoard}
-          />
-        </Column>
+        {!props.board ? (
+          <Column>
+            <SearchSelect
+              label={"Choose board"}
+              name={"ChooseBoard"}
+              index="boards"
+              onSelect={(asset: IBoard) => setBoard(asset)}
+              error={errors.chooseBoard}
+            />
+          </Column>
+        ) : null}
         <Column>
           <Button
             type="submit"
