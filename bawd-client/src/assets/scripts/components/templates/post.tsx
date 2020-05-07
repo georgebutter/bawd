@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import { IPost } from "../../types";
-import { getPostById } from "../../utils";
+import { getPostById, checkImageURL } from "../../utils";
 import {
   Column,
   Container,
@@ -24,7 +24,7 @@ const Post: React.FC = () => {
       setPost(thePost);
     })();
   }, []);
-
+  const link = post?._source?.link;
   return (
     <Container>
       <Row>
@@ -38,14 +38,16 @@ const Post: React.FC = () => {
             __html: post ? marked(post._source.post) : "Loading" }}
           />
         </Column>
-        {post?._source?.link ? (
+        {link ? (
           <Column>
             {
-              ReactPlayer.canPlay(post._source.link) ? (
-                <ReactPlayer url={post._source.link} />
+              ReactPlayer.canPlay(link) ? (
+                <ReactPlayer url={link} />
+              ) : checkImageURL(link) ? (
+                <Image src={link}/>
               ) : (
                 <a
-                  href={post._source.link}
+                  href={link}
                   target="_blank"
                   rel="nofollow noreferrer"
                   className="text-primary"

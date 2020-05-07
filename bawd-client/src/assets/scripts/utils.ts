@@ -56,3 +56,5 @@ export const togglePopup = (popup: {
   });
   document.dispatchEvent(event);
 };
+
+export const checkImageURL = (url: string): boolean => url.match(/\.(jpeg|jpg|gif|png)$/) != null;

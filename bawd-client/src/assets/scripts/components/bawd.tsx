@@ -123,7 +123,7 @@ const Bawd: React.FC = () => {
             <Column width="1/2">
               <Link to={`/`} className="flex items-center">
                 <Logo />
-                <Heading tag={`h6`} size={`h4`} className="ml-1">
+                <Heading tag={`h6`} size={`h4`} className="ml-2">
                   Bawd
                 </Heading>
               </Link>
