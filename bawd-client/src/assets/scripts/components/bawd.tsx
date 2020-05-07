@@ -27,6 +27,7 @@ import {
   Home,
   Post,
 } from "./templates";
+import { Logo } from "./icons";
 
 const routes = [
   {
@@ -120,8 +121,9 @@ const Bawd: React.FC = () => {
         <Container>
           <Row>
             <Column width="1/2">
-              <Link to={`/`}>
-                <Heading tag={`h6`} size={`h4`}>
+              <Link to={`/`} className="flex items-center">
+                <Logo />
+                <Heading tag={`h6`} size={`h4`} className="ml-1">
                   Bawd
                 </Heading>
               </Link>
