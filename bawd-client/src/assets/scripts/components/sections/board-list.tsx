@@ -6,10 +6,11 @@ import { ElasticList, Heading } from "../snippets";
 const BoardList: React.FC<IBoardList> = ({
   title,
   category,
+  query,
 }) => (
   <ElasticList
     index="boards"
-    query={{
+    query={query ? query : {
       query: {
         match: {
           category
@@ -33,7 +34,7 @@ const BoardList: React.FC<IBoardList> = ({
         </React.Fragment>
     )}
     renderError={(error: any) => (
-      <p>{error}</p>
+      <p>{JSON.stringify(error)}</p>
     )}
   />
 );
@@ -41,6 +42,7 @@ const BoardList: React.FC<IBoardList> = ({
 interface IBoardList {
   title?: string;
   category: string;
+  query?: any;
 }
 
 export { BoardList };

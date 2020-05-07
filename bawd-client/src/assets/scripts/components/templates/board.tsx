@@ -1,20 +1,17 @@
 import * as React from "react";
 
 import {
-  useParams, Link,
+  useParams,
 } from "react-router-dom";
 
 import {
-  Button,
   Column,
   Container,
-  Heading,
   Row,
 } from "../snippets";
 
 import { IBoard } from "../../types";
-import { getBoardByHandle, togglePopup } from "../../utils";
-import { BoardIcon } from "../icons";
+import { getBoardByHandle } from "../../utils";
 import * as Sections from "../sections";
 
 const Board: React.FC = () => {
@@ -45,6 +42,22 @@ const Board: React.FC = () => {
             <Sections.BoardList
               category={board._source.category}
               title={`More boards in ${board._source.category}`}
+              query={{
+                query: {
+                  bool: {
+                    must: {
+                      term: {
+                        "category.keyword": board._source.category
+                      }
+                    },
+                    must_not: {
+                      term: {
+                        handle: board._source.handle
+                      }
+                    },
+                  }
+                }
+              }}
             />
           </Column>
         </Row>
