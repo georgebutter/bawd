@@ -27,7 +27,6 @@ import {
   Home,
   Post,
 } from "./templates";
-import { Logo } from "./icons";
 
 const routes = [
   {
@@ -81,7 +80,7 @@ const applyDark = () => {
 };
 
 const Bawd: React.FC = () => {
-  const prefersColourScheme = matchMedia && matchMedia("(prefers-color-scheme: dark)").matches
+  const prefersColourScheme = matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
   const prefersDark = Store.get("prefersDark");
   const [dark, setDark] = React.useState<boolean>(prefersDark || prefersColourScheme);
   const [popup, setPopup] = React.useState<IPopup>(null);
@@ -122,7 +121,7 @@ const Bawd: React.FC = () => {
           <Row>
             <Column width="1/2">
               <Link to={`/`} className="flex items-center">
-                <Logo />
+                <Icons.Logo />
                 <Heading tag={`h6`} size={`h4`} className="ml-2">
                   Bawd
                 </Heading>

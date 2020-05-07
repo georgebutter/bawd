@@ -3,6 +3,8 @@ import * as React from "react";
 const Button: React.FC<IProps> = ({
   children, onClick, colour = "primary", disabled, type = "button",
 }) => {
+  const primaryCommon = "bg-primary text-sm text-bg px-4 py-2 rounded flex items-center outline-none active:outline-none focus:outline-none";
+  const secondaryCommon = "bg-bg text-sm text-primary px-4 py-2 rounded flex items-center outline-none active:outline-none focus:outline-none";
   const classes: {
     [key in Colours]: {
       disabled: string;
@@ -14,8 +16,12 @@ const Button: React.FC<IProps> = ({
       disabled: "outline-none active:outline-none focus:outline-none",
     },
     primary: {
-      default: "bg-primary text-sm text-bg px-4 py-2 rounded flex items-center outline-none active:outline-none focus:outline-none",
-      disabled: "bg-primary text-sm text-bg px-4 py-2 rounded flex items-center outline-none active:outline-none focus:outline-none cursor-not-allowed opacity-50",
+      default: primaryCommon,
+      disabled: `${primaryCommon} cursor-not-allowed opacity-50`,
+    },
+    secondary: {
+      default: secondaryCommon,
+      disabled: `${secondaryCommon} cursor-not-allowed opacity-50`,
     },
   };
   return (
@@ -37,6 +43,6 @@ interface IProps {
   type?: "submit" | "button";
 }
 
-type Colours = "primary" | "blank";
+type Colours = "primary" | "secondary" | "blank";
 
 export default Button;

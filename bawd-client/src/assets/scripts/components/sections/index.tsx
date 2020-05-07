@@ -1,3 +1,4 @@
+export * from "./board-header";
 export * from "./board-item";
 export * from "./board-list";
 export * from "./boards-list";
