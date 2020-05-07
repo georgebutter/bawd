@@ -4,7 +4,7 @@ import Container from "./container";
 import ElasticList from "./elastic-list";
 import Form from "./form";
 import Heading from "./heading";
-import { Image } from "./image";
+import Image from "./image";
 import Input from "./input";
 import MarkdownInput from "./markdown-input";
 import Popup from "./popup";

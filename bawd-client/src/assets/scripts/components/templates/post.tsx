@@ -6,11 +6,12 @@ import {
 } from "react-router-dom";
 
 import { IPost } from "../../types";
-import { getPostById, checkImageURL } from "../../utils";
+import { checkImageURL, getPostById } from "../../utils";
 import {
   Column,
   Container,
   Heading,
+  Image,
   Row,
 } from "../snippets";
 
