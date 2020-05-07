@@ -6,15 +6,17 @@ import {
 } from "react-router-dom";
 
 import { IBoard, IPost, } from "../../types";
-import { checkImageURL, getBoardByHandle, getPostById, } from "../../utils";
+import { checkImageURL, getBoardByHandle, getPostById, togglePopup, } from "../../utils";
 import * as Sections from "../sections";
 import {
+  Button,
   Column,
   Container,
   Heading,
   Image,
   Row,
 } from "../snippets";
+import { BoardIcon } from "../icons";
 
 const Post: React.FC = () => {
   const { boardHandle, postId } = useParams();
@@ -66,6 +68,28 @@ const Post: React.FC = () => {
           ) : null}
         </Row>
       </Container>
+      <div>
+        <Container>
+          <Row>
+            <Column width="1/2">
+              <Heading tag="h3">
+                Comments
+              </Heading>
+            </Column>
+            <Column width="1/2" align="end">
+              <Button
+                onClick={() => togglePopup({
+                  content: () => <Sections.CreateComment />,
+                  title: "Create Comment",
+                })}
+              >
+                <BoardIcon size={12} />
+                <span className={"ml-1"}>{"Comment"}</span>
+              </Button>
+            </Column>
+          </Row>
+        </Container>
+      </div>
     </div>
   );
 };
