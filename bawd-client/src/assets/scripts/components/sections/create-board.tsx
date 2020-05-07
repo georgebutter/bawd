@@ -46,7 +46,6 @@ const CreateBoard: React.FC = () => {
           method: "POST",
         });
         const json = await response.json();
-        console.log(json);
         if (json.status === "success") {
           togglePopup(null);
           history.push(`/boards/${json.body.handle}`);

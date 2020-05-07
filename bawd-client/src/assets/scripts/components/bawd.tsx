@@ -82,7 +82,6 @@ const applyDark = () => {
 const Bawd: React.FC = () => {
   const prefersColourScheme = matchMedia && matchMedia("(prefers-color-scheme: dark)").matches
   const prefersDark = Store.get("prefersDark");
-  console.log(prefersDark)
   const [dark, setDark] = React.useState<boolean>(prefersDark || prefersColourScheme);
   const [popup, setPopup] = React.useState<IPopup>(null);
 
