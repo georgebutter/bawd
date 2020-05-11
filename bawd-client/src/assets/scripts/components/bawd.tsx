@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Store from "store";
-import * as Icons from "./icons";
+import * as Icon from "./icons";
 
 import {
   BrowserRouter as Router,
@@ -121,7 +121,7 @@ const Bawd: React.FC = () => {
           <Row>
             <Column width="1/2">
               <Link to={`/`} className="flex items-center">
-                <Icons.Logo />
+                <Icon.Logo />
                 <Heading tag={`h6`} size={`h4`} className="ml-2">
                   Bawd
                 </Heading>
@@ -132,7 +132,7 @@ const Bawd: React.FC = () => {
                 colour="blank"
                 onClick={() => changeDarkMode()}
               >
-                <Icons.ContrastIcon size={24} />
+                <Icon.Contrast size={24} />
               </Button>
             </Column>
           </Row>

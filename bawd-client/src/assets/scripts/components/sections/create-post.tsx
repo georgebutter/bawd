@@ -1,8 +1,8 @@
 import * as React from "react";
 import ReactPlayer from "react-player";
-import { IBoard } from "../../types";
+import { IBoard, IPost } from "../../types";
 import { togglePopup } from "../../utils";
-import { PostIcon } from "../icons";
+import * as Icon from "../icons";
 
 import {
   Button,
@@ -16,7 +16,9 @@ import {
 
 const CreatePost: React.FC<{
   board?: IBoard;
+  parent?: IPost["_id"];
 }> = (props) => {
+  const { parent } = props;
   const [status, setStatus] = React.useState<"ready" | "loading">("ready");
   const [title, setTitle] = React.useState<string>("");
   const [link, setLink] = React.useState<string>("");
@@ -72,6 +74,7 @@ const CreatePost: React.FC<{
           body: JSON.stringify({
             board,
             link,
+            parent,
             password,
             post,
             title,
@@ -146,7 +149,11 @@ const CreatePost: React.FC<{
           <Button
             type="submit"
           >
-            <PostIcon size={12} />
+            {parent ? (
+              <Icon.Comment size={12} />
+            ) : (
+              <Icon.Post size={12} />
+            )}
             <span className={"ml-1"}>
               {status === "loading" ? "Creating post" : "Create post"}
             </span>

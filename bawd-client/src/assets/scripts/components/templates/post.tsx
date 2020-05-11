@@ -7,16 +7,17 @@ import {
 
 import { IBoard, IPost, } from "../../types";
 import { checkImageURL, getBoardByHandle, getPostById, togglePopup, } from "../../utils";
+import * as Icon from "../icons";
 import * as Sections from "../sections";
 import {
   Button,
   Column,
   Container,
+  ElasticList,
   Heading,
   Image,
   Row,
 } from "../snippets";
-import { BoardIcon } from "../icons";
 
 const Post: React.FC = () => {
   const { boardHandle, postId } = useParams();
@@ -79,15 +80,52 @@ const Post: React.FC = () => {
             <Column width="1/2" align="end">
               <Button
                 onClick={() => togglePopup({
-                  content: () => <Sections.CreateComment />,
+                  content: () => <Sections.CreatePost parent={postId} board={board} />,
                   title: "Create Comment",
                 })}
               >
-                <BoardIcon size={12} />
+                <Icon.Comment size={12} />
                 <span className={"ml-1"}>{"Comment"}</span>
               </Button>
             </Column>
           </Row>
+          <ElasticList
+            index="posts"
+            query={{
+              query: {
+                bool: {
+                  must: {
+                    term: {
+                      parent: postId
+                    },
+                  },
+                },
+              },
+            }}
+            render={(data) => (
+              <Row>
+                {data.map((comment: IPost) => (
+                  <Column>
+                    <div>
+                      <Heading tag="h6">
+                        {comment._source.title}
+                      </Heading>
+                      <div dangerouslySetInnerHTML={{
+                        __html: comment ? marked(comment._source.post) : "Loading" }}
+                      />
+                      <small className="text-xs">{comment._source.tripcode}</small>
+                    </div>
+                  </Column>
+                ))}
+              </Row>
+            )}
+            renderError={(err) => (
+              <p>{err}</p>
+            )}
+            renderNoResults={() => (
+              <p>No comments created yet...</p>
+            )}
+          />
         </Container>
       </div>
     </div>

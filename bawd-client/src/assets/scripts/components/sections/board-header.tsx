@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { IBoard } from "../../types";
 import { togglePopup } from "../../utils";
-import { BoardIcon } from "../icons";
+import * as Icon from "../icons";
 import * as Sections from "../sections";
 import { Button, Column, Container, Heading, Row, } from "../snippets";
 
@@ -31,7 +31,7 @@ export const BoardHeader: React.FC<{
               title: "Create Post",
             })}
           >
-            <BoardIcon size={12} />
+            <Icon.Board size={12} />
             <span className={"ml-1"}>{"Create post"}</span>
           </Button>
         </Column>

@@ -34,7 +34,7 @@ const PostList: React.FC<{
     renderError={(error: any) => (
       <Row>
         <Column>
-          <p>{error}</p>
+          <p>{JSON.stringify(error)}</p>
         </Column>
       </Row>
     )}

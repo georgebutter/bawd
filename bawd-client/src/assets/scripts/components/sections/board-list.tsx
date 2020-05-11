@@ -34,7 +34,7 @@ const BoardList: React.FC<IBoardList> = ({
         </React.Fragment>
     )}
     renderError={(error: any) => (
-      <p>{JSON.stringify(error)}</p>
+      <p className="text-error">{error}</p>
     )}
   />
 );

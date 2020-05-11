@@ -33,10 +33,10 @@ const ElasticList: React.FC<IProps> = ({
   if (status === "loading") {
     return renderLoading ? renderLoading() : <React.Fragment />;
   } else if (status === "ready") {
-    if (data?.body?.hits?.hits?.length) {
+    if (data?.body?.hits?.hits?.length > 0) {
       return render(data.body.hits.hits);
     }
-    return renderLoading ? renderNoResults() : <React.Fragment />;
+    return renderNoResults ? renderNoResults() : <React.Fragment />;
   }
   return renderError(data);
 

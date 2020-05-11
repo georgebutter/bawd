@@ -9,7 +9,7 @@ import {
 } from "../snippets";
 
 import { togglePopup } from "../../utils";
-import { BoardIcon, PostIcon } from "../icons";
+import * as Icon from "../icons";
 import * as Sections from "../sections";
 
 const Home: React.FC = () => {
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
                 title: "Create Post"
               })}
             >
-              <PostIcon size={12} />
+              <Icon.Post size={12} />
               <span className={"ml-1"}>
                 {"Create post"}
               </span>
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
                 title: "Create Board",
               })}
             >
-              <BoardIcon size={12} />
+              <Icon.Board size={12} />
               <span className={"ml-1"}>
                 {"Create board"}
               </span>

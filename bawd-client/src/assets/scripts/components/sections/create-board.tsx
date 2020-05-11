@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDebounce } from "use-debounce";
 import { categories, handleize } from "../../../../../../bawd-shared";
 import { getBoardByHandle, togglePopup } from "../../utils";
-import { BoardIcon } from "../icons";
+import * as Icon from "../icons";
 import {
   Button,
   Column,
@@ -80,7 +80,7 @@ const CreateBoard: React.FC = () => {
             disabled={status === "disabled"}
             type="submit"
           >
-            <BoardIcon size={12} />
+            <Icon.Board size={12} />
             <span className={"ml-1"}>
               {"Create board"}
             </span>

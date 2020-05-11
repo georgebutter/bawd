@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button } from ".";
-import { EyeIcon, NoEyeIcon } from "../icons";
+import * as Icon from "../icons";
 
 const Input: React.FC<IProps> = ({
   type = "text", placeholder, label, name, value, onChange, error, success, autoComplete, onBlur
@@ -37,9 +37,9 @@ const Input: React.FC<IProps> = ({
               onClick={() => setCurrentType((prev) => prev === "text" ? "password" : "text")}
             >
               {currentType === "password" ? (
-                <EyeIcon size={12} />
+                <Icon.Eye size={12} />
               ) : (
-                <NoEyeIcon size={12} />
+                <Icon.NoEye size={12} />
               )}
             </Button>
           </div>

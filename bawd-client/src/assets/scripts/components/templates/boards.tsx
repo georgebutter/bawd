@@ -6,11 +6,10 @@ import {
   Column,
   Container,
   Heading,
-  Popup,
   Row,
 } from "../snippets";
 
-import { BoardIcon, PostIcon } from "../icons";
+import * as Icon from "../icons";
 import * as Sections from "../sections";
 
 const Boards: React.FC = () => {
@@ -31,7 +30,7 @@ const Boards: React.FC = () => {
                 title: "Create Board",
               })}
             >
-              <BoardIcon size={12} />
+              <Icon.Board size={12} />
               <span className={"ml-1"}>
                 {"Create board"}
               </span>

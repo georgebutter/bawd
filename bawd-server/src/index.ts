@@ -32,7 +32,7 @@ const ing = (promise: any) => {
 })();
 
 app.post("/posts", (req: express.Request, res: express.Response) => {
-  const { title, post, board, password, link } = req.body;
+  const { title, post, board, parent, password, link } = req.body;
   const ip = req.headers["x-forwarded-for"] ||
   req.connection.remoteAddress ||
   req.socket.remoteAddress;
@@ -62,6 +62,7 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
         id: Math.random().toString(16).substr(2),
         ip,
         link,
+        parent,
         post,
         title,
         tripcode,
@@ -69,8 +70,9 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
       index: "posts",
     }));
     if (err) {
+      res.status(400);
       return res.json({
-        error: err,
+        error: err.meta.body.error.reason,
         status: "error",
       });
     }
@@ -90,8 +92,9 @@ app.post("/:index/search", (req: express.Request, res: express.Response) => {
       index,
     }));
     if (err) {
+      res.status(400);
       return res.json({
-        error: err,
+        error: err.meta.body.error.reason,
         status: "error",
       });
     }
@@ -125,8 +128,9 @@ app.post("/boards", (req: express.Request, res: express.Response) => {
       index: "boards",
     }));
     if (err) {
+      res.status(400);
       return res.json({
-        error: err,
+        error: err.meta.body.error.reason,
         status: "error",
       });
     }
@@ -144,8 +148,9 @@ app.get("/boards", (req: express.Request, res: express.Response) => {
       index: "boards",
     }));
     if (err) {
+      res.status(400);
       return res.json({
-        error: err,
+        error: err.meta.body.error.reason,
         status: "error",
       });
     }
@@ -172,8 +177,9 @@ app.get("/boards/:handle", (req: express.Request, res: express.Response) => {
       index: "boards",
     }));
     if (err) {
+      res.status(400);
       return res.json({
-        error: err,
+        error: err.meta.body.error.reason,
         status: "error",
       });
     }
@@ -197,6 +203,7 @@ app.get("/posts/:id", (req: express.Request, res: express.Response) => {
       index: "posts",
     }));
     if (err) {
+      res.status(400);
       return res.json({
         error: err,
         status: "error",
@@ -215,8 +222,9 @@ app.get("/posts", (req: express.Request, res: express.Response) => {
       index: "posts",
     }));
     if (err) {
+      res.status(400);
       return res.json({
-        error: err,
+        error: err.meta.body.error.reason,
         status: "error",
       });
     }

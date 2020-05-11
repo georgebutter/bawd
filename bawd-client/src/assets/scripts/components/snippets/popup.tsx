@@ -1,6 +1,6 @@
 import * as React from "react";
 import { togglePopup } from "../../utils";
-import { CloseIcon } from "../icons";
+import * as Icon from "../icons";
 
 import Button from "./button";
 import Column from "./column";
@@ -31,7 +31,7 @@ const Popup: React.FC<IProps> = ({ popup }) => {
                   colour="blank"
                   onClick={() => togglePopup(null)}
                 >
-                  <CloseIcon size={24} />
+                  <Icon.Close size={24} />
                 </Button>
               </Column>
             </Row>

@@ -1,6 +1,6 @@
 import * as marked from "marked";
 import * as React from "react";
-import { EyeIcon, NoEyeIcon } from "../icons";
+import * as Icon from "../icons";
 import Button from "./button";
 
 const MarkdownInput: React.FC<IProps> = ({
@@ -30,9 +30,9 @@ const MarkdownInput: React.FC<IProps> = ({
             onClick={() => setView((prev) => prev === "write" ? "preview" : "write")}
           >
             {view === "write" ? (
-              <EyeIcon size={18} />
+              <Icon.Eye size={18} />
             ) : (
-              <NoEyeIcon size={18} />
+              <Icon.NoEye size={18} />
             )}
           </Button>
         </div>
