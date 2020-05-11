@@ -4,6 +4,7 @@
   "routes": {
     "/assets/*": "/assets/",
     "/boards/*": "index.html",
+    "/boards/*/*/*": "index.html",
     "/": "index.html"
   },
   "proxies": {
