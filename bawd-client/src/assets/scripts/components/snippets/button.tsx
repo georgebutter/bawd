@@ -15,6 +15,10 @@ const Button: React.FC<IProps> = ({
       default: "outline-none active:outline-none focus:outline-none",
       disabled: "outline-none active:outline-none focus:outline-none",
     },
+    link: {
+      default: "text-primary font-inherit underline outline-none active:outline-none focus:outline-none",
+      disabled: "text-primary font-inherit outline-none active:outline-none focus:outline-none",
+    },
     primary: {
       default: primaryCommon,
       disabled: `${primaryCommon} cursor-not-allowed opacity-50`,
@@ -43,6 +47,6 @@ interface IProps {
   type?: "submit" | "button";
 }
 
-type Colours = "primary" | "secondary" | "blank";
+type Colours = "primary" | "secondary" | "blank" | "link";
 
 export default Button;

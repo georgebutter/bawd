@@ -13,6 +13,9 @@ module.exports = {
           'Segoe UI Emoji',
         ],
       },
+      fontWeight: {
+        'inherit': 'inherit',
+      },
     },
     colors: {
       'primary': 'var(--primary)',

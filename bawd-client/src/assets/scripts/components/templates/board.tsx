@@ -29,6 +29,7 @@ const Board: React.FC = () => {
       <Sections.BoardHeader board={board} />
       <Container>
         <Sections.PostList
+          board={board}
           query={{
             query: {
               match: {

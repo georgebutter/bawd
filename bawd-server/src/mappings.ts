@@ -27,3 +27,21 @@ export const posts = {
     type: "text"
   },
 };
+
+export const comments = {
+  handle: {
+    type: "text"
+  },
+  id: {
+    type: "text"
+  },
+  parent: {
+    type: "text"
+  },
+  post: {
+    type: "text"
+  },
+  tripcode: {
+    type: "text"
+  },
+};

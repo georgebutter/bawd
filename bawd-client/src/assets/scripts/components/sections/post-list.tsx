@@ -1,13 +1,16 @@
 import * as React from "react";
 import * as Sections from ".";
-import { Column, ElasticList, Row } from "../snippets";
+import { Button, Column, ElasticList, Heading, Row } from "../snippets";
 
-import { IPost } from "../../types";
+import { IBoard, IPost } from "../../types";
+import { togglePopup } from "../../utils";
 
 const PostList: React.FC<{
   query?: any;
+  board?: IBoard;
 }> = ({
-  query
+  query,
+  board
 }) => (
   <ElasticList
     index={`posts`}
@@ -26,8 +29,34 @@ const PostList: React.FC<{
     )}
     renderNoResults={() => (
       <Row>
-        <Column>
-          <p>No posts found.</p>
+        <Column
+          className="py-6 h-screen text-center"
+          vertical="center"
+          align="center"
+        >
+          <div>
+            <Heading
+              tag="h6"
+              size="h1"
+            >
+              👋
+            </Heading>
+            <Heading
+              tag="h4"
+            >
+              {"Wow a brand new board! Get started by "}
+              <Button
+                colour="link"
+                onClick={() => togglePopup({
+                  content: () => <Sections.CreatePost board={board} />,
+                  title: "Create Post",
+                })}
+              >
+                {"creating a post"}
+              </Button>
+              {"!"}
+            </Heading>
+          </div>
         </Column>
       </Row>
     )}

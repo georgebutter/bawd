@@ -19,6 +19,16 @@ export interface IPost {
     link: string;
   };
 }
+export interface IComment {
+  _id: string;
+  _source: {
+    comment: string;
+    tripcode: string;
+    id: string;
+    link: string;
+    parent: IPost["_id"];
+  };
+}
 
 interface IPopup {
   content: () => React.ReactNode;

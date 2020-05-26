@@ -2,7 +2,7 @@ import { Client } from "@elastic/elasticsearch";
 import * as express from "express";
 import { handleize } from "../../bawd-shared";
 import * as mappings from "./mappings";
-import { createTripcode } from "./utils";
+import { createTripcode, ing, checkAndCreateIndex } from "./utils";
 
 const {
   PORT = 3100,
@@ -17,13 +17,6 @@ const elasticClient = new Client({
 const app = express();
 app.use(express.json());
 app.set("trust proxy", true);
-
-const ing = (promise: any) => {
-  return promise.then((data: any) => {
-    return [null, data];
-  })
-  .catch((err: any) => [err]);
-};
 
 (async () => {
   await elasticClient.indices.refresh({ index: "posts" });
@@ -83,6 +76,48 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
   })();
 });
 
+
+app.post("/comments", (req: express.Request, res: express.Response) => {
+  const { comment, parent, password, link } = req.body;
+  const ip = req.headers["x-forwarded-for"] ||
+  req.connection.remoteAddress ||
+  req.socket.remoteAddress;
+  if (!comment || comment === "") {
+    return res.json({
+      error: {
+        chooseTitle: "Comment cannot be blank"
+      },
+      status: "error",
+    });
+  }
+  (async () => {
+    const tripcode = createTripcode(HMAC_SECRET, password);
+    const [err, result] = await ing(elasticClient.index({
+      body: {
+        comment,
+        id: Math.random().toString(16).substr(2),
+        ip,
+        link,
+        parent,
+        tripcode,
+      },
+      index: "comments",
+    }));
+    if (err) {
+      res.status(400);
+      return res.json({
+        error: err.meta.body.error.reason,
+        status: "error",
+      });
+    }
+    await elasticClient.indices.refresh({ index: "boards" });
+    return res.json({
+      result,
+      status: "success",
+    });
+  })();
+});
+
 app.post("/:index/search", (req: express.Request, res: express.Response) => {
   (async () => {
     const { index } = req.params;
@@ -134,6 +169,7 @@ app.post("/boards", (req: express.Request, res: express.Response) => {
         status: "error",
       });
     }
+    await elasticClient.indices.refresh({ index: "boards" });
     return res.json({
       body,
       result,
@@ -240,40 +276,12 @@ if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
     (async () => {
-      const [boardsErr] = await ing(elasticClient.indices.get({
-        index: "boards"
-      }));
-      if (boardsErr) {
-        const [error] = await ing(elasticClient.indices.create({
-          body: {
-            mappings: {
-              properties: mappings.boards
-            }
-          },
-          index: "boards",
-        }));
-        if (error) {
-          console.error("Could not create boards index");
-          console.log(error.body.error);
-        }
-      }
-      const [postsErr] = await ing(elasticClient.indices.get({
-        index: "posts"
-      }));
-      if (postsErr) {
-        const [error] = await ing(elasticClient.indices.create({
-          body: {
-            mappings: {
-              properties: mappings.posts
-            }
-          },
-          index: "posts",
-        }));
-        if (error) {
-          console.error("Could not create posts index");
-          console.log(error.body.error);
-        }
-      }
+      /**
+       * Create any missing indices
+       */
+      checkAndCreateIndex("boards", elasticClient);
+      checkAndCreateIndex("posts", elasticClient);
+      checkAndCreateIndex("comments", elasticClient);
     })();
   });
 }

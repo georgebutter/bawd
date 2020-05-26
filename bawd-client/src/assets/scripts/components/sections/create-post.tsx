@@ -1,5 +1,6 @@
 import * as React from "react";
 import ReactPlayer from "react-player";
+import { useHistory } from "react-router-dom";
 import { IBoard, IPost } from "../../types";
 import { togglePopup } from "../../utils";
 import * as Icon from "../icons";
@@ -34,6 +35,7 @@ const CreatePost: React.FC<{
     choosePost: null,
     chooseTitle: null,
   });
+  const history = useHistory();
   return (
     <Container>
       <Form onSubmit={async (e) => {
@@ -88,6 +90,7 @@ const CreatePost: React.FC<{
         if (json.status === "success") {
           setStatus("ready");
           togglePopup(null);
+          history.go(0);
         }
       }}>
         <Column>
@@ -98,16 +101,6 @@ const CreatePost: React.FC<{
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             error={errors.chooseTitle}
-          />
-        </Column>
-        <Column>
-          <Input
-            name="Signature"
-            label="Signature"
-            placeholder="Signature"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
           />
         </Column>
         <Column>
@@ -145,6 +138,16 @@ const CreatePost: React.FC<{
             />
           </Column>
         ) : null}
+        <Column>
+          <Input
+            name="Signature"
+            label="Signature"
+            placeholder="Signature"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Column>
         <Column>
           <Button
             type="submit"

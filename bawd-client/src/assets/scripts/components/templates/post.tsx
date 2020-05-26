@@ -5,7 +5,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import { IBoard, IPost, } from "../../types";
+import { IBoard, IPost, IComment, } from "../../types";
 import { checkImageURL, getBoardByHandle, getPostById, togglePopup, } from "../../utils";
 import * as Icon from "../icons";
 import * as Sections from "../sections";
@@ -80,7 +80,7 @@ const Post: React.FC = () => {
             <Column width="1/2" align="end">
               <Button
                 onClick={() => togglePopup({
-                  content: () => <Sections.CreatePost parent={postId} board={board} />,
+                  content: () => <Sections.CreateComment parent={postId} />,
                   title: "Create Comment",
                 })}
               >
@@ -90,7 +90,7 @@ const Post: React.FC = () => {
             </Column>
           </Row>
           <ElasticList
-            index="posts"
+            index="comments"
             query={{
               query: {
                 bool: {
@@ -104,14 +104,11 @@ const Post: React.FC = () => {
             }}
             render={(data) => (
               <Row>
-                {data.map((comment: IPost) => (
+                {data.map((comment: IComment) => (
                   <Column>
                     <div>
-                      <Heading tag="h6">
-                        {comment._source.title}
-                      </Heading>
                       <div dangerouslySetInnerHTML={{
-                        __html: comment ? marked(comment._source.post) : "Loading" }}
+                        __html: comment ? marked(comment._source.comment) : "Loading" }}
                       />
                       <small className="text-xs">{comment._source.tripcode}</small>
                     </div>

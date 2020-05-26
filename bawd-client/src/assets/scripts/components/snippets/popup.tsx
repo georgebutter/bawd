@@ -17,7 +17,7 @@ const Popup: React.FC<IProps> = ({ popup }) => {
       />
       <div className={`flex flex-col h-full justify-center p-2 w-full`}>
         <div
-          className={`bg-fg max-w-lg min-h-8 mx-auto overflow-y-auto relative rounded-lg w-full`}
+          className={`bg-fg max-w-lg min-h-8 mx-auto relative rounded-lg w-full flex flex-col`}
         >
           <Container>
             <Row>
@@ -36,7 +36,9 @@ const Popup: React.FC<IProps> = ({ popup }) => {
               </Column>
             </Row>
           </Container>
-          {popup ? popup.content() : null}
+          <div className={`overflow-y-auto`}>
+            {popup ? popup.content() : null}
+          </div>
         </div>
       </div>
     </div>
