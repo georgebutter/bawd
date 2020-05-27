@@ -30,7 +30,7 @@ const PostList: React.FC<{
     renderNoResults={() => (
       <Row>
         <Column
-          className="py-6 h-screen text-center"
+          className="py-6 text-center"
           vertical="center"
           align="center"
         >

@@ -10,7 +10,8 @@ import {
 } from "react-router-dom";
 
 import { IPopup } from "../types";
-
+import { togglePopup } from "../utils";
+import * as Sections from "./sections";
 import {
   Button,
   Column,
@@ -116,38 +117,42 @@ const Bawd: React.FC = () => {
 
   return (
     <Router>
-      <header className={`bg-fg`}>
-        <Container>
-          <Row>
-            <Column width="1/2">
-              <Link to={`/`} className="flex items-center">
-                <Icon.Logo />
-                <Heading tag={`h6`} size={`h4`} className="ml-2">
-                  Bawd
-                </Heading>
-              </Link>
-            </Column>
-            <Column width="1/2" align="end">
-              <Button
-                colour="blank"
-                onClick={() => changeDarkMode()}
-              >
-                <Icon.Contrast size={24} />
-              </Button>
-            </Column>
-          </Row>
-        </Container>
-      </header>
-      <Switch>
-        {routes.map((route) => (
-          <Route
-            key={route.path}
-            path={route.path}
-            exact={route.exact}
-            children={<route.main />}
-          />
-        ))}
-      </Switch>
+      <div className="h-screen flex bg-fg">
+        <aside className={`w-64 h-full overflow-y-auto`}>
+          <Container>
+            <Row>
+              <Column width="1/2">
+                <Link to={`/`} className="flex items-center">
+                  <Icon.Logo />
+                </Link>
+              </Column>
+              <Column width="1/2" align="end">
+                <Button
+                  colour="blank"
+                  onClick={() => changeDarkMode()}
+                >
+                  <Icon.Contrast size={24} />
+                </Button>
+              </Column>
+            </Row>
+            <Sections.BoardsList />
+          </Container>
+        </aside>
+        <main className={`p-2 overflow-y-auto h-full w-full`}>
+          <div className="bg-bg rounded-lg overflow-hidden h-full">
+            <Switch>
+              {routes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  exact={route.exact}
+                  children={<route.main />}
+                />
+              ))}
+            </Switch>
+          </div>
+        </main>
+      </div>
       <Popup
         setPopup={setPopup}
         popup={popup}

@@ -13,10 +13,12 @@ import {
   Select
 } from "../snippets";
 
-const CreateBoard: React.FC = () => {
+const CreateBoard: React.FC<{
+  category: typeof categories[number];
+}> = (props) => {
   const history = useHistory();
   const [name, setName] = React.useState<string>("");
-  const [category, setCategory] = React.useState<typeof categories[number] | "">("");
+  const [category, setCategory] = React.useState<typeof categories[number] | "">(props.category);
   const debouncedName = useDebounce(name, 500);
   const [status, setStatus] = React.useState<string>("disabled");
   React.useEffect(() => {
@@ -60,21 +62,23 @@ const CreateBoard: React.FC = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </Column>
-        <Column>
-          <Select
-            label="Category"
-            name="Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option>Please select a category</option>
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </Select>
-        </Column>
+        {!props.category ? (
+          <Column>
+            <Select
+              label="Category"
+              name="Category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option>Please select a category</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </Select>
+          </Column>
+        ) : null}
         <Column>
           <Button
             disabled={status === "disabled"}

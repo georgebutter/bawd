@@ -7,7 +7,7 @@ const Heading: React.FC<IProps> = ({ children, size, tag, className, itemprop })
     h3: "text-3xl font-semibold",
     h4: "text-2xl font-semibold",
     h5: "text-xl font-semibold",
-    h6: "text-lg",
+    h6: "text-sm",
   };
   const style: string = size ? sizes[size] : sizes[tag];
   const classes: string = `lh-crop ${style} ${className ? className : ""}`;

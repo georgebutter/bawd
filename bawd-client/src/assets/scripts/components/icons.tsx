@@ -60,6 +60,12 @@ export const Play: React.FC<IProps> = ({ size }) => (
   </IconWrapper>
 );
 
+export const Plus: React.FC<IProps> = ({ size }) => (
+  <IconWrapper>
+    <path fill="currentColor" d="M9 17h6v6c0 .6.4 1 1 1s1-.4 1-1v-6h6c.6 0 1-.4 1-1s-.4-1-1-1h-6V9c0-.6-.4-1-1-1s-1 .4-1 1v6H9c-.6 0-1 .4-1 1s.4 1 1 1z"/>
+  </IconWrapper>
+)
+
 export const Logo: React.FC<IProps> = ({ size }) => (
   <IconWrapper size={size}>
     <defs>

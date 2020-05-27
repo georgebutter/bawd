@@ -1,7 +1,9 @@
 import * as React from "react";
 import * as Sections from ".";
 import { IBoard } from "../../types";
-import { ElasticList, Heading } from "../snippets";
+import { togglePopup } from "../../utils";
+import * as Icons from "../icons";
+import { Button, ElasticList } from "../snippets";
 
 const BoardList: React.FC<IBoardList> = ({
   title,
@@ -19,9 +21,15 @@ const BoardList: React.FC<IBoardList> = ({
     }}
     render={(boards: IBoard[]) => (
       <React.Fragment>
-        <Heading tag="h6" className="w-full">
-          {title ? title : category}
-        </Heading>
+        <Button
+          colour="sidebar"
+          onClick={() => togglePopup({
+            content: () => <Sections.CreateBoard category={category} />,
+            title: "Create Board",
+          })}
+        >
+          {title ? title : category} <Icons.Plus />
+        </Button>
         <ul className="w-full">
           {boards.map((board) => (
             <li key={board._id}>
@@ -31,7 +39,18 @@ const BoardList: React.FC<IBoardList> = ({
             </li>
           ))}
         </ul>
-        </React.Fragment>
+      </React.Fragment>
+    )}
+    renderNoResults={() => (
+      <Button
+        colour="sidebar"
+        onClick={() => togglePopup({
+          content: () => <Sections.CreateBoard category={category} />,
+          title: "Create Board",
+        })}
+      >
+        {title ? title : category} <Icons.Plus />
+      </Button>
     )}
     renderError={(error: any) => (
       <p className="text-error">{error}</p>
