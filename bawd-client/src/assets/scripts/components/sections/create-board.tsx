@@ -14,7 +14,7 @@ import {
 } from "../snippets";
 
 const CreateBoard: React.FC<{
-  category: typeof categories[number];
+  category?: typeof categories[number];
 }> = (props) => {
   const history = useHistory();
   const [name, setName] = React.useState<string>("");
