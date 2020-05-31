@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Sections from ".";
-import { Button, Column, ElasticList, Heading, Row } from "../snippets";
+import { Button, Column, Container, ElasticList, Heading, Row,  } from "../snippets";
 
 import { IBoard, IPost } from "../../types";
 import { togglePopup } from "../../utils";
@@ -23,9 +23,11 @@ const PostList: React.FC<{
       </Row>
     )}
     render={(data) => (
-      <Row>
-        {data.map((post: IPost) => <Sections.PostItem {...post}  key={post._id} />)}
-      </Row>
+      <Container width="xl">
+        <Row>
+          {data.map((post: IPost) => <Sections.PostItem {...post}  key={post._id} />)}
+        </Row>
+      </Container>
     )}
     renderNoResults={() => (
       <Row>

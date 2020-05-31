@@ -4,7 +4,7 @@ const Heading: React.FC<IProps> = ({ children, size, tag, className, itemprop })
   const sizes: any = {
     h1: "text-5xl font-bold",
     h2: "text-4xl font-semibold",
-    h3: "text-3xl font-semibold",
+    h3: "text-xl md:text-3xl font-semibold",
     h4: "text-2xl font-semibold",
     h5: "text-xl font-semibold",
     h6: "text-sm",

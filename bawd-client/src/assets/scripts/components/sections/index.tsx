@@ -5,5 +5,6 @@ export * from "./boards-list";
 export * from "./create-board";
 export * from "./create-comment";
 export * from "./create-post";
+export * from "./menu";
 export * from "./post-item";
 export * from "./post-list";

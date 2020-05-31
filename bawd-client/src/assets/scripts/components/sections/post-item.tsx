@@ -10,55 +10,51 @@ import { Column, Heading, Image, Row, } from "../snippets";
 const PostItem: React.FC<IPost> = ({ _id, _source }) => (
   <Column>
     <div className="w-full bg-fg rounded-md hover:shadow-lg px-2 flex">
-      <div className="w-20 flex py-2 pr-2">
-        <div className="bg-primaryfaded rounded overflow-hidden w-full text-faded flex items-center justify-center">
+      <Row>
+        <Column>
+          <Link to={`/boards/${_source.board._source.handle}`} className="bg-primary text-fg px-1 rounded text-xs inline-block">
+            {_source.board._source.name}
+          </Link>
+        </Column>
+        <Column>
+          <Link
+            className="block w-full"
+            to={`/boards/${_source.board._source.handle}/${_source.id}/${_source.handle}`}
+          >
+            <Heading tag="h5">
+              {_source.title}
+            </Heading>
+            <div
+              className="text-sm text-faded rte"
+              dangerouslySetInnerHTML={{
+                __html: marked(_source.post)
+              }}
+            />
+          </Link>
+        </Column>
+        <Column>
           {_source.link ? (
             ReactPlayer.canPlay(_source.link) ? (
-              <Icon.Play />
+              <ReactPlayer url={_source.link} width="100%" />
             ) : checkImageURL(_source.link) ? (
               <Image src={_source.link} fit="cover" className="h-20"/>
             ) : (
               <Icon.Link />
             )
           ) : null}
-        </div>
-      </div>
-      <div className="flex-1">
-        <Row>
-          <Column width="1/2">
+        </Column>
+        <Column>
+          <small className="text-xs max-w-full block">
+            {"Posted by "}
             <Link
-              className="block w-full"
-              to={`/boards/${_source.board._source.handle}/${_source.id}/${_source.handle}`}
+              className="text-primary"
+              to={`/user/${_source.tripcode}`}
             >
-              <Heading tag="h5">
-                {_source.title}
-              </Heading>
-              <div
-                className="text-sm text-faded truncate rte"
-                dangerouslySetInnerHTML={{
-                  __html: marked(_source.post)
-                }}
-              />
+              {_source.tripcode.substring(0, 8)}
             </Link>
-          </Column>
-          <Column width="1/2" align="end">
-            <Link to={`/boards/${_source.board._source.handle}`} className="bg-primary text-fg px-1 rounded text-xs inline-block">
-              {_source.board._source.name}
-            </Link>
-          </Column>
-          <Column>
-            <small className="text-xs truncate max-w-full block">
-              {"Posted by "}
-              <Link
-                className="text-primary"
-                to={`/user/${_source.tripcode}`}
-              >
-                {_source.tripcode}
-              </Link>
-            </small>
-          </Column>
-        </Row>
-      </div>
+          </small>
+        </Column>
+      </Row>
     </div>
   </Column>
 );

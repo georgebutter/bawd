@@ -57,4 +57,11 @@ export const togglePopup = (popup: {
   document.dispatchEvent(event);
 };
 
+export const toggleMenu = (detail: boolean): void => {
+  const event = new CustomEvent("menu:toggle", {
+    detail,
+  });
+  document.dispatchEvent(event);
+};
+
 export const checkImageURL = (url: string): boolean => !!url.match(/\.(jpeg|jpg|gif|png)$/);

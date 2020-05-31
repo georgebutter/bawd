@@ -42,7 +42,20 @@ export const Comment: React.FC<IProps> = ({ size }) => (
     </g>
   </IconWrapper>
 );
-
+export const Menu: React.FC<IProps> = ({ size }) => (
+  <IconWrapper size={size}>
+    <g fill="currentColor">
+      <path d="M30 15H2c-.6 0-1 .4-1 1s.4 1 1 1h28c.6 0 1-.4 1-1s-.4-1-1-1z"/>
+      <path d="M30 6H2c-.6 0-1 .4-1 1s.4 1 1 1h28c.6 0 1-.4 1-1s-.4-1-1-1zM30 24H2c-.6 0-1 .4-1 1s.4 1 1 1h28c.6 0 1-.4 1-1s-.4-1-1-1z"/>
+    </g>
+  </IconWrapper>
+);
+export const Home: React.FC<IProps> = ({ size }) => (
+  <IconWrapper size={size}>
+    <path d="M31 15a1 1 0 01-.625-.219L16 3.28 1.625 14.781a1 1 0 11-1.25-1.562l15-12a1 1 0 011.25 0l15 12A1 1 0 0131 15z" fill="currentColor"/>
+    <path d="M16 5.842l-12 9.6V30a1 1 0 001 1h8v-8h6v8h8a1 1 0 001-1V15.442z" fill="currentColor"/>
+  </IconWrapper>
+);
 export const Link: React.FC<IProps> = ({ size }) => (
   <IconWrapper size={size}>
     <g fill="currentColor">

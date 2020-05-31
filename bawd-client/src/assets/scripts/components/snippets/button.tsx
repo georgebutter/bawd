@@ -1,12 +1,18 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 const Button: React.FC<IProps> = ({
-  children, onClick, colour = "primary", disabled, type = "button",
+  children,
+  onClick,
+  colour = "primary",
+  disabled,
+  href,
+  type = "button",
 }) => {
-  const common = "px-4 py-2 rounded flex items-center outline-none active:outline-none focus:outline-none"
+  const common = "px-4 py-2 rounded flex items-center outline-none active:outline-none focus:outline-none";
   const primaryCommon = `bg-primary text-sm text-bg ${common}`;
   const secondaryCommon = `bg-bg text-sm text-primary ${common}`;
-  const sidebarCommon = `bg-transparent text-sm text-faded flex items-center justify-between w-full outline-none active:outline-none focus:outline-none`;
+  const sidebarCommon = `bg-transparent text-sm text-faded flex items-center justify-between w-full outline-none active:outline-none focus:outline-none text-left`;
   const classes: {
     [key in Colours]: {
       disabled: string;
@@ -34,9 +40,17 @@ const Button: React.FC<IProps> = ({
       disabled: `${sidebarCommon} cursor-not-allowed opacity-50`,
     },
   };
-  return (
+  const className = classes[colour][disabled ? "disabled" : "default"];
+  return href ? (
+    <Link
+      to={href}
+      className={className}
+    >
+      {children}
+    </Link>
+  ) : (
     <button
-      className={classes[colour][disabled ? "disabled" : "default"]}
+      className={className}
       onClick={onClick}
       disabled={disabled}
       type={type}
@@ -51,6 +65,7 @@ interface IProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   colour?: Colours;
   type?: "submit" | "button";
+  href?: string;
 }
 
 type Colours = "primary" | "secondary" | "blank" | "link" | "sidebar";

@@ -8,6 +8,7 @@ import Image from "./image";
 import Input from "./input";
 import MarkdownInput from "./markdown-input";
 import Popup from "./popup";
+import RouterCallback from "./router-callback";
 import Row from "./row";
 import SearchSelect from "./search-select";
 import Select from "./select";
@@ -24,6 +25,7 @@ export {
   Input,
   MarkdownInput,
   Popup,
+  RouterCallback,
   Row,
   SearchSelect,
   Select,

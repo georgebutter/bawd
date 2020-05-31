@@ -5,9 +5,7 @@ import {
 } from "react-router-dom";
 
 import {
-  Column,
   Container,
-  Row,
 } from "../snippets";
 
 import { IBoard } from "../../types";

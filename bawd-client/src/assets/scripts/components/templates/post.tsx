@@ -5,7 +5,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import { IBoard, IPost, IComment, } from "../../types";
+import { IBoard, IComment, IPost, } from "../../types";
 import { checkImageURL, getBoardByHandle, getPostById, togglePopup, } from "../../utils";
 import * as Icon from "../icons";
 import * as Sections from "../sections";

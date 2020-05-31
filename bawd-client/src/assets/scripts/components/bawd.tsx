@@ -1,26 +1,14 @@
 import * as React from "react";
-import * as Store from "store";
-import * as Icon from "./icons";
-
 import {
   BrowserRouter as Router,
-  Link,
   Route,
   Switch,
 } from "react-router-dom";
-
+import * as Store from "store";
 import { IPopup } from "../types";
-import { togglePopup } from "../utils";
+import * as Icons from "./icons";
 import * as Sections from "./sections";
-import {
-  Button,
-  Column,
-  Container,
-  Heading,
-  Popup,
-  Row,
-} from "./snippets";
-
+import { Button, Popup, RouterCallback } from "./snippets";
 import {
   Board,
   Boards,
@@ -85,6 +73,7 @@ const Bawd: React.FC = () => {
   const prefersDark = Store.get("prefersDark");
   const [dark, setDark] = React.useState<boolean>(prefersDark || prefersColourScheme);
   const [popup, setPopup] = React.useState<IPopup>(null);
+  const [menuActive, setMenuActive] = React.useState<boolean>(false);
 
   const changeDarkMode = (change?: "dark" | "light") => {
     setDark((prev) => {
@@ -110,6 +99,9 @@ const Bawd: React.FC = () => {
     document.addEventListener("popup:toggle", (event: CustomEvent) => {
       setPopup((prev) => !prev ? event.detail : null);
     });
+    document.addEventListener("menu:toggle", (event: CustomEvent) => {
+      setMenuActive((prev) => !prev ? event.detail : false);
+    });
     if (prefersDark !== prefersColourScheme && matchMedia) {
       changeDarkMode(prefersDark ? "dark" : "light");
     }
@@ -117,29 +109,13 @@ const Bawd: React.FC = () => {
 
   return (
     <Router>
-      <div className="h-screen flex bg-fg">
-        <aside className={`w-64 h-full overflow-y-auto`}>
-          <Container>
-            <Row>
-              <Column width="1/2">
-                <Link to={`/`} className="flex items-center">
-                  <Icon.Logo />
-                </Link>
-              </Column>
-              <Column width="1/2" align="end">
-                <Button
-                  colour="blank"
-                  onClick={() => changeDarkMode()}
-                >
-                  <Icon.Contrast size={24} />
-                </Button>
-              </Column>
-            </Row>
-            <Sections.BoardsList />
-          </Container>
-        </aside>
+      <div className="h-screen flex flex-col md:flex-row bg-fg">
+        <Sections.Menu
+          changeDarkMode={changeDarkMode}
+          active={menuActive}
+        />
         <main className={`p-2 overflow-y-auto h-full w-full`}>
-          <div className="bg-bg rounded-lg overflow-hidden h-full">
+          <div className="bg-bg rounded-lg overflow-hidden">
             <Switch>
               {routes.map((route) => (
                 <Route
@@ -152,11 +128,38 @@ const Bawd: React.FC = () => {
             </Switch>
           </div>
         </main>
+        <nav className="w-full md:hidden flex justify-between border-faded border-t z-10">
+          <div className="p-2">
+            <Button
+              colour="sidebar"
+              onClick={() => setMenuActive((prev) => !prev)}
+            >
+              <Icons.Menu />
+            </Button>
+          </div>
+          <div className="p-2">
+            <Button
+              colour="sidebar"
+              href="/"
+            >
+              <Icons.Home />
+            </Button>
+          </div>
+          <div className="p-2">
+            <Button
+              colour="sidebar"
+              onClick={() => changeDarkMode()}
+            >
+              <Icons.Contrast />
+            </Button>
+          </div>
+        </nav>
       </div>
       <Popup
         setPopup={setPopup}
         popup={popup}
       />
+      <RouterCallback />
     </Router>
   );
 };

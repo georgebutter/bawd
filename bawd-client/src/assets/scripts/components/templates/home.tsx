@@ -1,41 +1,13 @@
 import * as React from "react";
-
-import {
-  Button,
-  Column,
-  Container,
-  Heading,
-  Row,
-} from "../snippets";
-
-import { togglePopup } from "../../utils";
-import * as Icon from "../icons";
 import * as Sections from "../sections";
+import {
+  Container,
+} from "../snippets";
 
 const Home: React.FC = () => {
   return (
     <React.Fragment>
       <Container>
-        <Row>
-          <Column width={`1/2`}>
-            <Heading tag={`h3`}>
-              {`Posts`}
-            </Heading>
-          </Column>
-          <Column width={`1/2`} align={`end`}>
-            <Button
-              onClick={() => togglePopup({
-                content: () => <Sections.CreatePost />,
-                title: "Create Post"
-              })}
-            >
-              <Icon.Post size={12} />
-              <span className={"ml-1"}>
-                {"Create post"}
-              </span>
-            </Button>
-          </Column>
-        </Row>
         <Sections.PostList />
       </Container>
     </React.Fragment>
