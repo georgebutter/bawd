@@ -10,7 +10,7 @@ import Row from "./row";
 
 const Popup: React.FC<IProps> = ({ popup }) => {
   return (
-    <div className={`fixed inset-0 ${popup ? `` : `opacity-0 invisible pointer-events-none`}`}>
+    <div className={`fixed z-20 inset-0 ${popup ? `` : `opacity-0 invisible pointer-events-none`}`}>
       <div
         className={`fixed inset-0 bg-bg opacity-50 backdrop-blur`}
         onClick={() => togglePopup(null)}

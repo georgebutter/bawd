@@ -114,7 +114,7 @@ const Bawd: React.FC = () => {
           changeDarkMode={changeDarkMode}
           active={menuActive}
         />
-        <main className={`p-2 overflow-y-auto h-full w-full`}>
+        <main className={`px-2 py-2 pb-16 md:pb-2 overflow-y-auto h-full w-full `}>
           <div className="bg-bg rounded-lg overflow-hidden">
             <Switch>
               {routes.map((route) => (
@@ -128,7 +128,7 @@ const Bawd: React.FC = () => {
             </Switch>
           </div>
         </main>
-        <nav className="w-full md:hidden flex justify-between border-faded border-t z-10">
+        <nav className="w-full md:hidden flex justify-between border-faded border-t z-10 bg-bg fixed bottom-0 left-0 right-0">
           <div className="p-2">
             <Button
               colour="sidebar"
