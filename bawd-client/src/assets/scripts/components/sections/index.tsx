@@ -6,5 +6,6 @@ export * from "./create-board";
 export * from "./create-comment";
 export * from "./create-post";
 export * from "./menu";
+export * from "./mobile-navigation";
 export * from "./post-item";
 export * from "./post-list";
