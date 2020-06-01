@@ -1,6 +1,7 @@
 import * as React from "react";
 import ReactPlayer from "react-player";
 import { useHistory } from "react-router-dom";
+import * as Store from "store";
 import { IBoard, IPost } from "../../types";
 import { togglePopup } from "../../utils";
 import * as Icon from "../icons";
@@ -25,7 +26,7 @@ const CreatePost: React.FC<{
   const [link, setLink] = React.useState<string>("");
   const [post, setPost] = React.useState<string>("");
   const [board, setBoard] = React.useState<IBoard>(props.board);
-  const [password, setPassword] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>(Store.get("signature") || "");
   const [errors, setErrors] = React.useState<{
     chooseBoard: "Please specify an existing board";
     chooseTitle: "Title cannot be blank",
@@ -72,6 +73,7 @@ const CreatePost: React.FC<{
         if (errs.length) {
           return;
         }
+        Store.set("signature", password);
         const response = await fetch(`/api/posts`, {
           body: JSON.stringify({
             board,
@@ -138,16 +140,18 @@ const CreatePost: React.FC<{
             />
           </Column>
         ) : null}
-        <Column>
-          <Input
-            name="Signature"
-            label="Signature"
-            placeholder="Signature"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Column>
+        {Store.get("signature") ? null : (
+          <Column>
+            <Input
+              name="Signature"
+              label="Signature"
+              placeholder="Signature"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Column>
+        )}
         <Column>
           <Button
             type="submit"

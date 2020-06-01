@@ -6,15 +6,15 @@ import {
 } from "react-router-dom";
 import * as Store from "store";
 import { IPopup } from "../types";
-import * as Icons from "./icons";
 import * as Sections from "./sections";
-import { Button, Popup, RouterCallback } from "./snippets";
+import { Popup, RouterCallback } from "./snippets";
 import {
   Board,
   Boards,
   Error,
   Home,
   Post,
+  User
 } from "./templates";
 
 const routes = [
@@ -37,6 +37,11 @@ const routes = [
     exact: true,
     main: () => <Post />,
     path: "/boards/:boardHandle/:postId/:postHandle",
+  },
+  {
+    exact: true,
+    main: () => <User />,
+    path: "/user/:user",
   },
   {
     exact: false,
