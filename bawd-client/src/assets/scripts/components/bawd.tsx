@@ -109,7 +109,7 @@ const Bawd: React.FC = () => {
 
   return (
     <Router>
-      <div className="h-screen flex flex-col md:flex-row bg-fg">
+      <div className="h-full flex flex-col md:flex-row bg-fg">
         <Sections.Menu
           changeDarkMode={changeDarkMode}
           active={menuActive}
