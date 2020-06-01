@@ -128,33 +128,33 @@ const Bawd: React.FC = () => {
             </Switch>
           </div>
         </main>
-        <nav className="w-full md:hidden flex justify-between border-faded border-t z-10 bg-bg fixed bottom-0 left-0 right-0">
-          <div className="p-2">
-            <Button
-              colour="sidebar"
-              onClick={() => setMenuActive((prev) => !prev)}
-            >
-              <Icons.Menu />
-            </Button>
-          </div>
-          <div className="p-2">
-            <Button
-              colour="sidebar"
-              href="/"
-            >
-              <Icons.Home />
-            </Button>
-          </div>
-          <div className="p-2">
-            <Button
-              colour="sidebar"
-              onClick={() => changeDarkMode()}
-            >
-              <Icons.Contrast />
-            </Button>
-          </div>
-        </nav>
       </div>
+      <nav className="w-full md:hidden flex justify-between border-faded border-t z-10 bg-bg fixed bottom-0 left-0 right-0">
+        <div className="p-2">
+          <Button
+            colour="sidebar"
+            onClick={() => setMenuActive((prev) => !prev)}
+          >
+            <Icons.Menu />
+          </Button>
+        </div>
+        <div className="p-2">
+          <Button
+            colour="sidebar"
+            href="/"
+          >
+            <Icons.Home />
+          </Button>
+        </div>
+        <div className="p-2">
+          <Button
+            colour="sidebar"
+            onClick={() => changeDarkMode()}
+          >
+            <Icons.Contrast />
+          </Button>
+        </div>
+      </nav>
       <Popup
         setPopup={setPopup}
         popup={popup}
