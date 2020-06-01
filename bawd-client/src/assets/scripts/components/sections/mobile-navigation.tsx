@@ -8,7 +8,7 @@ export const MobileNavigation: React.FC<IProps> = ({
   setMenuActive,
   changeDarkMode,
 }) => (
-  <nav className="w-full md:hidden flex justify-between border-faded border-t z-10 bg-bg absolute bottom-0 left-0 right-0">
+  <nav className="w-full md:hidden flex justify-between border-faded border-t z-10 bg-bg fixed bottom-0 left-0 right-0">
     <div className="p-2">
       <Button
         colour="sidebar"
