@@ -14,7 +14,7 @@ export const BoardHeader: React.FC<{
   <div className="bg-primary">
     <Container className="py-4">
       <Row>
-        <Column width={`1/2`}>
+        <Column width={`1/2`} vertical="center">
           <Heading tag="h3">
             <Link
               to={board ? `/boards/${board._source.handle}` : null}
