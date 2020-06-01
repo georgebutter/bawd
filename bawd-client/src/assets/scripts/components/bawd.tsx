@@ -94,12 +94,14 @@ const Bawd: React.FC = () => {
   };
 
   React.useEffect(() => {
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      const change = e.matches ? "dark" : "light";
-      if (!Store.get("prefersDark")) {
-        changeDarkMode(change);
-      }
-    });
+    if (typeof window.matchMedia("(prefers-color-scheme: dark)").addEventListener === "function") {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+        const change = e.matches ? "dark" : "light";
+        if (!Store.get("prefersDark")) {
+          changeDarkMode(change);
+        }
+      });
+    }
 
     document.addEventListener("popup:toggle", (event: CustomEvent) => {
       setPopup((prev) => !prev ? event.detail : null);
