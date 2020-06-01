@@ -31,7 +31,7 @@ const PreviewLink: React.FC<IProps> = ({ link }) => {
               </span>
             ) : null}
           </div>
-          {preview.open_graph.images ? (
+          {preview?.open_graph?.images ? (
             <Image src={preview.open_graph.images[0].url} />
           ) : null}
           <Heading tag="h4">{title}</Heading>
