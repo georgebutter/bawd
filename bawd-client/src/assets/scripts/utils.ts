@@ -1,6 +1,7 @@
 import {
   IBoard,
   IPost,
+  IMetadata,
 } from "./types";
 
 /**
@@ -37,6 +38,28 @@ export const getBoardByHandle = async (handle: string): Promise<IBoard> => {
   });
   const json = await res.json();
   return json.result.body.hits.hits[0];
+};
+
+/**
+ * Gets a open graph json object response for an external link
+ * @async
+ * @function getPreview
+ * @param {string} link The handle of the board you want to retrieve.
+ * @version 0.0.1
+ * @returns {Promise} A promise representing an IMetadata
+ */
+export const getPreview = async (link: string): Promise<IMetadata> => {
+  const res = await fetch(`/api/preview`, {
+    body: JSON.stringify({
+      link,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+  const json = await res.json();
+  return json;
 };
 
 /**

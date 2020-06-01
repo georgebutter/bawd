@@ -16,6 +16,7 @@ import {
   ElasticList,
   Heading,
   Image,
+  PreviewLink,
   Row,
 } from "../snippets";
 
@@ -53,16 +54,9 @@ const Post: React.FC = () => {
                 ReactPlayer.canPlay(link) ? (
                   <ReactPlayer url={link} />
                 ) : checkImageURL(link) ? (
-                  <Image src={link}/>
+                  <Image src={link} />
                 ) : (
-                  <a
-                    href={link}
-                    target="_blank"
-                    rel="nofollow noreferrer"
-                    className="text-primary"
-                  >
-                    External link
-                  </a>
+                  <PreviewLink link={link} />
                 )
               }
             </Column>

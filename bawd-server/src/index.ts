@@ -1,8 +1,8 @@
 import { Client } from "@elastic/elasticsearch";
 import * as express from "express";
+import { unfurl } from "unfurl.js";
 import { handleize } from "../../bawd-shared";
-import * as mappings from "./mappings";
-import { createTripcode, ing, checkAndCreateIndex } from "./utils";
+import { checkAndCreateIndex, createTripcode, ing, } from "./utils";
 
 const {
   PORT = 3100,
@@ -268,6 +268,17 @@ app.get("/posts", (req: express.Request, res: express.Response) => {
       result,
       status: "success",
     });
+  })();
+});
+
+app.post("/preview", ({ body }: express.Request, res: express.Response) => {
+  console.log("preview");
+
+  (async () => {
+    console.log(body.link);
+    const preview = await unfurl(body.link);
+    console.log(preview);
+    res.status(200).json(preview);
   })();
 });
 

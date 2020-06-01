@@ -30,6 +30,87 @@ export interface IComment {
   };
 }
 
+export interface IMetadata {
+  oEmbed?: {
+    type: "photo" | "video" | "link" | "rich";
+    version?: string;
+    title?: string;
+    author_name?: string;
+    author_url?: string;
+    provider_name?: string;
+    provider_url?: string;
+    cache_age?: number;
+    thumbnails?: Array<{
+      url?: string;
+      width?: number;
+      height?: number;
+    }>;
+  };
+  twitter_card: {
+    card: string
+    site?: string
+    creator?: string
+    creator_id?: string
+    title?: string
+    description?: string
+    players?: Array<{
+      url: string;
+      stream?: string;
+      height?: number;
+      width?: number;
+    }>
+    apps: {
+      iphone: {
+        id: string;
+        name: string;
+        url: string;
+      };
+      ipad: {
+        id: string;
+        name: string;
+        url: string;
+      }
+      googleplay: {
+        id: string;
+        name: string;
+        url: string;
+      }
+    };
+    images: Array<{
+      url: string;
+      alt: string;
+    }>
+  };
+  open_graph: {
+    title: string
+    type: string
+    images?: Array<{
+      url: string
+      secure_url?: string
+      type: string
+      width: number
+      height: number
+    }>
+    url?: string
+    audio?: Array<{
+      url: string
+      secure_url?: string
+      type: string;
+    }>;
+    description?: string
+    determiner?: string
+    locale: string
+    locale_alt: string
+    videos: Array<{
+      url: string
+      stream?: string
+      height?: number
+      width?: number
+      tags?: string[]
+    }>
+  };
+}
+
 interface IPopup {
   content: () => React.ReactNode;
   title: string;
