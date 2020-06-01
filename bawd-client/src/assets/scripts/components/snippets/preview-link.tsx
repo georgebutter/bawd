@@ -11,6 +11,7 @@ const PreviewLink: React.FC<IProps> = ({ link }) => {
     })();
   }, []);
   console.log(preview);
+  const title = preview?.open_graph?.title || preview?.title;
   return (
     <a
       href={link}
@@ -22,16 +23,18 @@ const PreviewLink: React.FC<IProps> = ({ link }) => {
         <div>
           <div>
             <Image src={preview.favicon} className="inline-block"/>
-            <span
-              className="ml-2 bg-primary text-fg px-1 rounded text-xs inline-block"
-            >
-              {preview.open_graph.site_name}
-            </span>
+            {preview?.open_graph?.site_name ? (
+              <span
+                className="ml-2 bg-primary text-fg px-1 rounded text-xs inline-block"
+              >
+                {preview.open_graph.site_name}
+              </span>
+            ) : null}
           </div>
           {preview.open_graph.images ? (
             <Image src={preview.open_graph.images[0].url} />
           ) : null}
-          <Heading tag="h4">{preview.open_graph.title}</Heading>
+          <Heading tag="h4">{title}</Heading>
         </div>
       ) : "External link"}
     </a>
