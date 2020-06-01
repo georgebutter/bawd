@@ -4,8 +4,7 @@ import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
 import { IPost } from "../../types";
 import { checkImageURL } from "../../utils";
-import * as Icon from "../icons";
-import { Column, Heading, Image, Row, } from "../snippets";
+import { Column, Heading, Image, PreviewLink, Row,  } from "../snippets";
 
 const PostItem: React.FC<IPost> = ({ _id, _source }) => (
   <Column>
@@ -39,7 +38,7 @@ const PostItem: React.FC<IPost> = ({ _id, _source }) => (
             ) : checkImageURL(_source.link) ? (
               <Image src={_source.link} fit="cover" className="h-20"/>
             ) : (
-              <Icon.Link />
+              <PreviewLink link={_source.link} />
             )
           ) : null}
         </Column>
@@ -49,8 +48,9 @@ const PostItem: React.FC<IPost> = ({ _id, _source }) => (
             <Link
               className="text-primary"
               to={`/user/${_source.tripcode}`}
+              title={_source.tripcode}
             >
-              {_source.tripcode.substring(0, 8)}
+              {`${_source.tripcode.substring(0, 8)}...`}
             </Link>
           </small>
         </Column>
