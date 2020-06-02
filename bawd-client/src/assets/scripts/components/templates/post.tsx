@@ -1,3 +1,4 @@
+import * as DOMPurify from "dompurify";
 import * as marked from "marked";
 import * as React from "react";
 import ReactPlayer from "react-player";
@@ -45,7 +46,7 @@ const Post: React.FC = () => {
           </Column>
           <Column>
             <div dangerouslySetInnerHTML={{
-              __html: post ? marked(post._source.post) : "Loading" }}
+              __html: post ? marked(DOMPurify.sanitize(post._source.post)) : "Loading" }}
             />
           </Column>
           {link ? (
@@ -102,7 +103,7 @@ const Post: React.FC = () => {
                   <Column>
                     <div>
                       <div dangerouslySetInnerHTML={{
-                        __html: comment ? marked(comment._source.comment) : "Loading" }}
+                        __html: comment ? marked(DOMPurify.sanitize(comment._source.comment)) : "Loading" }}
                       />
                       <small className="text-xs">{comment._source.tripcode}</small>
                     </div>

@@ -1,3 +1,4 @@
+import * as DOMPurify from "dompurify";
 import * as marked from "marked";
 import * as React from "react";
 import * as Icon from "../icons";
@@ -46,7 +47,7 @@ const MarkdownInput: React.FC<IProps> = ({
           />
         ) : (
           <div className={`${fieldClass} rte`}
-            dangerouslySetInnerHTML={{ __html: marked(value) }}
+            dangerouslySetInnerHTML={{ __html: marked(DOMPurify.sanitize(value)) }}
           />
         )}
       </div>

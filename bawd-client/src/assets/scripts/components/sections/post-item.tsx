@@ -1,3 +1,4 @@
+import * as DOMPurify from "dompurify";
 import * as marked from "marked";
 import * as React from "react";
 import ReactPlayer from "react-player";
@@ -26,7 +27,7 @@ const PostItem: React.FC<IPost> = ({ _id, _source }) => (
             <div
               className="text-sm text-faded rte"
               dangerouslySetInnerHTML={{
-                __html: marked(_source.post)
+                __html: marked(DOMPurify.sanitize(_source.post))
               }}
             />
           </Link>
