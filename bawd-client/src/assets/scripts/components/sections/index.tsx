@@ -9,4 +9,4 @@ export * from "./menu";
 export * from "./mobile-navigation";
 export * from "./post-item";
 export * from "./post-list";
-export * from "./upvote-post";
+export * from "./vote-post";

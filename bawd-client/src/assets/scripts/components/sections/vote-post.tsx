@@ -1,5 +1,4 @@
 import * as React from "react";
-import ReactPlayer from "react-player";
 import { useHistory } from "react-router-dom";
 import * as Store from "store";
 import { IPost } from "../../types";
@@ -12,13 +11,12 @@ import {
   Container,
   Form,
   Input,
-  MarkdownInput,
-  SearchSelect,
 } from "../snippets";
 
-const UpvotePost: React.FC<{
+const VotePost: React.FC<{
   post: IPost;
-}> = ({ post }) => {
+  method: "upvote" | "downvote";
+}> = ({ post, method }) => {
   const [status, setStatus] = React.useState<"ready" | "loading">("ready");
   const [password, setPassword] = React.useState<string>(Store.get("signature") || "");
   const [errors, setErrors] = React.useState<{
@@ -26,6 +24,8 @@ const UpvotePost: React.FC<{
   }>({
     signature: null,
   });
+  const activeMessage = method === "upvote" ? "Upvoting post" : "Downvoting post";
+  const buttonText = method === "upvote" ? "Upvote post" : "Downvote post";
   const history = useHistory();
   return (
     <Container>
@@ -48,7 +48,7 @@ const UpvotePost: React.FC<{
           return;
         }
         Store.set("signature", password);
-        const response = await fetch(`/api/posts/${post._source.id}/upvote`, {
+        const response = await fetch(`/api/posts/${post._source.id}/${method}`, {
           body: JSON.stringify({
             password,
           }),
@@ -70,6 +70,7 @@ const UpvotePost: React.FC<{
             label="Signature"
             placeholder="Signature"
             type="password"
+            error={errors.signature}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -78,9 +79,13 @@ const UpvotePost: React.FC<{
           <Button
             type="submit"
           >
-            <Icon.ArrowUp size={12} />
+            {method === "upvote" ? (
+              <Icon.ArrowUp size={12} />
+            ) : (
+              <Icon.ArrowDown size={12} />
+            )}
             <span className={"ml-1"}>
-              {status === "loading" ? "Upvoting post" : "Upvote post"}
+              {status === "loading" ? activeMessage : buttonText}
             </span>
           </Button>
         </Column>
@@ -89,4 +94,4 @@ const UpvotePost: React.FC<{
   );
 };
 
-export { UpvotePost };
+export { VotePost };

@@ -13,7 +13,7 @@ const Row: React.FC<IProps> = ({ children, post }) => {
       <button
         type="button"
         onClick={() => togglePopup({
-          content: () => <Sections.UpvotePost post={post} />,
+          content: () => <Sections.VotePost post={post} method="upvote"/>,
           title: "Upvote post",
         })}
         className={`hover:text-success inline-block ${post?._source?.upvotes?.includes(sig) ? "text-success" : ""}`}
@@ -29,8 +29,8 @@ const Row: React.FC<IProps> = ({ children, post }) => {
         type="button"
         className={`hover:text-error inline-block ${post?._source?.downvotes?.includes(sig) ? "text-error" : ""}`}
         onClick={() => togglePopup({
-          content: () => <Sections.UpvotePost post={post} />,
-          title: "Upvote post",
+          content: () => <Sections.VotePost post={post} method="downvote" />,
+          title: "Downvote post",
         })}
       >
         <Icons.ArrowDown />
