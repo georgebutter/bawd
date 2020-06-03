@@ -7,6 +7,7 @@
     "run:dev": "nodemon dist/index.js",
     "build": "webpack",
     "dev": "webpack",
+    "maintenance": "node dist/maintenance.js",
     "test": "tslint -c ../tslint.json -p tsconfig.json --fix && jest"
   },
   "private": true,
