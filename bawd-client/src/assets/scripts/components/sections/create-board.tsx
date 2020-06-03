@@ -18,16 +18,44 @@ const CreateBoard: React.FC<{
 }> = (props) => {
   const history = useHistory();
   const [name, setName] = React.useState<string>("");
+  const [warnings, setWarnings] = React.useState<{
+    name: "Max length 32 characters" | "Can only contain alphanumeric values";
+  }>({
+    name: null,
+  });
+  const [errors, setErrors] = React.useState<{
+    name: "A board with this name already exists" | "Must be at least 3 characters";
+  }>({
+    name: null,
+  });
   const [category, setCategory] = React.useState<typeof categories[number] | "">(props.category);
   const debouncedName = useDebounce(name, 500);
-  const [status, setStatus] = React.useState<string>("disabled");
+  const [status, setStatus] = React.useState<"validated" | "disabled">("disabled");
+
   React.useEffect(() => {
     (async () => {
       if (name.length > 3) {
         const handle = handleize(name);
         const board = await getBoardByHandle(handle);
         if (!board) {
-          setStatus("validated");
+          setErrors((prev) => ({
+            ...prev,
+            name: null,
+          }));
+          return setStatus("validated");
+        }
+        setStatus("disabled");
+        setErrors((prev) => ({
+          ...prev,
+          name: "A board with this name already exists",
+        }));
+      } else {
+        if (status === "validated") {
+          setStatus("disabled");
+          setErrors((prev) => ({
+            ...prev,
+            name: "Must be at least 3 characters",
+          }));
         }
       }
     })();
@@ -59,7 +87,28 @@ const CreateBoard: React.FC<{
             label="Choose a name"
             placeholder="Board name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            error={errors.name}
+            warning={warnings.name}
+            onChange={(e) => {
+              const { value } = e.target;
+              if (/[^a-zA-Z0-9]/.test(value)) {
+                return setWarnings((prev) => ({
+                  ...prev,
+                  name: "Can only contain alphanumeric values",
+                }));
+              }
+              if (e.target.value.length > 32) {
+                return setWarnings((prev) => ({
+                  ...prev,
+                  name: "Max length 32 characters",
+                }));
+              }
+              setWarnings((prev) => ({
+                ...prev,
+                name: null,
+              }));
+              setName(e.target.value);
+            }}
           />
         </Column>
         {!props.category ? (
