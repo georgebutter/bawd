@@ -21,6 +21,7 @@ app.set("trust proxy", true);
 (async () => {
   await elasticClient.indices.refresh({ index: "posts" });
   await elasticClient.indices.refresh({ index: "boards" });
+  await elasticClient.indices.refresh({ index: "comments" });
   console.log("refreshing indices");
 })();
 
