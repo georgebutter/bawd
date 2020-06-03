@@ -17,6 +17,9 @@ export interface IPost {
     tripcode: string;
     id: string;
     link: string;
+    score: number;
+    upvotes: Array<IPost["_source"]["tripcode"]>;
+    downvotes: Array<IPost["_source"]["tripcode"]>;
   };
 }
 export interface IComment {

@@ -26,9 +26,6 @@ app.set("trust proxy", true);
 
 app.post("/posts", (req: express.Request, res: express.Response) => {
   const { title, post, board, parent, password, link } = req.body;
-  const ip = req.headers["x-forwarded-for"] ||
-  req.connection.remoteAddress ||
-  req.socket.remoteAddress;
   const handle = handleize(title);
   if (!title || title === "") {
     return res.json({
@@ -48,17 +45,23 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
   }
   (async () => {
     const tripcode = createTripcode(HMAC_SECRET, password);
+    const upvotes = [tripcode];
+    const downvotes = [];
+    const score = 1;
     const [err, result] = await ing(elasticClient.index({
       body: {
         board,
+        createdAt: new Date().toString(),
+        downvotes,
         handle,
         id: Math.random().toString(16).substr(2),
-        ip,
         link,
         parent,
         post,
+        score,
         title,
         tripcode,
+        upvotes,
       },
       index: "posts",
     }));
@@ -258,6 +261,63 @@ app.get("/posts", (req: express.Request, res: express.Response) => {
       index: "posts",
     }));
     if (err) {
+      res.status(400);
+      return res.json({
+        error: err.meta.body.error.reason,
+        status: "error",
+      });
+    }
+    res.json({
+      result,
+      status: "success",
+    });
+  })();
+});
+
+app.post("/posts/:id/upvote", (req: express.Request, res: express.Response) => {
+  (async () => {
+    const [err, docs] = await ing(elasticClient.search({
+      body: {
+        query: {
+          match: {
+            id: req.params.id
+          }
+        }
+      },
+      index: "posts",
+    }));
+    if (err) {
+      res.status(400);
+      return res.json({
+        error: err.meta.body.error.reason,
+        status: "error",
+      });
+    }
+    const post = docs.body.hits.hits[0];
+    console.log(docs)
+    const { password } = req.body;
+    const tripcode = createTripcode(HMAC_SECRET, password);
+    const upvotes = post._source.upvotes || [];
+    const postScore = post._source.score || 0;
+    const isUpvoted = upvotes.includes(tripcode);
+    const score = isUpvoted ? postScore - 1 : postScore + 1;
+    if (isUpvoted) {
+      upvotes.splice(upvotes.indexOf(tripcode), 1);
+    } else {
+      upvotes.push(tripcode);
+    }
+    const [error, result] = await ing(elasticClient.update({
+      body: {
+        doc: {
+          score,
+          upvotes
+        }
+      },
+      id: post._id,
+      index: "posts",
+      refresh: "true",
+    }));
+    if (error) {
       res.status(400);
       return res.json({
         error: err.meta.body.error.reason,
