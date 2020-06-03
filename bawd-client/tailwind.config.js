@@ -21,6 +21,7 @@ module.exports = {
       'primary': 'var(--primary)',
       'success': 'var(--success)',
       'error': 'var(--error)',
+      'warning': 'var(--warning)',
       'primaryfaded': 'var(--primary-faded)',
       'bg': 'var(--bg)',
       'text': 'var(--text)',
