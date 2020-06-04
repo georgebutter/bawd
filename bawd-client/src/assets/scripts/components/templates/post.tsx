@@ -1,13 +1,12 @@
-import * as DOMPurify from "dompurify";
-import * as marked from "marked";
 import * as React from "react";
+import * as ReactMarkdown from "react-markdown";
 import ReactPlayer from "react-player";
 import {
   useParams,
 } from "react-router-dom";
 
 import { IBoard, IComment, IPost, } from "../../types";
-import { checkImageURL, getBoardByHandle, getPostById, togglePopup, } from "../../utils";
+import { checkImageURL, getBoardByHandle, getPostById, togglePopup, getMarkdown, } from "../../utils";
 import * as Icon from "../icons";
 import * as Sections from "../sections";
 import {
@@ -45,9 +44,7 @@ const Post: React.FC = () => {
             </Heading>
           </Column>
           <Column>
-            <div dangerouslySetInnerHTML={{
-              __html: post ? marked(DOMPurify.sanitize(post._source.post)) : "Loading" }}
-            />
+            <ReactMarkdown source={getMarkdown(post._source.post)} />
           </Column>
           {link ? (
             <Column>
@@ -102,9 +99,7 @@ const Post: React.FC = () => {
                 {data.map((comment: IComment) => (
                   <Column>
                     <div>
-                      <div dangerouslySetInnerHTML={{
-                        __html: comment ? marked(DOMPurify.sanitize(comment._source.comment)) : "Loading" }}
-                      />
+                      <ReactMarkdown source={getMarkdown(comment._source.comment)} />
                       <small className="text-xs">{comment._source.tripcode}</small>
                     </div>
                   </Column>

@@ -1,6 +1,6 @@
-import * as DOMPurify from "dompurify";
-import * as marked from "marked";
 import * as React from "react";
+import * as ReactMarkdown from "react-markdown";
+import { getMarkdown } from "../../utils";
 import * as Icon from "../icons";
 import Button from "./button";
 
@@ -13,7 +13,7 @@ const MarkdownInput: React.FC<IProps> = ({
   error,
   success,
 }) => {
-  const fieldClass = `bg-bg text-text block h-32 text-bg w-full p-1 rounded-b border-1 ${error ? `border-error` : ``} ${success ? `border-success` : ``} ${!success && !error ? `border-faded` : ``}`
+  const fieldClass = `bg-bg text-text block h-32 text-bg w-full p-1 rounded-b border-1 ${error ? `border-error` : ``} ${success ? `border-success` : ``} ${!success && !error ? `border-faded` : ``}`;
   const [view, setView] = React.useState<string>("write");
   return (
     <React.Fragment>
@@ -46,9 +46,9 @@ const MarkdownInput: React.FC<IProps> = ({
             value={value}
           />
         ) : (
-          <div className={`${fieldClass} rte`}
-            dangerouslySetInnerHTML={{ __html: marked(DOMPurify.sanitize(value)) }}
-          />
+          <div className={`${fieldClass} rte`}>
+            <ReactMarkdown source={getMarkdown(value)} />
+          </div>
         )}
       </div>
       <small className="text-xs">
