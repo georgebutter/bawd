@@ -44,7 +44,7 @@ const Post: React.FC = () => {
             </Heading>
           </Column>
           <Column>
-            <ReactMarkdown source={getMarkdown(post._source.post)} />
+            {post ? <ReactMarkdown source={getMarkdown(post._source.post)} /> : null}
           </Column>
           {link ? (
             <Column>
