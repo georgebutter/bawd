@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import { IBoard, IComment, IPost, } from "../../types";
-import { checkImageURL, getBoardByHandle, getPostById, togglePopup, getMarkdown, } from "../../utils";
+import { checkImageURL, getBoardByHandle, getMarkdown, getPostById, togglePopup, } from "../../utils";
 import * as Icon from "../icons";
 import * as Sections from "../sections";
 import {
@@ -61,7 +61,7 @@ const Post: React.FC = () => {
           ) : null}
         </Row>
       </Container>
-      <div>
+      <div className="py-2 border-t border-faded">
         <Container>
           <Row>
             <Column width="1/2">
