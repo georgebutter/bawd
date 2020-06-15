@@ -216,7 +216,6 @@ app.get("/boards/:handle", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err?.meta?.body?.error?.reason ? : err,
         error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
