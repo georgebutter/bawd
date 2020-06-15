@@ -66,7 +66,7 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -107,7 +107,7 @@ app.post("/comments", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -130,7 +130,7 @@ app.post("/:index/search", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -166,7 +166,7 @@ app.post("/boards", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -187,7 +187,7 @@ app.get("/boards", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -216,7 +216,8 @@ app.get("/boards/:handle", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? : err,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -261,7 +262,7 @@ app.get("/posts", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
