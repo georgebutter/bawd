@@ -3,6 +3,7 @@ import * as express from "express";
 import { unfurl } from "unfurl.js";
 import { handleize } from "../../bawd-shared";
 import { checkAndCreateIndex, createTripcode, ing, } from "./utils";
+import { maintenance } from "./maintenance";
 
 const {
   PORT = 3100,
@@ -19,9 +20,12 @@ app.use(express.json());
 app.set("trust proxy", true);
 
 (async () => {
+  console.log("refreshing indices");
   await elasticClient.indices.refresh({ index: "posts" });
   await elasticClient.indices.refresh({ index: "boards" });
-  console.log("refreshing indices");
+  await elasticClient.indices.refresh({ index: "comments" });
+  console.log("performing maintenance");
+  await maintenance();
 })();
 
 app.post("/posts", (req: express.Request, res: express.Response) => {
@@ -68,7 +72,7 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -78,7 +82,6 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
     });
   })();
 });
-
 
 app.post("/comments", (req: express.Request, res: express.Response) => {
   const { comment, parent, password, link } = req.body;
@@ -109,7 +112,7 @@ app.post("/comments", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -132,7 +135,7 @@ app.post("/:index/search", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -168,7 +171,7 @@ app.post("/boards", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -189,7 +192,7 @@ app.get("/boards", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -218,7 +221,7 @@ app.get("/boards/:handle", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }
@@ -263,7 +266,7 @@ app.get("/posts", (req: express.Request, res: express.Response) => {
     if (err) {
       res.status(400);
       return res.json({
-        error: err.meta.body.error.reason,
+        error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
         status: "error",
       });
     }

@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "log:server": "heroku logs -a bawd-server --tail",
     "log:client": "heroku logs -a bawd-client --tail",
-    "dev": "yarn workspaces run dev -p",
+    "log": "concurrently \"npm:log:server\" \"yarn log:client\"",
+    "dev": "concurrently \"elasticsearch\" \"kibana\" \"yarn workspace bawd-server run dev\" \"yarn workspace bawd-client run dev\"",
     "heroku-postbuild": "yarn workspaces run build"
   },
   "engines": {
@@ -28,6 +29,7 @@
     "bawd-server"
   ],
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0"
   }

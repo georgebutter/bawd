@@ -3,7 +3,7 @@ import { Button } from ".";
 import * as Icon from "../icons";
 
 const Input: React.FC<IProps> = ({
-  type = "text", placeholder, label, name, value, onChange, error, success, autoComplete, onBlur
+  type = "text", placeholder, label, name, value, onChange, error, warning, success, autoComplete, onBlur
 }) => {
   const [currentType, setCurrentType] = React.useState<IProps["type"]>(type);
   return (
@@ -19,7 +19,12 @@ const Input: React.FC<IProps> = ({
           {error}
         </p>
       ) : null}
-      <div className={`text-text bg-bg w-full p-1 relative rounded border-2 ${error ? `border-error` : ``} ${success ? `border-success` : ``} ${!success && !error ? `border-transparent` : ``}`}>
+      {warning ? (
+        <p className={`text-warning`}>
+          {warning}
+        </p>
+      ) : null}
+      <div className={`text-text bg-bg w-full p-1 relative rounded border-2 ${error ? `border-error` : ``} ${warning ? `border-warning` : ``} ${success ? `border-success` : ``} ${!success && !warning && !error ? `border-transparent` : ``}`}>
         <input
           className="bg-transparent w-full"
           name={name}
@@ -57,6 +62,7 @@ interface IProps {
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  warning?: string;
   success?: boolean;
   autoComplete?: string;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;

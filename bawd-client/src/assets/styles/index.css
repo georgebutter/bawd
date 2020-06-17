@@ -35,8 +35,9 @@
   :root {
     --primary: #6979f8;
     --primary-faded: #a5affb;
-    --success: #00C48C;
-    --error: #FF647C;
+    --success: #00c48c;
+    --warning: #ffa26b;
+    --error: #ff647c;
     --bg: #3f3356;
     --text: #d0c9d6;
     --faded: #7c7086;
@@ -49,6 +50,7 @@
     --primary: #6979f8;
     --primary-faded: #a5affb;
     --success: #00c48c;
+    --warning: #ffa26b;
     --error: #ff647c;
     --bg: #fff;
     --text: #221524;

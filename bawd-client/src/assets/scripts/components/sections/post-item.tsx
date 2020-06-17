@@ -1,10 +1,9 @@
-import * as DOMPurify from "dompurify";
-import * as marked from "marked";
 import * as React from "react";
+import * as ReactMarkdown from "react-markdown";
 import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
 import { IPost } from "../../types";
-import { checkImageURL } from "../../utils";
+import { checkImageURL, getMarkdown } from "../../utils";
 import { Column, Heading, Image, PreviewLink, Row,  } from "../snippets";
 
 const PostItem: React.FC<IPost> = ({ _id, _source }) => (
@@ -24,12 +23,9 @@ const PostItem: React.FC<IPost> = ({ _id, _source }) => (
             <Heading tag="h5">
               {_source.title}
             </Heading>
-            <div
-              className="text-sm text-faded rte"
-              dangerouslySetInnerHTML={{
-                __html: marked(DOMPurify.sanitize(_source.post))
-              }}
-            />
+            <div className="text-sm text-faded rte">
+              <ReactMarkdown source={getMarkdown(_source.post)} />
+            </div>
           </Link>
         </Column>
         <Column>

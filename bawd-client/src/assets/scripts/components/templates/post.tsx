@@ -1,13 +1,12 @@
-import * as DOMPurify from "dompurify";
-import * as marked from "marked";
 import * as React from "react";
+import * as ReactMarkdown from "react-markdown";
 import ReactPlayer from "react-player";
 import {
   useParams,
 } from "react-router-dom";
 
 import { IBoard, IComment, IPost, } from "../../types";
-import { checkImageURL, getBoardByHandle, getPostById, togglePopup, } from "../../utils";
+import { checkImageURL, getBoardByHandle, getMarkdown, getPostById, togglePopup, } from "../../utils";
 import * as Icon from "../icons";
 import * as Sections from "../sections";
 import {
@@ -53,9 +52,7 @@ const Post: React.FC = () => {
         </Row>
         <Row>
           <Column>
-            <div dangerouslySetInnerHTML={{
-              __html: post ? marked(DOMPurify.sanitize(post._source.post)) : "Loading" }}
-            />
+            {post ? <ReactMarkdown source={getMarkdown(post._source.post)} /> : null}
           </Column>
           {link ? (
             <Column>
@@ -72,7 +69,7 @@ const Post: React.FC = () => {
           ) : null}
         </Row>
       </Container>
-      <div>
+      <div className="py-2 border-t border-faded">
         <Container>
           <Row>
             <Column width="1/2">
@@ -110,9 +107,7 @@ const Post: React.FC = () => {
                 {data.map((comment: IComment) => (
                   <Column>
                     <div>
-                      <div dangerouslySetInnerHTML={{
-                        __html: comment ? marked(DOMPurify.sanitize(comment._source.comment)) : "Loading" }}
-                      />
+                      <ReactMarkdown source={getMarkdown(comment._source.comment)} />
                       <small className="text-xs">{comment._source.tripcode}</small>
                     </div>
                   </Column>

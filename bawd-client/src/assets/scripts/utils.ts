@@ -1,7 +1,8 @@
+import * as DOMPurify from "dompurify";
 import {
   IBoard,
-  IPost,
   IMetadata,
+  IPost,
 } from "./types";
 
 /**
@@ -79,6 +80,11 @@ export const togglePopup = (popup: {
   });
   document.dispatchEvent(event);
 };
+
+/**
+ * Sanitize and return markdown
+ */
+export const getMarkdown = (val: string): string => DOMPurify.sanitize(val);
 
 export const toggleMenu = (detail: boolean): void => {
   const event = new CustomEvent("menu:toggle", {
