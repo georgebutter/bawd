@@ -3,6 +3,7 @@ import * as express from "express";
 import { unfurl } from "unfurl.js";
 import { handleize } from "../../bawd-shared";
 import { checkAndCreateIndex, createTripcode, ing, } from "./utils";
+import { maintenance } from "./maintenance";
 
 const {
   PORT = 3100,
@@ -19,10 +20,12 @@ app.use(express.json());
 app.set("trust proxy", true);
 
 (async () => {
+  console.log("refreshing indices");
   await elasticClient.indices.refresh({ index: "posts" });
   await elasticClient.indices.refresh({ index: "boards" });
   await elasticClient.indices.refresh({ index: "comments" });
-  console.log("refreshing indices");
+  console.log("performing maintenance");
+  await maintenance();
 })();
 
 app.post("/posts", (req: express.Request, res: express.Response) => {
@@ -76,7 +79,6 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
     });
   })();
 });
-
 
 app.post("/comments", (req: express.Request, res: express.Response) => {
   const { comment, parent, password, link } = req.body;
