@@ -115,7 +115,9 @@ export const createBoard = async ({
   const json: {
     status: "success" | "error";
     body?: IBoard["_source"];
-    error: string;
+    error: {
+      name: "A board with this name already exists" | "Must be at least 3 characters";
+    }
   } = await response.json();
   return json;
 };

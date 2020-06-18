@@ -24,7 +24,7 @@ const CreateBoard: React.FC<{
     name: null,
   });
   const [errors, setErrors] = React.useState<{
-    name: "A board with this name already exists" | "Must be at least 3 characters";
+    name: "A board with this name already exists" | "Must be at least 3 characters" | "Name must only contain alphanumeric values or spaces" | "Name cannot be blank";
   }>({
     name: null,
   });
