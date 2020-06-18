@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "log:server": "heroku logs -a bawd-server --tail",
     "log:client": "heroku logs -a bawd-client --tail",
-    "log": "concurrently \"npm:log:server\" \"yarn log:client\"",
+    "log": "concurrently \"yarn log:server\" \"yarn log:client\"",
     "dev": "concurrently \"elasticsearch\" \"kibana\" \"yarn workspace bawd-server run dev\" \"yarn workspace bawd-client run dev\"",
     "heroku-postbuild": "yarn workspaces run build"
   },
