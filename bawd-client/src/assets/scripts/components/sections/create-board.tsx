@@ -35,20 +35,11 @@ const CreateBoard: React.FC<{
   React.useEffect(() => {
     (async () => {
       if (name.length > 3) {
-        const handle = handleize(name);
-        const board = await getBoardByHandle(handle);
-        if (!board) {
-          setErrors((prev) => ({
-            ...prev,
-            name: null,
-          }));
-          return setStatus("validated");
-        }
-        setStatus("disabled");
         setErrors((prev) => ({
           ...prev,
-          name: "A board with this name already exists",
+          name: null,
         }));
+        return setStatus("validated");
       } else {
         if (status === "validated") {
           setStatus("disabled");
@@ -73,7 +64,7 @@ const CreateBoard: React.FC<{
           togglePopup(null);
           history.push(`/boards/${res.body.handle}`);
         } else if (res.status === "error") {
-          setErrors(res.error)
+          setErrors(res.error);
         }
       }}>
         <Column>
