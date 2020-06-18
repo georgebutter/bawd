@@ -1,7 +1,7 @@
 import { Client } from "@elastic/elasticsearch";
 import * as express from "express";
 import { unfurl } from "unfurl.js";
-import { handleize } from "../../bawd-shared";
+import { handleize, validateBoardName } from "../../bawd-shared";
 import { checkAndCreateIndex, createTripcode, ing, } from "./utils";
 import { maintenance } from "./maintenance";
 
@@ -152,7 +152,15 @@ app.post("/boards", (req: express.Request, res: express.Response) => {
   if (!name || name === "") {
     return res.json({
       error: {
-        chooseTitle: "Name cannot be blank"
+        name: "Name cannot be blank"
+      },
+      status: "error",
+    });
+  }
+  if (!validateBoardName(name)) {
+    return res.json({
+      error: {
+        name: "Name must only contain alphanumeric values or spaces"
       },
       status: "error",
     });

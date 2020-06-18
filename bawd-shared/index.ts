@@ -3,3 +3,7 @@ export const handleize = (str: string) => {
 };
 
 export const categories: string[] = ["Arts & Entertainment", "Innovation & Technology", "Life", "Society", "Work & Industry"];
+
+export const validateBoardName = (name: string) => {
+  return /^[-\w\s]+$/.test(name);
+};
