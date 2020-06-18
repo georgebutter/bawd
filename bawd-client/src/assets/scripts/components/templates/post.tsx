@@ -13,6 +13,7 @@ import {
   Button,
   Column,
   Container,
+  Counter,
   ElasticList,
   Heading,
   Image,
@@ -38,11 +39,18 @@ const Post: React.FC = () => {
       <Sections.BoardHeader board={board} />
       <Container className="py-4">
         <Row>
-          <Column>
+          <Column width="auto">
+            {post ? (
+              <Counter post={post}/>
+            ) : null}
+          </Column>
+          <Column width="auto" vertical="center">
             <Heading tag="h2">
               {post ? post._source.title : "Loading"}
             </Heading>
           </Column>
+        </Row>
+        <Row>
           <Column>
             {post ? <ReactMarkdown source={getMarkdown(post._source.post)} /> : null}
           </Column>

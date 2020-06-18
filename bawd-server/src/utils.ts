@@ -1,6 +1,6 @@
+import * as Elastic from "@elastic/elasticsearch";
 import * as crypto from "crypto";
 import * as mappings from "./mappings";
-import * as Elastic from "@elastic/elasticsearch";
 
 /**
  * Gets a post from the end point querying by the posts handle

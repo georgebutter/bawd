@@ -74,10 +74,28 @@ export const Play: React.FC<IProps> = ({ size }) => (
 );
 
 export const Plus: React.FC<IProps> = ({ size }) => (
-  <IconWrapper>
+  <IconWrapper size={size}>
     <path fill="currentColor" d="M9 17h6v6c0 .6.4 1 1 1s1-.4 1-1v-6h6c.6 0 1-.4 1-1s-.4-1-1-1h-6V9c0-.6-.4-1-1-1s-1 .4-1 1v6H9c-.6 0-1 .4-1 1s.4 1 1 1z"/>
   </IconWrapper>
-)
+);
+
+export const ArrowUp: React.FC<IProps> = ({ size }) => (
+  <IconWrapper size={size}>
+    <path
+      d="M18.947 15.21l9.832 9.74a4.103 4.103 0 010 5.84A4.188 4.188 0 0125.832 32H6.168C3.866 32 2 30.151 2 27.87a4.11 4.11 0 011.22-2.92l9.833-9.74a4.196 4.196 0 015.894 0z"
+      fill="currentColor"
+    />
+  </IconWrapper>
+);
+
+export const ArrowDown: React.FC<IProps> = ({ size }) => (
+  <IconWrapper size={size}>
+    <path
+      d="M18.947 16.79l9.832-9.74a4.103 4.103 0 000-5.84A4.188 4.188 0 0025.832 0H6.168C3.866 0 2 1.849 2 4.13a4.11 4.11 0 001.22 2.92l9.833 9.74a4.196 4.196 0 005.894 0z"
+      fill="currentColor"
+    />
+  </IconWrapper>
+);
 
 export const Logo: React.FC<IProps> = ({ size }) => (
   <IconWrapper size={size}>

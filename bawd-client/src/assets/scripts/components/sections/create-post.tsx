@@ -156,11 +156,7 @@ const CreatePost: React.FC<{
           <Button
             type="submit"
           >
-            {parent ? (
-              <Icon.Comment size={12} />
-            ) : (
-              <Icon.Post size={12} />
-            )}
+            <Icon.Post size={12} />
             <span className={"ml-1"}>
               {status === "loading" ? "Creating post" : "Create post"}
             </span>

@@ -94,3 +94,30 @@ export const toggleMenu = (detail: boolean): void => {
 };
 
 export const checkImageURL = (url: string): boolean => !!url.match(/\.(jpeg|jpg|gif|png)$/);
+
+export const createBoard = async ({
+  category,
+  name,
+}: {
+  category: string;
+  name: string;
+}) => {
+  const response = await fetch(`/api/boards`, {
+    body: JSON.stringify({
+      category,
+      name,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+  const json: {
+    status: "success" | "error";
+    body?: IBoard["_source"];
+    error: {
+      name: "A board with this name already exists" | "Must be at least 3 characters";
+    }
+  } = await response.json();
+  return json;
+};
