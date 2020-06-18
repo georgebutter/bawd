@@ -1,7 +1,7 @@
 import { Client } from "@elastic/elasticsearch";
 import * as express from "express";
 import { unfurl } from "unfurl.js";
-import { handleize } from "../../bawd-shared";
+import { handleize, validateBoardName } from "../../bawd-shared";
 import { checkAndCreateIndex, createTripcode, ing, } from "./utils";
 import { maintenance } from "./maintenance";
 
@@ -30,9 +30,6 @@ app.set("trust proxy", true);
 
 app.post("/posts", (req: express.Request, res: express.Response) => {
   const { title, post, board, parent, password, link } = req.body;
-  const ip = req.headers["x-forwarded-for"] ||
-  req.connection.remoteAddress ||
-  req.socket.remoteAddress;
   const handle = handleize(title);
   if (!title || title === "") {
     return res.json({
@@ -52,17 +49,23 @@ app.post("/posts", (req: express.Request, res: express.Response) => {
   }
   (async () => {
     const tripcode = createTripcode(HMAC_SECRET, password);
+    const upvotes = [tripcode];
+    const downvotes = [];
+    const score = 1;
     const [err, result] = await ing(elasticClient.index({
       body: {
         board,
+        createdAt: new Date().toString(),
+        downvotes,
         handle,
         id: Math.random().toString(16).substr(2),
-        ip,
         link,
         parent,
         post,
+        score,
         title,
         tripcode,
+        upvotes,
       },
       index: "posts",
     }));
@@ -149,7 +152,15 @@ app.post("/boards", (req: express.Request, res: express.Response) => {
   if (!name || name === "") {
     return res.json({
       error: {
-        chooseTitle: "Name cannot be blank"
+        name: "Name cannot be blank"
+      },
+      status: "error",
+    });
+  }
+  if (!validateBoardName(name)) {
+    return res.json({
+      error: {
+        name: "Name must only contain alphanumeric values or spaces"
       },
       status: "error",
     });
@@ -264,6 +275,136 @@ app.get("/posts", (req: express.Request, res: express.Response) => {
       res.status(400);
       return res.json({
         error: err?.meta?.body?.error?.reason ? err.meta.body.error.reason : err,
+        status: "error",
+      });
+    }
+    res.json({
+      result,
+      status: "success",
+    });
+  })();
+});
+
+app.post("/posts/:id/upvote", (req: express.Request, res: express.Response) => {
+  (async () => {
+    const [err, docs] = await ing(elasticClient.search({
+      body: {
+        query: {
+          match: {
+            id: req.params.id
+          }
+        }
+      },
+      index: "posts",
+    }));
+    if (err) {
+      res.status(400);
+      return res.json({
+        error: err.meta.body.error.reason,
+        status: "error",
+      });
+    }
+    const post = docs.body.hits.hits[0];
+    const { password } = req.body;
+    const tripcode = createTripcode(HMAC_SECRET, password);
+    const upvotes = post._source.upvotes || [];
+    const downvotes = post._source.downvotes || [];
+    const postScore = post._source.score || 0;
+    const isUpvoted = upvotes.includes(tripcode);
+    const isDownvoted = downvotes.includes(tripcode);
+    let score = postScore;
+    if (isUpvoted) {
+      upvotes.splice(upvotes.indexOf(tripcode), 1);
+      score -= 1;
+    } else if (isDownvoted) {
+      downvotes.splice(downvotes.indexOf(tripcode), 1);
+      upvotes.push(tripcode);
+      score += 2;
+    } else {
+      score += 1;
+      upvotes.push(tripcode);
+    }
+    const [error, result] = await ing(elasticClient.update({
+      body: {
+        doc: {
+          downvotes,
+          score,
+          upvotes,
+        }
+      },
+      id: post._id,
+      index: "posts",
+      refresh: "true",
+    }));
+    if (error) {
+      res.status(400);
+      return res.json({
+        error: err.meta.body.error.reason,
+        status: "error",
+      });
+    }
+    res.json({
+      result,
+      status: "success",
+    });
+  })();
+});
+
+app.post("/posts/:id/downvote", (req: express.Request, res: express.Response) => {
+  (async () => {
+    const [err, docs] = await ing(elasticClient.search({
+      body: {
+        query: {
+          match: {
+            id: req.params.id
+          }
+        }
+      },
+      index: "posts",
+    }));
+    if (err) {
+      res.status(400);
+      return res.json({
+        error: err.meta.body.error.reason,
+        status: "error",
+      });
+    }
+    const post = docs.body.hits.hits[0];
+    const { password } = req.body;
+    const tripcode = createTripcode(HMAC_SECRET, password);
+    const upvotes = post._source.upvotes || [];
+    const downvotes = post._source.downvotes || [];
+    const postScore = post._source.score || 0;
+    const isUpvoted = upvotes.includes(tripcode);
+    const isDownvoted = downvotes.includes(tripcode);
+    let score = postScore;
+    if (isDownvoted) {
+      downvotes.splice(downvotes.indexOf(tripcode), 1);
+      score += 1;
+    } else if (isUpvoted) {
+      upvotes.splice(upvotes.indexOf(tripcode), 1);
+      downvotes.push(tripcode);
+      score -= 2;
+    } else {
+      score -= 1;
+      downvotes.push(tripcode);
+    }
+    const [error, result] = await ing(elasticClient.update({
+      body: {
+        doc: {
+          downvotes,
+          score,
+          upvotes,
+        }
+      },
+      id: post._id,
+      index: "posts",
+      refresh: "true",
+    }));
+    if (error) {
+      res.status(400);
+      return res.json({
+        error: err.meta.body.error.reason,
         status: "error",
       });
     }

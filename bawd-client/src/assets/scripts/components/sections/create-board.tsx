@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { useDebounce } from "use-debounce";
-import { categories, handleize } from "../../../../../../bawd-shared";
-import { getBoardByHandle, togglePopup } from "../../utils";
+import { categories, handleize, validateBoardName } from "../../../../../../bawd-shared";
+import { createBoard, getBoardByHandle, togglePopup } from "../../utils";
 import * as Icon from "../icons";
 import {
   Button,
@@ -65,20 +65,15 @@ const CreateBoard: React.FC<{
     <Container>
       <Form onSubmit={async (e) => {
         e.preventDefault();
-        const response = await fetch(`/api/boards`, {
-          body: JSON.stringify({
-            category,
-            name,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
+        const res = await createBoard({
+          category,
+          name,
         });
-        const json = await response.json();
-        if (json.status === "success") {
+        if (res.status === "success") {
           togglePopup(null);
-          history.push(`/boards/${json.body.handle}`);
+          history.push(`/boards/${res.body.handle}`);
+        } else if (res.status === "error") {
+          setErrors(res.error)
         }
       }}>
         <Column>
@@ -91,7 +86,7 @@ const CreateBoard: React.FC<{
             warning={warnings.name}
             onChange={(e) => {
               const { value } = e.target;
-              if (/[^a-zA-Z0-9]/.test(value)) {
+              if (!validateBoardName(value) && value !== "") {
                 return setWarnings((prev) => ({
                   ...prev,
                   name: "Can only contain alphanumeric values",

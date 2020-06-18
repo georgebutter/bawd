@@ -1,8 +1,10 @@
 import * as React from "react";
 import ReactPlayer from "react-player";
+import * as Store from "store";
 import { IPost } from "../../types";
-import { Button, Column, Container, Form, Input, MarkdownInput, } from "../snippets";
 import { togglePopup } from "../../utils";
+import * as Icon from "../icons";
+import { Button, Column, Container, Form, Input, MarkdownInput, } from "../snippets";
 
 export const CreateComment: React.FC<{
   parent: IPost["_id"];
@@ -81,19 +83,22 @@ export const CreateComment: React.FC<{
             <ReactPlayer url={link} />
           </Column>
         ) : null}
-        <Column>
-          <Input
-            label="Signature"
-            name="Signature"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Column>
+        {Store.get("signature") ? null : (
+          <Column>
+            <Input
+              label="Signature"
+              name="Signature"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Column>
+        )}
         <Column>
           <Button
             type="submit"
           >
+            <Icon.Comment size={12} />
             Comment
           </Button>
         </Column>

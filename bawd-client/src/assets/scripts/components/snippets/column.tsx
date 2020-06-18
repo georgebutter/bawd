@@ -12,7 +12,7 @@ const Column: React.FC<IProps> = ({
 
 interface IProps {
   className?: string;
-  width?: "1/2" | "1/3" | "2/3" | "full";
+  width?: "1/2" | "1/3" | "2/3" | "full" | "auto";
   align?: "start" | "center" | "end";
   vertical?: "start" | "center" | "end";
 }

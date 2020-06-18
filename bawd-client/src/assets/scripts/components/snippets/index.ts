@@ -1,6 +1,7 @@
 import Button from "./button";
 import Column from "./column";
 import Container from "./container";
+import Counter from "./counter";
 import ElasticList from "./elastic-list";
 import Form from "./form";
 import Heading from "./heading";
@@ -19,6 +20,7 @@ export {
   Button,
   Column,
   Container,
+  Counter,
   ElasticList,
   Form,
   Heading,
